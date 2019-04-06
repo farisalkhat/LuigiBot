@@ -26,7 +26,7 @@ def create_embed(atitle,adescription):
     embed = discord.Embed(
                 title = atitle,
                 description = adescription,
-                colour = discord.Colour.blue())
+                colour = 0x16820d)
     return embed
 
 
@@ -35,12 +35,12 @@ class Administration:
         self.client = client
 
     @commands.command(pass_context=True)
-    async def setAdmin(self,ctx):
+    async def addAdmin(self,ctx):
         author = ctx.message.author
         server = ctx.message.server
         args = ctx.message.content.split(' ')
         if len(args)==1:
-            embed = create_embed('!setAdmin error:','You need to give me a role to look at.')
+            embed = create_embed('!addAdmin error:','You need to give me a role to look at.')
             await self.client.say(embed=embed)
             return
         role = " "
