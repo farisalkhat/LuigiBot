@@ -136,7 +136,7 @@ class Administration:
         server = ctx.message.server
         args = ctx.message.content.split(' ')
 
-        if args==1:
+        if len(args)==1:
             embed = create_embed('!createrole error','Invalid format. Please type a role')
             await self.client.say(embed=embed)
             return
@@ -152,9 +152,14 @@ class Administration:
                 theRoleName = theRoleName + " " + roleName[i]
                 i=i+1
 
-        await self.client.create_role(author.server, name=theRoleName)
-        embed = create_embed('Created role','{} Created the role: **{}**'.format(author,theRoleName))
-        await self.client.say(embed=embed)
+        try:
+            await self.client.create_role(author.server, name=theRoleName)
+            embed = create_embed('Created role','{} Created the role: **{}**'.format(author,theRoleName))
+            await self.client.say(embed=embed)
+        except discord.Forbidden:
+            embed = create_embed('!createrole error!',"You do not have the permission to delete this role!")
+            await self.client.say(embed=embed)
+
 
 
 
@@ -166,7 +171,7 @@ class Administration:
         server = ctx.message.server
         args = ctx.message.content.split(' ')
         if len(args)==1:
-            embed = create_embed('!createrole error','Invalid format. Please type a role')
+            embed = create_embed('!deleterole error','Invalid format. Please type a role')
             await self.client.say(embed=embed)
             return
         roleName = args[1:]
