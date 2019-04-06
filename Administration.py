@@ -20,6 +20,8 @@ admins = [king_of_games,smuckers_goober]
 kick_reason = 'not specified.'
 
 
+serverAdmins = {}
+
 def create_embed(atitle,adescription):
     embed = discord.Embed(
                 title = atitle,
@@ -31,6 +33,50 @@ def create_embed(atitle,adescription):
 class Administration:
     def __init__(self,client):
         self.client = client
+
+    @commands.command(pass_context=True)
+    async def setAdmin(self,ctx):
+        author = ctx.message.author
+        server = ctx.message.server
+        args = ctx.message.content.split(' ')
+        if len(args)==1:
+            embed = create_embed('!setAdmin error:','You need to give me a role to look at.')
+            await self.client.say(embed=embed)
+            return
+        role = " "
+        role = role.join(args[1:])
+        checker = serverAdmins.get(server.id,False)
+        if checker == False:
+            serverAdmins[server.id] = [role]
+        else:
+            serverAdmins[server.id].append(role)
+        embed = create_embed('Role added','Added role as Admin: **{}**'.format(role))
+        await self.client.say(embed=embed)
+
+    @commands.command(pass_context=True)
+    async def listServerAdmins(self,ctx):
+        author = ctx.message.author
+        server = ctx.message.server
+        args = ctx.message.content.split(' ')
+        if len(args)!=1:
+            embed = create_embed('!listServerAdmins error:','Too many arguments.')
+            await self.client.say(embed=embed)
+            return
+        checker = serverAdmins.get(server.id,False)
+        if checker == False:
+            embed = create_embed('!listServerAdmins','There are no roles set as admins')
+            await self.client.say(embed=embed)
+            return
+        admins = serverAdmins[server.id]
+        i = 0
+        theList = ""
+        while i<=len(serverAdmins):
+            theList = theList + str(i+1) + ". " + admins[i] + "\n"
+            i=i+1
+        embed = create_embed('List of Server Admins',theList)
+        await self.client.say(embed=embed)
+
+
 
     @commands.command(pass_context=True)
     async def kick(self,ctx):
