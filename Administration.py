@@ -130,6 +130,68 @@ class Administration:
             return
         client.unban(server,userid)
 
+    @commands.command(pass_context=True)
+    async def createrole(self,ctx):
+        author = ctx.message.author
+        server = ctx.message.server
+        args = ctx.message.content.split(' ')
+
+        if args==1:
+            embed = create_embed('!createrole error','Invalid format. Please type a role')
+            await self.client.say(embed=embed)
+            return
+        roleName = args[1:]
+
+        theRoleName = ""
+        i = 0
+        while i<len(roleName):
+            if i==0:
+                theRoleName = theRoleName + roleName[i]
+                i=i+1
+            else:
+                theRoleName = theRoleName + " " + roleName[i]
+                i=i+1
+
+        await self.client.create_role(author.server, name=theRoleName)
+        embed = create_embed('Created role','{} Created the role: **{}**'.format(author,theRoleName))
+        await self.client.say(embed=embed)
+
+
+
+
+
+    @commands.command(pass_context=True)
+    async def deleterole(self,ctx):
+        author = ctx.message.author
+        server = ctx.message.server
+        args = ctx.message.content.split(' ')
+        if len(args)==1:
+            embed = create_embed('!createrole error','Invalid format. Please type a role')
+            await self.client.say(embed=embed)
+            return
+        roleName = args[1:]
+        theRoleName = ""
+        i = 0
+        while i<len(roleName):
+            if i==0:
+                theRoleName = theRoleName + roleName[i]
+                i=i+1
+            else:
+                theRoleName = theRoleName + " " + roleName[i]
+                i=i+1
+        role = discord.utils.get(ctx.message.server.roles, name=theRoleName)
+        if role:
+            try:
+                await self.client.delete_role(ctx.message.server,role)
+                embed = create_embed('Role Deleted',"The role {} has been deleted!".format(role.name))
+                await self.client.say(embed=embed)
+            except discord.Forbidden:
+                embed = create_embed('!deleterole error!',"You do not have the permission to delete this role!")
+                await self.client.say(embed=embed)
+        else:
+            embed = create_embed('!deleterole error!',"Invalid number of arguments. Usage: !deleterole role_name")
+            await self.client.say(embed=embed)
+
 
     '''
     async def softban(self,ctx):
@@ -199,8 +261,6 @@ class Administration:
     async def renamerole(self,ctx):
     @commands.command(pass_context=True)
     async def removeallroles(self,ctx):
-    @commands.command(pass_context=True)
-    async def createrole(self,ctx):
     @commands.command(pass_context=True)
     async def deleterole(self,ctx):
     @commands.command(pass_context=True)
