@@ -31,7 +31,7 @@ async def load(extension):
         print('Loaded {}'.format(extension))
     except Exception as error:
         print('{} cannot be loaded.[{}]'.format(extension,error))
-    
+
 @client.command()
 async def unload(extension):
     try:
@@ -39,31 +39,31 @@ async def unload(extension):
         print('Unloaded {}'.format(extension))
     except Exception as error:
         print('{} cannot be loaded.[{}]'.format(extension,error))
-    
+
 
 '''
 @client.command()
 async def checklist():
-    queue = '!queue \n' 
-    play = '!play \n' 
-    vol = '!vol \n' 
+    queue = '!queue \n'
+    play = '!play \n'
+    vol = '!vol \n'
     skip= '!skip \n'
-    playing = '!playing \n' 
-    pause = '!pause \n' 
-    resume = '!resume \n' 
+    playing = '!playing \n'
+    pause = '!pause \n'
+    resume = '!resume \n'
     stop= '!stop \n'
     await client.say()
 
 
 
-    
+
     embed = discord.Embed(
         title = 'LuigiBot To-Do List! ',
         description = '!queue\n  !play\n   !vol\n !skip\n  !playing\n !pause\n !resume\n !stop\n',
         colour = discord.Colour.blue())
     await client.say(embed=embed)
-'''   
-    
+'''
+
 
 #Embedding
 @client.command()
@@ -71,7 +71,7 @@ async def displayembed():
     embed = discord.Embed(
         title = 'Title',
         description = 'This is a description.',
-        colour = discord.Colour.blue()
+        colour = 0x16820d
     )
     embed.set_footer(text='This is a footer.')
     embed.set_image(url='')
@@ -80,15 +80,9 @@ async def displayembed():
     embed.add_field(name='Field Name',value='Field Value',inline=True)
     embed.add_field(name='Field Name',value='Field Value',inline=False)
     embed.add_field(name='Field Name',value='Field Value',inline=True)
-    await client.say(embed=embed)    
+    await client.say(embed=embed)
 
-'''
-def check_queue(id):
-    if queues[id] != []:
-        player = queues[id].pop(0)
-        player[id]=player
-        player.start()
-'''
+
 async def change_status():
     await client.wait_until_ready()
     msgs= cycle(status)
@@ -119,7 +113,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     print('A user has sent a message.')
-    
+
     if message.content.lower() == "i love anthony":
         await client.send_message(message.channel,"Me too :blush::heart:")
 
@@ -131,8 +125,8 @@ async def on_message(message):
 
 
 
-	
-            
+
+
 
 
 #Help Command
@@ -141,11 +135,11 @@ async def on_message(message):
 async def help(ctx):
 	author = ctx.message.author
 	embed = discord.Embed(colour = discord.Colour.orange())
-	
+
 	embed.set_author(name='Help')
 	embed.add_field(name='.ping',value='Returns Pong',inline = False)
 	await client.send_message(author,embed=embed)
-'''                                 
+'''
 
 
 @client.event
@@ -158,7 +152,6 @@ async def on_reaction_remove(reaction,user):
 	channel = reaction.message.channel
 	await client.send_message(channel,'{} has added {} to the message: {}',format(user.name,reaction.emoji,reaction.message.content))
 
-	
 
 
 
@@ -167,7 +160,8 @@ async def on_reaction_remove(reaction,user):
 
 
 
-    
+
+
 
 
 client.loop.create_task(change_status())
@@ -177,7 +171,7 @@ if __name__ == '__main__':
             client.load_extension(extension)
         except Exception as error:
             print('{} cannot be loaded.[{}]'.format(extension,error))
-    client.run("NTMzNDM4ODk1Njk5MDAxMzY0.DxrDTw.Y2Tptl--dp8BOygeCORS54V4zZY") #This is the bot's tokenID, used to turn on the bot. 
+    client.run("NTMzNDM4ODk1Njk5MDAxMzY0.DxrDTw.Y2Tptl--dp8BOygeCORS54V4zZY") #This is the bot's tokenID, used to turn on the bot.
 
 
 
@@ -214,6 +208,6 @@ async def on_message(message):
         #args[0]= !SAY
         #args[1] = Hey
         #args[2] = There!
-        await client.send_message(message.channel, "%s" % (" ".join(args[1:]))) #From arg1 onwards, we join the message and return it. 
+        await client.send_message(message.channel, "%s" % (" ".join(args[1:]))) #From arg1 onwards, we join the message and return it.
 
-'''    
+'''
