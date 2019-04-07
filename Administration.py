@@ -29,6 +29,18 @@ def create_embed(atitle,adescription):
                 colour = 0x16820d)
     return embed
 
+def getRoleName(roleName,length):
+    i = 0
+    theRoleName = ""
+    while i<length:
+        if i==0:
+            theRoleName = theRoleName + roleName[i]
+            i=i+1
+        else:
+            theRoleName = theRoleName + " " + roleName[i]
+            i=i+1
+    return theRoleName
+
 
 class Administration:
     def __init__(self,client):
@@ -141,27 +153,14 @@ class Administration:
             await self.client.say(embed=embed)
             return
 
-
-
-
-
         roleName = args[1:]
+        theRoleName = getRoleName(roleName,len(roleName))
 
-        theRoleName = ""
-        i = 0
-        while i<len(roleName):
-            if i==0:
-                theRoleName = theRoleName + roleName[i]
-                i=i+1
-            else:
-                theRoleName = theRoleName + " " + roleName[i]
-                i=i+1
-
-        try:
+        if author.server_permissions.administrator:
             await self.client.create_role(author.server, name=theRoleName)
             embed = create_embed('Created role','{} Created the role: **{}**'.format(author,theRoleName))
             await self.client.say(embed=embed)
-        except discord.Forbidden:
+        else:
             embed = create_embed('!createrole error!',"You do not have the permission to delete this role!")
             await self.client.say(embed=embed)
 
@@ -179,28 +178,25 @@ class Administration:
             embed = create_embed('!deleterole error','Invalid format. Please type a role')
             await self.client.say(embed=embed)
             return
+
         roleName = args[1:]
-        theRoleName = ""
-        i = 0
-        while i<len(roleName):
-            if i==0:
-                theRoleName = theRoleName + roleName[i]
-                i=i+1
-            else:
-                theRoleName = theRoleName + " " + roleName[i]
-                i=i+1
-        role = discord.utils.get(ctx.message.server.roles, name=theRoleName)
-        if role:
-            try:
+        theRoleName = getRoleName(roleName,len(roleName))
+
+        if author.server_permissions.administrator:
+            role = discord.utils.get(ctx.message.server.roles, name=theRoleName)
+            if role:
                 await self.client.delete_role(ctx.message.server,role)
                 embed = create_embed('Role Deleted',"The role {} has been deleted!".format(role.name))
                 await self.client.say(embed=embed)
-            except discord.Forbidden:
-                embed = create_embed('!deleterole error!',"You do not have the permission to delete this role!")
+                return
+            else:
+                embed = create_embed('!deleterole error!',"The role does not exist!")
                 await self.client.say(embed=embed)
+                return
         else:
-            embed = create_embed('!deleterole error!',"Invalid number of arguments. Usage: !deleterole role_name")
+            embed = create_embed('!deleterole error!',"You do not have permission to use this command.")
             await self.client.say(embed=embed)
+            return
 
 
     @commands.command(pass_context=True)
@@ -220,19 +216,9 @@ class Administration:
         userid = ctx.message.mentions[0].id
         member = server.get_member(userid)
 
-
-
         if author.server_permissions.administrator:
             roleName = args[1:len(args)-1]
-            theRoleName = ""
-            i = 0
-            while i<len(roleName):
-                if i==0:
-                    theRoleName = theRoleName + roleName[i]
-                    i=i+1
-                else:
-                    theRoleName = theRoleName + " " + roleName[i]
-                    i=i+1
+            theRoleName = getRoleName(roleName,len(roleName))
             role = discord.utils.get(ctx.message.server.roles, name=theRoleName)
             if role:
                 await self.client.add_roles(member,role)
