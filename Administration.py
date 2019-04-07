@@ -157,9 +157,13 @@ class Administration:
         theRoleName = getRoleName(roleName,len(roleName))
 
         if author.server_permissions.administrator:
-            await self.client.create_role(author.server, name=theRoleName)
-            embed = create_embed('Created role','{} Created the role: **{}**'.format(author,theRoleName))
-            await self.client.say(embed=embed)
+            if discord.utils.get(ctx.message.server.roles, name=theRoleName)==false:
+                await self.client.create_role(author.server, name=theRoleName)
+                embed = create_embed('Created role','{} Created the role: **{}**'.format(author,theRoleName))
+                await self.client.say(embed=embed)
+            else:
+                embed = create_embed('!createrole error!',"Role already exists!")
+                await self.client.say(embed=embed)
         else:
             embed = create_embed('!createrole error!',"You do not have the permission to delete this role!")
             await self.client.say(embed=embed)
@@ -221,6 +225,10 @@ class Administration:
             theRoleName = getRoleName(roleName,len(roleName))
             role = discord.utils.get(ctx.message.server.roles, name=theRoleName)
             if role:
+                if role in [x.name for x in member.roles]:
+                    embed = create_embed('!setrole error!',"User already has role!")
+                    await self.client.say(embed=embed)
+                    return
                 await self.client.add_roles(member,role)
                 embed = create_embed('Role Added',"The role {} has been added to {}".format(role.name,member))
                 await self.client.say(embed=embed)
@@ -233,9 +241,73 @@ class Administration:
         else:
             embed = create_embed('!setrole error!',"You do not have permission to add roles!")
             await self.client.say(embed=embed)
-    '''
+
     @commands.command(pass_context=True)
     async def removerole(self,ctx):
+        author = ctx.message.author
+        server = ctx.message.server
+        args = ctx.message.content.split(' ')
+        if len(args)==1:
+            embed = create_embed('!removerole error','Invalid format. Please type a role')
+            await self.client.say(embed=embed)
+            return
+
+        if not ctx.message.mentions:
+            embed = create_embed('!removerole error:','You did not mention a user or the user is no longer on the server.')
+            await self.client.say(embed=embed)
+            return
+        userid = ctx.message.mentions[0].id
+        member = server.get_member(userid)
+
+        if author.server_permissions.administrator:
+            roleName = args[1:len(args)-1]
+            theRoleName = getRoleName(roleName,len(roleName))
+            role = discord.utils.get(ctx.message.server.roles, name=theRoleName)
+            if role:
+                if role in [x.name for x in member.roles]:
+                    await self.client.remove_roles(member,role)
+                    embed = create_embed('Role Removed',"The role {} has been removed from {}".format(role.name,member))
+                    await self.client.say(embed=embed)
+                    return
+                else:
+                    embed = create_embed('!removerole error!',"User does not have this role!")
+                    await self.client.say(embed=embed)
+                    return
+
+            else:
+                embed = create_embed('!removerole error!',"Role does not exist!")
+                await self.client.say(embed=embed)
+                return
+        else:
+            embed = create_embed('!removerole error!',"You do not have permission to remove roles!")
+            await self.client.say(embed=embed)
+
+
+    @commands.command(pass_context=True)
+    async def removeallroles(self,ctx):
+        author = ctx.message.author
+        server = ctx.message.server
+        args = ctx.message.content.split(' ')
+        if len(args)==1:
+            embed = create_embed('!removeallroles error','Invalid format. Please type a role')
+            await self.client.say(embed=embed)
+            return
+
+        if not ctx.message.mentions:
+            embed = create_embed('!removeallroles error:','You did not mention a user or the user is no longer on the server.')
+            await self.client.say(embed=embed)
+            return
+        userid = ctx.message.mentions[0].id
+        member = server.get_member(userid)
+
+        if author.server_permissions.administrator:
+            await self.client.removeRoles(member)
+        else:
+            embed = create_embed('!removeallroles error!',"You do not have permission to remove roles!")
+            await self.client.say(embed=embed)
+
+
+    '''
     @commands.command(pass_context=True)
     async def renamerole(self,ctx):
     @commands.command(pass_context=True)
