@@ -140,6 +140,11 @@ class Administration:
             embed = create_embed('!createrole error','Invalid format. Please type a role')
             await self.client.say(embed=embed)
             return
+
+
+
+
+
         roleName = args[1:]
 
         theRoleName = ""
@@ -198,6 +203,60 @@ class Administration:
             await self.client.say(embed=embed)
 
 
+    @commands.command(pass_context=True)
+    async def setrole(self,ctx):
+        author = ctx.message.author
+        server = ctx.message.server
+        args = ctx.message.content.split(' ')
+        if len(args)==1:
+            embed = create_embed('!setrole error','Invalid format. Please type a role')
+            await self.client.say(embed=embed)
+            return
+
+        if not ctx.message.mentions:
+            embed = create_embed('!setrole error:','You did not mention a user or the user is no longer on the server.')
+            await self.client.say(embed=embed)
+            return
+        userid = ctx.message.mentions[0].id
+        member = server.get_member(userid)
+
+
+
+        if author.server_permissions.administrator:
+            roleName = args[1:len(args)-1]
+            theRoleName = ""
+            i = 0
+            while i<len(roleName):
+                if i==0:
+                    theRoleName = theRoleName + roleName[i]
+                    i=i+1
+                else:
+                    theRoleName = theRoleName + " " + roleName[i]
+                    i=i+1
+            role = discord.utils.get(ctx.message.server.roles, name=theRoleName)
+            if role:
+                await self.client.add_roles(member,role)
+                embed = create_embed('Role Added',"The role {} has been added to {}".format(role.name,member))
+                await self.client.say(embed=embed)
+                return
+
+            else:
+                embed = create_embed('!setrole error!',"Role does not exist!")
+                await self.client.say(embed=embed)
+                return
+        else:
+            embed = create_embed('!setrole error!',"You do not have permission to add roles!")
+            await self.client.say(embed=embed)
+    '''
+    @commands.command(pass_context=True)
+    async def removerole(self,ctx):
+    @commands.command(pass_context=True)
+    async def renamerole(self,ctx):
+    @commands.command(pass_context=True)
+    async def removeallroles(self,ctx):
+    @commands.command(pass_context=True)
+    async def rolecolor(self,ctx):
+    '''
     '''
     async def softban(self,ctx):
     @commands.command(pass_context=True)
@@ -207,6 +266,15 @@ class Administration:
     @commands.command(pass_context=True)
     '''
     '''
+
+    @commands.command(pass_context=True)
+    async def voicemute(self,ctx):
+    @commands.command(pass_context=True)
+    async def voiceunmute(self,ctx):
+    @commands.command(pass_context=True)
+    async def prune(self,ctx):
+
+
     @commands.command(pass_context=True)
     async def deafen(self,ctx):
 
@@ -252,26 +320,10 @@ class Administration:
     @commands.command(pass_context=True)
     async def chatunmute(self,ctx):
 
-    @commands.command(pass_context=True)
-    async def voicemute(self,ctx):
-    @commands.command(pass_context=True)
-    async def voiceunmute(self,ctx):
-    @commands.command(pass_context=True)
-    async def prune(self,ctx):
-    @commands.command(pass_context=True)
-    async def setrole(self,ctx):
-    @commands.command(pass_context=True)
-    async def removerole(self,ctx):
-    @commands.command(pass_context=True)
-    async def renamerole(self,ctx):
-    @commands.command(pass_context=True)
-    async def removeallroles(self,ctx):
-    @commands.command(pass_context=True)
-    async def deleterole(self,ctx):
+
+
     @commands.command(pass_context=True)
     async def rolehoist(self,ctx):
-    @commands.command(pass_context=True)
-    async def rolecolor(self,ctx):
     @commands.command(pass_context=True)
     async def asar(self,ctx):
     @commands.command(pass_context=True)
