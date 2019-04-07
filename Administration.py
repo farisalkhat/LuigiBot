@@ -288,7 +288,7 @@ class Administration:
         author = ctx.message.author
         server = ctx.message.server
         args = ctx.message.content.split(' ')
-        if len(args)==1:
+        if len(args)!=2:
             embed = create_embed('!removeallroles error','Invalid format. Please type a role')
             await self.client.say(embed=embed)
             return
@@ -300,8 +300,12 @@ class Administration:
         userid = ctx.message.mentions[0].id
         member = server.get_member(userid)
 
+
         if author.server_permissions.administrator:
-            await self.client.removeRoles(member)
+            for role in member.roles:
+                await self.client.remove_roles(member,role)
+            embed = create_embed('Roles removed',"I have removed all roles from {}".format(member))
+            await self.client.say(embed=embed)
         else:
             embed = create_embed('!removeallroles error!',"You do not have permission to remove roles!")
             await self.client.say(embed=embed)
