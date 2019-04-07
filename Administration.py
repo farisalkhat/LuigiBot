@@ -9,7 +9,7 @@ import random
 import validators
 import copy
 import os
-
+import re
 
 
 default_ban_message = 'You have been banned, '
@@ -106,24 +106,31 @@ class Administration:
             embed = create_embed('!kick error:','You did not mention a user or the user is no longer on the server.')
             await self.client.say(embed=embed)
             return
+
         userid = ctx.message.mentions[0].id
         member = server.get_member(userid)
         if len(args) > 2:
             kick_reason = args[2:]
 
-
-
         if ctx.message.author.id == userid: #Making sure user doesn't kick himself.
             embed = create_embed('!kick error:','You cannot kick yourself, fool!')
             await self.client.say(embed=embed)
             return
+        if author.server_permissions.administrator:
+            await self.client.kick(member)
+            embed = create_embed('User kicked by {}'.format(author),'@{} {} The reason for the kick was {}'.format(member,default_kick_message,kick_reason))
+            await self.client.say(embed=embed)
+        else:
+            embed = create_embed('!kick error','You do not have the permissions to kick!')
+            await self.client.say(embed=embed)
 
+        '''
         for admin in admins: #Goes through list of roles allowed to touch this command to make sure user can do it.
             if  admin in [role.id for role in ctx.message.author.roles]:
                 await self.client.kick(member)
                 embed = create_embed('User kicked by {}'.format(author),'@{} {} The reason for the kick was {}'.format(member,default_kick_message,kick_reason))
                 await self.client.say(embed=embed)
-
+        '''
 
 
 
@@ -310,12 +317,61 @@ class Administration:
             embed = create_embed('!removeallroles error!',"You do not have permission to remove roles!")
             await self.client.say(embed=embed)
 
+    @commands.command(pass_context=True)
+    async def rolecolor(self,ctx):
+        author = ctx.message.author
+        server = ctx.message.server
+        args = ctx.message.content.split(' ')
+        if len(args)<3:
+            embed = create_embed('!rolecolor error','Invalid format. Usage: !rolecolor role_name colour')
+            await self.client.say(embed=embed)
+            return
+
+        if author.server_permissions.administrator:
+            roleName = args[1:len(args)-1]
+            theRoleName = getRoleName(roleName,len(roleName))
+            role = discord.utils.get(ctx.message.server.roles, name=theRoleName)
+
+
+            if role:
+                thecolor = args[len(args)-1]
+                match = re.search(r'^0x(?:[0-9a-fA-F]{3}){1,2}$', thecolor)
+
+
+                if match:
+                    thecolor = int(thecolor,16)
+                    colour = discord.Colour(thecolor)
+                    await self.client.edit_role(server, role, colour=colour)
+                    embed = create_embed('Role color changed!','You have changed the color of the following role: **{}**'.format(role))
+                    await self.client.say(embed=embed)
+                    return
+
+
+                else:
+                    embed = create_embed('!rolecolor error:','You did not provide a color in the correct format. Example: 0x16820d')
+                    await self.client.say(embed=embed)
+                    return
+
+
+
+
+
+
+
+
+
+            else:
+                embed = create_embed('!rolecolor error!',"Role does not exist!")
+                await self.client.say(embed=embed)
+                return
+        else:
+            embed = create_embed('!rolecolor error!',"You do not have permission to add roles!")
+            await self.client.say(embed=embed)
+
 
     '''
     @commands.command(pass_context=True)
     async def renamerole(self,ctx):
-    @commands.command(pass_context=True)
-    async def removeallroles(self,ctx):
     @commands.command(pass_context=True)
     async def rolecolor(self,ctx):
     '''
