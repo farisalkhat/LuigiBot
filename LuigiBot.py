@@ -52,7 +52,7 @@ async def change_status():
 
 
 
-bot.run("NTMzNDM4ODk1Njk5MDAxMzY0.DxrDTw.Y2Tptl--dp8BOygeCORS54V4zZY",bot=True,reconnect=True)
+bot.run("",bot=True,reconnect=True)
 #client.loop.create_task(change_status())
 
 
