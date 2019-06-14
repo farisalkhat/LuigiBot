@@ -151,30 +151,82 @@ class Admin(commands.Cog):
 
     
     @commands.command(name='kick', pass_context=True)
-    async def kick(self,ctx, user: discord.Member = None,*,arg=None):
+    async def kick(self,ctx, user: discord.Member = None,reason: str = None):
+        """
+        Kicks the user if the author has admin permissions.
+        Author can optionally provide a reason for the kick.
+        
 
+        Example:
+        !kick @Lefty#6430 You're an idiot
+        !kick @Lefty#6430
+        """
         author = ctx.message.author
         server= ctx.guild
-        if not arg:
-            arg = 'No reason given.'
         if not user:
             embed = create_embed('!kick error: No member selected.', 'You did not provide a username to kick.',RED)
             await ctx.send(embed=embed,delete_after=20)
+            return
         if not author.guild_permissions.administrator:
             embed = create_embed('!kick error: No permission', 'You do not have permission to kick.',RED)
             await ctx.send(embed=embed,delete_after=20)
-        embed = create_embed('**{}** has kicked **{}**'.format(author,user), '**Reason:** {}'.format(arg),GREEN)
+            return
+        if not reason:
+            reason = 'No reason given.'
+        embed = create_embed('**{}** has kicked **{}**'.format(author,user), '**Reason:** {}'.format(reason),GREEN)
         
         await ctx.send(embed=embed,delete_after=20)
-        await ctx.guild.kick(user,reason = arg)
+        await ctx.guild.kick(user,reason = reason)
         
         
+        
+    @commands.command(name='ban', pass_context=True)
+    async def ban(self,ctx, user: discord.Member = None,reason: str = None,days: int = 0):
+        
+        author = ctx.message.author
+        server= ctx.guild
+        if not user:
+            embed = create_embed('!ban error: No member selected.', 'You did not provide a username to kick.',RED)
+            await ctx.send(embed=embed,delete_after=20)
+            return
+        if not author.guild_permissions.administrator:
+            embed = create_embed('!ban error: No permission', 'You do not have permission to ban.',RED)
+            await ctx.send(embed=embed,delete_after=20)
+            return
+        if not reason:
+            reason = 'No reason given.'
+        try:
+            embed = create_embed('**{}** has banned **{}**.'.format(author,user), '**Reason:** {}'.format(reason),GREEN)
+            await ctx.send(embed=embed,delete_after=20)
+            await server.ban(user,reason = reason,delete_message_days = days)
+        except discord.Forbidden:
+            embed = create_embed('!ban error: No permission', 'I do not have permission to do this. Try again when I have more power.',RED)
+            await ctx.send(embed=embed,delete_after=20)
+
+
+        
+    @commands.command(name='unban', pass_context=True)
+    async def unban(self,ctx, user: discord.Member = None,reason:str = None):
+        author = ctx.message.author
+        server= ctx.guild
+        if not user:
+            embed = create_embed('!ban error: No member selected.', 'You did not provide a username to kick.',RED)
+            await ctx.send(embed=embed,delete_after=20)
+            return
+        if not author.guild_permissions.administrator:
+            embed = create_embed('!ban error: No permission', 'You do not have permission to ban.',RED)
+            await ctx.send(embed=embed,delete_after=20)
+            return
+        if not reason:
+            reason = 'No reason given.'
+        try:
+            await server.unban(user,reason = reason)
+            embed = create_embed('**{}** has unbanned **{}**.'.format(author,user), '**Reason:** {}'.format(reason),GREEN)
+            await ctx.send(embed=embed,delete_after=20)
+        except discord.Forbidden:
+            embed = create_embed('!ban error: No permission', 'I do not have permission to do this. Try again when I have more power.',RED)
+            await ctx.send(embed=embed,delete_after=20)
     '''    
-    @commands.command(name='editrolecolor', pass_context=True)
-    async def ban(self,ctx,*,arg):
-    @commands.command(name='editrolecolor', pass_context=True)
-    async def unban(self,ctx,*,arg):
-        
     @commands.command(name='editrolecolor', pass_context=True)
     async def setemoterole(self,ctx,*,arg):
     @commands.command(name='editrolecolor', pass_context=True)
