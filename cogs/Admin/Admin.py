@@ -138,8 +138,38 @@ class Admin(commands.Cog):
             await ctx.send(embed=embed,delete_after=20)
             
 
+
+
+
+
+
+
+
+
+
+
+
+    
     @commands.command(name='kick', pass_context=True)
-    async def kick(self,ctx,*,arg):
+    async def kick(self,ctx, user: discord.Member = None,*,arg=None):
+
+        author = ctx.message.author
+        server= ctx.guild
+        if not arg:
+            arg = 'No reason given.'
+        if not user:
+            embed = create_embed('!kick error: No member selected.', 'You did not provide a username to kick.',RED)
+            await ctx.send(embed=embed,delete_after=20)
+        if not author.guild_permissions.administrator:
+            embed = create_embed('!kick error: No permission', 'You do not have permission to kick.',RED)
+            await ctx.send(embed=embed,delete_after=20)
+        embed = create_embed('**{}** has kicked **{}**'.format(author,user), '**Reason:** {}'.format(arg),GREEN)
+        
+        await ctx.send(embed=embed,delete_after=20)
+        await ctx.guild.kick(user,reason = arg)
+        
+        
+    '''    
     @commands.command(name='editrolecolor', pass_context=True)
     async def ban(self,ctx,*,arg):
     @commands.command(name='editrolecolor', pass_context=True)
@@ -242,3 +272,4 @@ class Admin(commands.Cog):
     async def creatxtchanl(self,ctx,*,arg):
     @commands.command(name='editrolecolor', pass_context=True)
     async def setchanlname(self,ctx,*,arg):
+    '''
