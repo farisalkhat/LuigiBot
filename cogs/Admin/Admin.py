@@ -47,10 +47,34 @@ def create_embed(atitle,adescription,color):
 
     
 
+class ServerTools:
+    __slots__ = ('bot','guild','channel','emoteroles','reportlogs')
+
+    def __init__(self,ctx):
+        self.bot = ctx.bot
+        self.guild = ctx.guild
+        self.channel = ctx.channel
+        self.emoteroles = {}
+        self.reportlogs={}
+
 
 class Admin(commands.Cog):
+
+    __slots__ = ('bot','tools')
     def __init__(self,bot):
         self.bot = bot
+        self.tools = {}
+
+    def get_tools(self, ctx):
+        """Retrieve the guild player, or generate one."""
+        try:
+            tool = self.tools[ctx.guild.id]
+        except KeyError:
+            tool = ServerTools(ctx)
+            self.tools[ctx.guild.id] = tool
+        return tool
+
+    
 
     @staticmethod
     async def errorreport(ctx, message: str, **kwargs):
@@ -173,16 +197,30 @@ class Admin(commands.Cog):
             return
         if not reason:
             reason = 'No reason given.'
-        embed = create_embed('**{}** has kicked **{}**'.format(author,user), '**Reason:** {}'.format(reason),GREEN)
-        
-        await ctx.send(embed=embed,delete_after=20)
-        await ctx.guild.kick(user,reason = reason)
+        try:
+            await ctx.guild.kick(user,reason = reason)
+            embed = create_embed('**{}** has kicked **{}**'.format(author,user), '**Reason:** {}'.format(reason),GREEN)
+            await ctx.send(embed=embed,delete_after=20)
+        except discord.Forbidden:
+            embed = create_embed('!kick error: No permission', 'I do not have permission to kick. Try again when I have more power.',RED)
+            await ctx.send(embed=embed,delete_after=20)           
+            
         
         
         
     @commands.command(name='ban', pass_context=True)
     async def ban(self,ctx, user: discord.Member = None,reason: str = None,days: int = 0):
-        
+        """
+        Bans a user from the server. Requires both the bot and author to have admin permissions.
+        Author can optionally set a reason for the ban.
+        Author can optionally set a number, which will delete all messages from the user from that many days.
+
+        Example:
+        !ban @Lefty#6430 You're an idiot 3
+        !ban @Lefty#6430 3
+        !ban @Lefty#6430 You're an idiot
+        !ban @Lefty#6430 
+        """
         author = ctx.message.author
         server= ctx.guild
         if not user:
@@ -207,6 +245,14 @@ class Admin(commands.Cog):
         
     @commands.command(name='unban', pass_context=True)
     async def unban(self,ctx, user: discord.Member = None,reason:str = None):
+        """
+        Unbans a user from the server. Requires both the bot and author to have admin permissions.
+        Author can optionally set a reason for the unban.
+
+        Example:
+        !unban @Lefty#6430 Hey you're pretty cool : )
+        !unban @Lefty#6430 
+        """
         author = ctx.message.author
         server= ctx.guild
         if not user:
@@ -226,11 +272,91 @@ class Admin(commands.Cog):
         except discord.Forbidden:
             embed = create_embed('!ban error: No permission', 'I do not have permission to do this. Try again when I have more power.',RED)
             await ctx.send(embed=embed,delete_after=20)
-    '''    
-    @commands.command(name='editrolecolor', pass_context=True)
-    async def setemoterole(self,ctx,*,arg):
-    @commands.command(name='editrolecolor', pass_context=True)
+        
+    @commands.command(name='setemoterole', pass_context=True)
+    async def setemoterole(self,ctx,emote: discord.Emoji = None,*,arg):
+        author = ctx.message.author
+        
+        if not emote:
+            embed = create_embed('setemoterole error:','You did not specify an emote.',RED)
+            await ctx.send(embed=embed, delete_after = 20)
+        if not author.guild_permissions.administrator:
+            embed = create_embed('!setemoterole error: No permission', 'You do not have permission to ban.',RED)
+            await ctx.send(embed=embed,delete_after=20)
+
+        arg = shlex.split(arg)
+        roleName = arg[0]
+        role = discord.utils.get(ctx.message.guild.roles, name=roleName)
+
+        if not role:
+            embed = create_embed('setemoterole error:','The role **{}** does not exist on this server.'.format(roleName),RED)
+            await ctx.send(embed=embed, delete_after = 20)
+        tool = self.get_tools(ctx)
+        
+        try:
+            roleexist = tool.emoteroles[emote.name]
+            embed = create_embed('setemoterole error: Emote already set.',"Fool I have the **{}** role set to this emote already!".format(roleexist),RED)
+            await ctx.send(embed=embed, delete_after = 20)
+            
+        except KeyError:
+            tool.emoteroles[emote.name] = role
+            embed = create_embed('Role now set!','The role **{}** can now be set by reacting with **{}**'.format(roleName,emote.name),GREEN)
+            await ctx.send(embed=embed)
+
+    @commands.command(name='removeemoterole', pass_context=True)
+    async def removeemoterole(self,ctx,emote: discord.Emoji = None):
+        author = ctx.message.author
+        
+        if not emote:
+            embed = create_embed('setemoterole error:','You did not specify an emote.',RED)
+            await ctx.send(embed=embed, delete_after = 20)
+        if not author.guild_permissions.administrator:
+            embed = create_embed('!setemoterole error: No permission', 'You do not have permission to ban.',RED)
+            await ctx.send(embed=embed,delete_after=20)
+
+        tool = self.get_tools(ctx)
+        
+        try:
+            roleName = tool.emoteroles[emote.name]
+            tool.emoteroles.pop(emote.name,None) 
+            embed = create_embed('Successfully removed ', 'The **{}** role has been removed from **{}**'.format(roleName,emote.name),GREEN)
+            await ctx.send(embed=embed)
+
+        except KeyError:
+            embed = create_embed('!removeemoterole error: No role set', 'The emote does not have a role set to it!',RED)
+            await ctx.send(embed=embed,delete_after=20)
+            
+
+
+        
+        
+    @commands.command(name='renamerole', pass_context=True)
     async def renamerole(self,ctx,*,arg):
+        author = ctx.message.author
+        arg = shlex.split(arg)
+        if len(arg) <=1:
+            embed = create_embed('renamerole error: Not enough arguments ','You must provide 2 arguments for this command.',RED)
+            await ctx.send(embed=embed,delete_after=20)
+            return
+        role1N = arg[0]
+        role2N = arg[1]
+        role1 = discord.utils.get(ctx.message.guild.roles, name=role1N)
+
+        if not role1:
+            embed = create_embed('renamerole error: ','The role **{}** does not exist on this server'.format(role1N),RED)
+            await ctx.send(embed=embed,delete_after=20)
+            return
+        if not author.guild_permissions.administrator:
+            embed = create_embed('renamerole error: No permission', 'You do not have permission to ban.',RED)
+            await ctx.send(embed=embed,delete_after=20)
+            return
+
+        await role1.edit(name = role2N)
+        embed = create_embed('Role has been renamed!', 'The **{}** role has been renamed to **{}**'.format(role1N,role2N),GREEN)
+        await ctx.send(embed=embed)        
+
+        
+    '''
     @commands.command(name='editrolecolor', pass_context=True)
     async def removeallroles(self,ctx,*,arg):
     @commands.command(name='editrolecolor', pass_context=True)
