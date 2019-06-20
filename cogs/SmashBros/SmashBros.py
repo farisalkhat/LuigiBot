@@ -341,7 +341,7 @@ class SmashBros(commands.Cog):
                 await ctx.send(embed=embed,delete_after=20)
                 return
 
-
+    @commands.cooldown(1,20,commands.BucketType.guild)
     @commands.command(name='sscformat',pass_context = True)
     async def sscformat(self,ctx):
         label = 1
