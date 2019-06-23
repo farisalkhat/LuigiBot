@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/farisalkhat/LuigiBot"><img src="https://i.imgur.com/Asa1r52.png" alt="LuigiBot - Discord Bot"></a>
+  <a href="https://github.com/farisalkhat/LuigiBot"><img src="https://i.imgur.com/Asa1r52.png" alt="LuigiBot - Discord Bot" width:"500"></a>
   <br>
   Luigi Discord Bot
   <br>
@@ -24,9 +24,9 @@
 
 <p align="center">
   <a href="#overview">Overview</a>
-  •
+  â€¢
  <a href="#license">License</a>
-  •
+  â€¢
 </p>
 
 # Overview
