@@ -22,12 +22,7 @@
 </p>
 
 
-<p align="center">
-  <a href="#overview">Overview</a>
-  •
- <a href="#license">License</a>
-  •
-</p>
+
 
 # Overview
 
