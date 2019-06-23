@@ -130,7 +130,7 @@ class Admin(commands.Cog):
 
         except discord.Forbidden:
             if not rolename:
-                embed = create_embed('addrole error:',NOPERMISSION.format(rolename,RED))
+                embed = create_embed('addrole error: Role does not exist!',"This role does not exist!",RED)
                 await ctx.send(embed=embed, delete_after = 20)
             else:
                 embed = create_embed('addrole error:',NOPERMISSION.format('add',rolename,member),RED)
@@ -144,6 +144,7 @@ class Admin(commands.Cog):
         Deletes a role off a user.
         If user field is left blank, it will default to the author who issued the command.
         """
+        author = ctx.message.author
 
         if member is None:
             member = ctx.message.author
@@ -160,7 +161,7 @@ class Admin(commands.Cog):
 
         except discord.Forbidden:
             if not rolename:
-                embed = create_embed('deleterole error:',NOPERMISSION.format(rolename,RED))
+                embed = create_embed('deleterole error: Role does not exist.',"This role does not exist!",RED)
                 await ctx.send(embed=embed, delete_after = 20)
             else:
                 embed = create_embed('deleterole error:',NOPERMISSION.format('delete',rolename,member),RED)
@@ -181,7 +182,7 @@ class Admin(commands.Cog):
         arg = shlex.split(arg)
         roleName = arg[0]
         roleName = discord.utils.get(ctx.message.guild.roles, name=roleName)
-
+        author = ctx.message.author
 
 
         if not author.guild_permissions.manage_roles:

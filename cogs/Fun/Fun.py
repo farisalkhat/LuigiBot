@@ -45,6 +45,15 @@ class Fun(commands.Cog):
         N = randint(0,len(choices)-1)
         await ctx.send(choices[N])
 
+    @commands.command(name="flip")
+    async def flip(self,ctx):
+        """Flips a coin."""
+        N = randint(1,2)
+        if N == 1:
+            await ctx.send("_**Heads.**_")
+        else:
+            await ctx.send("_**Tails.**_")
+
     @commands.command(name="roll")
     async def roll(self,ctx,left: int = 1,right:int = 100):
         """
