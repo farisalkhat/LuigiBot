@@ -5,7 +5,7 @@ import asyncio
 import time
 import youtube_dl
 from itertools import cycle
-
+import sqlite3
 
 #
 #   LuigiBot - Discord Bot ver.0.1.0
@@ -14,37 +14,40 @@ from itertools import cycle
 #
 
 
-status = ['Pokemon Emerald', 'Final Fantasy X', 'Dark Souls', 'Fire Emblem Heroes']
+status = ['Pokemon Emerald', 'Final Fantasy X',
+          'Dark Souls', 'Fire Emblem Heroes']
 
 
 def get_prefix(bot, message):
     prefixes = ['!']
-    #If bot is in DM, then they can only use commands starting with ?
+    # If bot is in DM, then they can only use commands starting with ?
     if not message.guild:
         return '?'
-    return commands.when_mentioned_or(*prefixes)(bot,message)
+    return commands.when_mentioned_or(*prefixes)(bot, message)
 
-initial_extensions = ['cogs.Admin','cogs.Audio','cogs.SmashBros','cogs.Events','cogs.Fun','cogs.Help']
-bot = commands.Bot(command_prefix = get_prefix, description = 'LuigiBot: General Purpose Bot!')
+
+initial_extensions = ['cogs.Admin', 'cogs.Audio',
+                      'cogs.SmashBros', 'cogs.Events', 'cogs.Fun', 'cogs.Help','cogs.Image']
+bot = commands.Bot(command_prefix=get_prefix,
+                   description='LuigiBot: General Purpose Bot!')
 bot.remove_command('help')
 if __name__ == '__main__':
     for extension in initial_extensions:
         bot.load_extension(extension)
 
 
-
 @bot.event
 async def on_ready():
-    print(f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
+    print(
+        f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
     await bot.change_presence(activity=discord.Game(name='World of Warcraft', type=1, url='https://twitch.tv/Lefty43'))
 
     print(f'Successfully logged in and booted...!')
 
 
-
 async def change_status():
     await bot.wait_until_ready()
-    msgs= cycle(status)
+    msgs = cycle(status)
 
     while not bot.is_closed():
         current_status = next(msgs)
@@ -53,8 +56,8 @@ async def change_status():
         await asyncio.sleep(60*60)
 
 
+bot.run("", bot=True, reconnect=True)
 
 
-bot.run("",bot=True,reconnect=True)
 
-#client.loop.create_task(change_status())
+# client.loop.create_task(change_status())

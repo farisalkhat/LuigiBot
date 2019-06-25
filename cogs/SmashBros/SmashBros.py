@@ -11,7 +11,7 @@ import copy
 import os
 import re
 import shlex
-
+from db import database
 
 RED = 0xc9330a
 GREEN = 0x16820d
@@ -88,8 +88,6 @@ class SmashTools:
         self.bot = ctx.bot
         self.guild = ctx.guild
         self.channel = ctx.channel
-        self.smashprofiles = {}
-        self.smashresources = {}
 
 
 
@@ -120,16 +118,15 @@ class SmashBros(commands.Cog):
     @commands.command(name='createsp',pass_context = True)
     async def createsmashprofile(self,ctx,*,arg):
         author = ctx.message.author
-        server = ctx.message.guild
+        server = ctx.message.guild.id
         arg = shlex.split(arg)
-        tool = self.get_tools(ctx)
 
         if len(arg)<2:
             embed = create_embed('createsmashprofile error: Not enough arguments ','You must provide at least 2 arguments for this command.',RED)
             await ctx.send(embed=embed,delete_after=20)
             return
 
-        gamertag=author
+
         switchcode = arg[0]
         if len(switchcode)!=12:
             embed = create_embed('createsmashprofile error: Bad Switch Code ','The length of a switch code is 12 digits.',RED)
@@ -156,29 +153,33 @@ class SmashBros(commands.Cog):
         profile = []
         name = author.name + "@" + author.discriminator
 
-        profile.append(name)
-        profile.append(switchcode)
-        profile.append(main)
-        profile.append(secondaries)
-        tool.smashprofiles[name]=profile
+
+        profile = [server,name,switchcode,main]
+        database.make_profile(profile)
+        profile2 = [server,name,'']
+
+        for secondary in secondaries:
+            profile2[2] = secondary
+            database.make_profile_secondaries(profile2)
+
         await ctx.send('Profile created!')
 
     @commands.command(name='viewprofiles',pass_context = True)
     async def viewprofiles(self,ctx):
-        author = ctx.message.author
         server = ctx.message.guild
-        tool = self.get_tools(ctx)
+        serverid = ctx.message.guild.id
 
         name = ""
         switchcode = ""
         main = ""
 
-        if not tool.smashprofiles:
+        server_smashprofiles = database.get_smashplayers(serverid)
+        if not server_smashprofiles:
             embed = create_embed('No Profiles.', 'There are no profiles on this server!',GREEN)
             await ctx.send(embed=embed,delete_after=20)
             return
-
-        for item in tool.smashprofiles.values():
+        
+        for item in server_smashprofiles.values():
             name = name + item[0] + "\n"
             switchcode = switchcode + item[1] + "\n"
             main = main + item[2] + "\n"
@@ -191,41 +192,43 @@ class SmashBros(commands.Cog):
     @commands.command(name='profile',pass_context = True)
     async def profile(self,ctx, user:discord.Member = None):
         author = ctx.message.author
-        server = ctx.message.guild
-        tool = self.get_tools(ctx)
+        server = ctx.message.guild.id
         secondaries = ""
 
         if user is None:
             name = author.name + "@" + author.discriminator
-            try:
-                switchcode = tool.smashprofiles[name][1]
-                main = tool.smashprofiles[name][2]
-                for item in tool.smashprofiles[name][3]:
-                    secondaries = secondaries + item + ", "
-                    #secondaries = tool.smashprofiles[name][3]
-                embed = profile_embed(name,switchcode,main,secondaries)
-            except KeyError:
-                embed = create_embed('No Profiles.', 'There are no profiles on this server!',GREEN)
+            switchprofile = database.get_smashprofile(server,name)
+            if not switchprofile:
+                embed = create_embed('No Profile.', 'You do not have a profile set up currently.',GREEN)
                 await ctx.send(embed=embed,delete_after=20)
                 return
+
+            switchcode = switchprofile[1]
+            main = switchprofile[2]
+            for item in switchprofile[3]:
+                secondaries = secondaries + item + ", "
+            embed = profile_embed(name,switchcode,main,secondaries)
+
 
             await ctx.send(embed=embed)
 
         else:
             name = user.name + "@" + user.discriminator
-            try:
-                switchcode = tool.smashprofiles[name][1]
-                main = tool.smashprofiles[name][2]
-                for item in tool.smashprofiles[name][3]:
-                    secondaries = secondaries + item + ", "
-                    #secondaries = tool.smashprofiles[name][3]
-                embed = profile_embed(name,switchcode,main,secondaries)
-            except KeyError:
-                embed = create_embed('No Profiles.', 'There are no profiles on this server!',GREEN)
+            switchprofile = database.get_smashprofile(server,name)
+            if not switchprofile:
+                embed = create_embed('No Profile', '**{}** does not have a profile on this server.'.format(name),GREEN)
                 await ctx.send(embed=embed,delete_after=20)
                 return
 
+            switchcode = switchprofile[1]
+            main = switchprofile[2]
+            for item in switchprofile[3]:
+                secondaries = secondaries + item + ", "
+            embed = profile_embed(name,switchcode,main,secondaries)
+
+
             await ctx.send(embed=embed)
+
 
     @commands.command(name='switchcode',pass_context = True)
     async def switchcode(self,ctx,*,arg):

@@ -169,6 +169,16 @@ class Admin(commands.Cog):
 
 
 
+    @commands.command(name='kill')
+    async def kill(self,ctx):
+        if ctx.message.author.id == 88047132937822208:
+            await ctx.send("Bot is shutting down. Good night!")
+            sys.exit()
+            exit()
+
+
+
+        
     @commands.command(name='editrolecolor', pass_context=True)
     async def editcolorrole(self,ctx,*,arg):
         """
