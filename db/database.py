@@ -61,6 +61,28 @@ def make_profile_secondaries(input):
 
 
 
+def edit_profile_switchcode(input):
+    (SERVERID, USERNAME, SWITCHCODE) = input
+    query = 'UPDATE SmashUsers SET SWITCHCODE = :SWITCHCODE WHERE SERVER_ID = :SERVERID AND USERNAME = :USERNAME ;'
+    con.execute(query,dict(SERVERID=SERVERID,USERNAME=USERNAME,SWITCHCODE=SWITCHCODE))
+    conn.commit()
+
+def edit_profile_main(input):
+    (SERVERID, USERNAME, MAIN) = input
+    query = 'UPDATE SmashUsers SET MAIN = :MAIN WHERE SERVER_ID = :SERVERID AND USERNAME = :USERNAME ;'
+    con.execute(query,dict(SERVERID=SERVERID,USERNAME=USERNAME,MAIN=MAIN))
+    conn.commit()
+
+
+
+
+def delete_secondaries(input):
+    (SERVERID, USERNAME, SECONDARY) = input
+    query = 'DELETE FROM SmashUsers_Secondaries WHERE SERVER_ID = :SERVERID AND USERNAME = :USERNAME ;'
+    con.execute(query,dict(SERVERID=SERVERID,USERNAME=USERNAME,SECONDARY=SECONDARY))
+    conn.commit()
+
+
          
 
 

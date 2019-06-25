@@ -233,8 +233,7 @@ class SmashBros(commands.Cog):
     @commands.command(name='switchcode',pass_context = True)
     async def switchcode(self,ctx,*,arg):
         author = ctx.message.author
-        server = ctx.message.guild
-        tool = self.get_tools(ctx)
+        server = ctx.message.guild.id
         name = author.name + "@" + author.discriminator
         arg = shlex.split(arg)
         switchcode = arg[0]
@@ -244,9 +243,8 @@ class SmashBros(commands.Cog):
             return
         else:
             switchcode = fix_switch_code(switchcode)
-
         try:
-            tool.smashprofiles[name][1] = switchcode
+            database.edit_profile_switchcode([server,name,switchcode])
             embed = create_embed('Modified profile','Your switch code has been updated.',GREEN)
             await ctx.send(embed=embed,delete_after=20)
             return
@@ -259,7 +257,7 @@ class SmashBros(commands.Cog):
     @commands.command(name='main',pass_context = True)
     async def main(self,ctx,*,arg):
         author = ctx.message.author
-        server = ctx.message.guild
+        server = ctx.message.guild.id
         tool = self.get_tools(ctx)
         name = author.name + "@" + author.discriminator
         arg = shlex.split(arg)
@@ -271,8 +269,10 @@ class SmashBros(commands.Cog):
             await ctx.send(embed=embed,delete_after=20)
             return
 
+
+        profile = [server,name,main]
         try:
-            tool.smashprofiles[name][2] = main
+            database.edit_profile_main(profile)
             embed = create_embed('Modified profile','Your main has been updated.',GREEN)
             await ctx.send(embed=embed,delete_after=20)
             return
@@ -285,17 +285,23 @@ class SmashBros(commands.Cog):
     @commands.command(name='secondaries',pass_context = True)
     async def secondaries(self,ctx,*,arg):
         author = ctx.message.author
-        server = ctx.message.guild
+        server = ctx.message.guild.id
         tool = self.get_tools(ctx)
         name = author.name + "@" + author.discriminator
         arg = shlex.split(arg)
+
 
         secondaries = check_secondaries(arg)
         if not secondaries:
             secondaries = '--'
 
+        profile2 = [server,name,'']
+        database.delete_secondaries(profile2)
+
         try:
-            tool.smashprofiles[name][2] = secondaries
+            for secondary in secondaries:
+                profile2[2] = secondary
+                database.make_profile_secondaries(profile2)
             embed = create_embed('Modified profile','Your switch code has been updated.',GREEN)
             await ctx.send(embed=embed,delete_after=20)
             return
