@@ -42,8 +42,10 @@ class Image(commands.Cog):
         """
         r = requests.get('https://dog.ceo/api/breeds/image/random')
         js = r.json()
+        
+        
         em = discord.Embed(color=GREEN)
-        em.set_image(url=js['file'])
+        em.set_image(url=js['message'])
         await ctx.send(embed=em) 
 
         
