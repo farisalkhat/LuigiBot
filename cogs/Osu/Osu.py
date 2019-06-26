@@ -13,12 +13,12 @@ import re
 import shlex
 from db import database
 import requests
+import tokens
 
 from pyosu import OsuApi
 
 
-
-api = OsuApi(api_key)
+api = OsuApi(tokens.osu_api)
 
 class Osu(commands.Cog):
     __slots__ = ('bot')
@@ -28,6 +28,13 @@ class Osu(commands.Cog):
 
     @commands.command(name='osu')
     async def osu(self,ctx,*,arg):
+        """
+        Provides basic stats of the given user, if they exist. Uses Renondedju's Osu.py library https://github.com/Renondedju/Osu.py
+
+        Example:
+        !osu Leftyy
+        """
+
         #recent5 = await api.get_user_recents(user=arg,limit = 5)
 
         user = await api.get_user(user = arg)
@@ -53,6 +60,12 @@ class Osu(commands.Cog):
 
     @commands.command(name='osu5')
     async def osu5(self,ctx,*,arg):
+        """
+        Find the top 5 beatmaps of the given user. Uses Renondedju's Osu.py library https://github.com/Renondedju/Osu.py
+
+        Usage:
+        !osu5 Leftyy
+        """
         user = await api.get_user(user = arg)
         image = 'http://s.ppy.sh/a/'  + str(user.user_id)
         
@@ -92,6 +105,52 @@ class Osu(commands.Cog):
             embed.add_field(name=together, value=info )
 
         await ctx.send(embed = embed)
+
+    @commands.command(name='osub')
+    async def osub(self,ctx,*,arg):
+        """
+        Shows basic information of an osu beatmap. Must provide the link to the beatmap. Uses Renondedju's Osu.py library https://github.com/Renondedju/Osu.py
+        """
+        compare = 'https://osu.ppy.sh/beatmapsets/'
+        if len(arg)>31:
+            if compare == arg[0:31]:
+                beatmap_id = arg[31:37]
+                print(beatmap_id)
+            beatmap = await api.get_beatmap(beatmapset_id = beatmap_id)
+            if not beatmap:
+                await ctx.send('Beatmap does not exist.',delete_after=20)
+                return
+            
+            title = beatmap.title + " by " + beatmap.artist
+            length = beatmap.total_length
+            difficulty = beatmap.difficultyrating
+            creator = beatmap.creator
+            bpm = str(beatmap.bpm)
+            max_combo = str(beatmap.max_combo)
+            playcount = str(beatmap.playcount)
+
+            embed=discord.Embed(title=title, url=arg, description="All the basic information for this song!", color=0xe005ba)
+            embed.add_field(name='Length', value=length, inline=True)
+            embed.add_field(name='Difficulty', value=difficulty, inline=True)
+            embed.add_field(name='Creator', value=creator, inline=True)
+            embed.add_field(name='BPM', value=bpm, inline=True)
+            embed.add_field(name='Max Combo', value=max_combo, inline=True)
+            embed.add_field(name='Playcount', value=playcount, inline=True)
+            await ctx.send(embed=embed) 
+            return 
+
+        else:
+            await ctx.send('Invalid format. Try using an actual link.',delete_after=20)
+            return
+
+           
+        
+        
+
+
+
+
+
 
 
         

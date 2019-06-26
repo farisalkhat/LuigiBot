@@ -6,7 +6,9 @@ import time
 import youtube_dl
 from itertools import cycle
 import sqlite3
+import tokens
 
+api_key = tokens.discord_api
 #
 #   LuigiBot - Discord Bot ver.0.1.0
 #
@@ -56,7 +58,7 @@ async def change_status():
         await asyncio.sleep(60*60)
 
 
-bot.run("", bot=True, reconnect=True)
+bot.run(api_key, bot=True, reconnect=True)
 
 
 

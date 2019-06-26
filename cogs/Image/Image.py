@@ -17,9 +17,9 @@ import cat
 from geopy import geocoders
 from tzwhere import tzwhere
 from youtube_api import YouTubeDataAPI
+import tokens
 
-
-api_key = 
+api_key = tokens.google_api
 GREEN = 0x16820d
 
 
