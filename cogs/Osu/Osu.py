@@ -16,7 +16,7 @@ import requests
 
 from pyosu import OsuApi
 
-api_key = '5e914b09d09d7ac4f37888f6e1fbd371e7c02066'
+
 
 api = OsuApi(api_key)
 

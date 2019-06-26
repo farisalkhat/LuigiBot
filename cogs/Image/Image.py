@@ -19,7 +19,7 @@ from tzwhere import tzwhere
 from youtube_api import YouTubeDataAPI
 
 
-api_key = 'AIzaSyDGQXcGGIyajK9P7XjQHt2yotAKoiAx1EM'
+api_key = 
 GREEN = 0x16820d
 
 
@@ -28,7 +28,7 @@ class Image(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
 
-        #AIzaSyDGQXcGGIyajK9P7XjQHt2yotAKoiAx1EM
+        
 
 
 

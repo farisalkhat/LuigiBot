@@ -56,7 +56,7 @@ async def change_status():
         await asyncio.sleep(60*60)
 
 
-bot.run("NTMzNDM4ODk1Njk5MDAxMzY0.XRKUAA.LeXu8RN7nTtC0TgPaSytxHj31cw", bot=True, reconnect=True)
+bot.run("", bot=True, reconnect=True)
 
 
 
