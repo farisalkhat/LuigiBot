@@ -42,7 +42,9 @@ class Image(commands.Cog):
         Generate a random cat from random.cat/meow
         """
         r = requests.get('http://aws.random.cat/meow')
+        print(r)
         js = r.json()
+        print(js)
         em = discord.Embed(color=GREEN)
         em.set_image(url=js['file'])
         await ctx.send(embed=em) 
@@ -64,6 +66,9 @@ class Image(commands.Cog):
         
     @commands.command(name="youtube")
     async def youtube(self,ctx,*,arg):
+        """
+        Searches Youtube for the given search, and returns the first video given.
+        """
         yt = YouTubeDataAPI(api_key)
         lmao = yt.search(arg)
         print(lmao[0])
@@ -75,6 +80,10 @@ class Image(commands.Cog):
 
     @commands.command(name="time")
     async def time(self,ctx,*,arg):
+        """
+        Retrieves the timezone for the given location. Utilizes geocoders and tzwhere.
+        """
+
         g = geocoders.GoogleV3(api_key=api_key)
         
         place, (lat, lng) = g.geocode(arg)
