@@ -10,22 +10,85 @@ import random
 import copy
 import os
 import re
-import shlex
-from db import database
+from random import randint
 import requests
-import tokens
+import cat
 
+from geopy import geocoders
+from tzwhere import tzwhere
+from youtube_api import YouTubeDataAPI
+import tokens
 from pyosu import OsuApi
 
-
+google_key = tokens.google_api
 api = OsuApi(tokens.osu_api)
+GREEN = 0x16820d
 
-class Osu(commands.Cog):
-    __slots__ = ('bot')
+
+class Search(commands.Cog):
+
     def __init__(self,bot):
         self.bot = bot
 
+    @commands.command(name="cat")
+    async def cat(self,ctx):
+        """
+        Generate a random cat from random.cat/meow
+        """
+        r = requests.get('http://aws.random.cat/meow')
+        print(r)
+        js = r.json()
+        print(js)
+        em = discord.Embed(color=GREEN)
+        em.set_image(url=js['file'])
+        await ctx.send(embed=em) 
 
+
+    @commands.command(name="woof")
+    async def woof(self,ctx):
+        """
+        Generate a doggo from dog.ceo
+        """
+        r = requests.get('https://dog.ceo/api/breeds/image/random')
+        js = r.json()
+        
+        
+        em = discord.Embed(color=GREEN)
+        em.set_image(url=js['message'])
+        await ctx.send(embed=em) 
+
+        
+    @commands.command(name="youtube")
+    async def youtube(self,ctx,*,arg):
+        """
+        Searches Youtube for the given search, and returns the first video given.
+        """
+        yt = YouTubeDataAPI(google_key)
+        lmao = yt.search(arg)
+        print(lmao[0])
+        pog = lmao[0]
+        link = 'https://www.youtube.com/watch?v=' + pog['video_id']
+        await ctx.send(link)
+
+
+
+    @commands.command(name="time")
+    async def time(self,ctx,*,arg):
+        """
+        Retrieves the timezone for the given location. Utilizes geocoders and tzwhere.
+        """
+
+        g = geocoders.GoogleV3(api_key=google_key)
+        
+        place, (lat, lng) = g.geocode(arg)
+        tz = tzwhere.tzwhere()
+        timezone = g.timezone(lat,lng)
+
+        await ctx.send('The time in **{}** is: **{}**'.format(place,timezone))
+        #print (tz.tzNameAt(lat, lng))
+
+
+    
     @commands.command(name='osu')
     async def osu(self,ctx,*,arg):
         """
@@ -142,36 +205,3 @@ class Osu(commands.Cog):
         else:
             await ctx.send('Invalid format. Try using an actual link.',delete_after=20)
             return
-
-           
-        
-        
-
-
-
-
-
-
-
-        
-        '''
-
-        for recent in recent5:
-            beatmap = await api.get_beatmap(beatmap_id =best.beatmap_id)
-            beatmap_title = beatmap.title
-
-            osutuple = ["Beatmap " +beatmap_title, "Score: " + str(best.score),"Max Combo: " + str(best.maxcombo),"PP: " + str(best.pp)]
-            osurecent.append(osutuple)
-
-        '''
-
-
-
-
-           
-
-        #await ctx.send(best5)
-        #await ctx.send(recent5)
-
-        
-    

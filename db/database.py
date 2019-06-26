@@ -8,6 +8,7 @@ conn = sqlite3.connect('db\sqldatabase.db')  # You can create a new database by 
 con = conn.cursor()
 
 
+
 def get_smashplayers(SERVERID):
     query = 'SELECT USERNAME, SWITCHCODE, MAIN  FROM SmashUsers WHERE SERVER_ID = :SERVERID'
     rs = con.execute(query,dict(SERVERID=SERVERID))

@@ -29,7 +29,7 @@ def get_prefix(bot, message):
 
 
 initial_extensions = ['cogs.Admin', 'cogs.Audio',
-                      'cogs.SmashBros', 'cogs.Events', 'cogs.Fun', 'cogs.Help','cogs.Image','cogs.Osu']
+                      'cogs.SmashBros', 'cogs.Events', 'cogs.Fun', 'cogs.Help','cogs.Search','cogs.Economy']
 bot = commands.Bot(command_prefix=get_prefix,
                    description='LuigiBot: General Purpose Bot!')
 bot.remove_command('help')
