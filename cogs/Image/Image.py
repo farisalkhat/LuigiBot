@@ -14,6 +14,12 @@ from random import randint
 import requests
 import cat
 
+from geopy import geocoders
+from tzwhere import tzwhere
+from youtube_api import YouTubeDataAPI
+
+
+api_key = 'AIzaSyDGQXcGGIyajK9P7XjQHt2yotAKoiAx1EM'
 GREEN = 0x16820d
 
 
@@ -21,6 +27,13 @@ class Image(commands.Cog):
 
     def __init__(self,bot):
         self.bot = bot
+
+        #AIzaSyDGQXcGGIyajK9P7XjQHt2yotAKoiAx1EM
+
+
+
+
+
 
 
     @commands.command(name="cat")
@@ -49,6 +62,24 @@ class Image(commands.Cog):
         await ctx.send(embed=em) 
 
         
+    @commands.command(name="youtube")
+    async def youtube(self,ctx,*,arg):
+        yt = YouTubeDataAPI(api_key)
+        lmao = yt.search(arg)
+        print(lmao[0])
+        pog = lmao[0]
+        link = 'https://www.youtube.com/watch?v=' + pog['video_id']
+        await ctx.send(link)
 
 
 
+    @commands.command(name="time")
+    async def time(self,ctx,*,arg):
+        g = geocoders.GoogleV3(api_key=api_key)
+        
+        place, (lat, lng) = g.geocode(arg)
+        tz = tzwhere.tzwhere()
+        timezone = g.timezone(lat,lng)
+
+        await ctx.send('The time in **{}** is: **{}**'.format(place,timezone))
+        #print (tz.tzNameAt(lat, lng))
