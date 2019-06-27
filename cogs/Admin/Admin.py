@@ -173,7 +173,7 @@ class Admin(commands.Cog):
     async def kill(self,ctx):
         if ctx.message.author.id == 88047132937822208:
             await ctx.send("Bot is shutting down. Good night!")
-            sys.exit()
+            
             exit()
 
 

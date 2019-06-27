@@ -47,15 +47,7 @@ async def on_ready():
     print(f'Successfully logged in and booted...!')
 
 
-async def change_status():
-    await bot.wait_until_ready()
-    msgs = cycle(status)
 
-    while not bot.is_closed():
-        current_status = next(msgs)
-        activity = discord.Game(name=current_status)
-        await bot.change_presence(status=discord.Status.idle, activity=activity)
-        await asyncio.sleep(60*60)
 
 
 bot.run(api_key, bot=True, reconnect=True)

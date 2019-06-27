@@ -18,25 +18,44 @@ class Economy(commands.Cog):
 
     def __init__(self,bot):
         self.bot = bot
-
-    @commands.command(name="h")
-    async def createecon(self,ctx,*,arg):
-        lmao = gachadatabase.get_hero(arg)
-        if not lmao:
-            await ctx.send("Hero does not exist!")
-        else:
-
-            stats = "HP: " + str(lmao[5]) + " \n" + "ATK" + str(lmao[6]) + " \n" + "DEF" + str(lmao[7]) + " \n" + "SPD" + str(lmao[8]) + " \n"
-            
-            embed=discord.Embed(title=lmao[0], description="Details")
-            embed.set_image(url = lmao[2])
-            embed.add_field(name='Creator', value=lmao[1], inline=True)
-            embed.add_field(name='Rating', value=lmao[3], inline=True)
-            embed.add_field(name='Type', value=lmao[4], inline=True)
-            embed.add_field(name='Moves', value='TODO', inline=True)
-            embed.add_field(name='Stats', value=stats, inline=True)
-            
-            await ctx.send(embed=embed)
-            
-
     
+    @commands.command(name="createeconomy")
+    async def createeconomy(self,ctx):
+        """
+        Sets up the economy for the server.
+        """
+        guildid = ctx.message.guild.id
+        memberslist = ctx.message.guild.members
+        author = ctx.message.author
+        
+
+        if not author.guild_permissions.administrator:
+            await ctx.send('Sorry good sir, you do not have permission to create an economy!',delete_after=20)
+            return
+
+        
+        econ_enabled = gachadatabase.get_economy(guildid)
+        if not econ_enabled:
+            await ctx.send("Creating economy..",delete_after=20)
+            gachadatabase.create_economy([guildid,'Enabled'])
+
+            for member in memberslist:
+                gachadatabase.add_econ_member([guildid,member.id,25])
+
+            await ctx.send("Economy created!",delete_after=20)
+
+        elif econ_enabled[1] == 'Enabled':
+            await ctx.send('Economy already enabled for this server!')
+            return
+    
+    @commands.command(name="balance")
+    async def balance(self,ctx):
+        authorid = ctx.message.author.id
+        guildid = ctx.message.guild.id
+
+        balance = gachadatabase.get_balance([guildid,authorid])
+        await ctx.send("**{}**, you currently have **{} LuigiCoins!**".format(ctx.message.author,balance[2]))
+
+
+
+            
