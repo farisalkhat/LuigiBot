@@ -9,7 +9,27 @@ con = conn.cursor()
 
 
 
-
+def get_threestars(SERVERID):
+    query = 'SELECT Name,HP,ATK,DEF,SDEF,SPD FROM Heroes WHERE SERVERID = :SERVERID AND Rating =3'
+    rs = con.execute(query,dict(SERVERID=SERVERID))
+    results = []
+    for user in rs:
+        results.append(user)
+    return results
+def get_fourstars(SERVERID):
+    query = 'SELECT Name,HP,ATK,DEF,SDEF,SPD FROM Heroes WHERE SERVERID = :SERVERID AND Rating =4'
+    rs = con.execute(query,dict(SERVERID=SERVERID))
+    results = []
+    for user in rs:
+        results.append(user)
+    return results
+def get_fivestars(SERVERID):
+    query = 'SELECT Name,HP,ATK,DEF,SDEF,SPD FROM HeroesWHERE SERVERID = :SERVERID AND Rating =5'
+    rs = con.execute(query,dict(SERVERID=SERVERID))
+    results = []
+    for user in rs:
+        results.append(user)
+    return results
 
 def get_hero(input):
     (HERO_NAME,SERVERID) = input
@@ -43,6 +63,23 @@ def get_balance(input):
         results = list(result[:])
     return results
 
+def set_balance(input):
+    (SERVERID,MEMBERID,BALANCE) = input
+    query = 'UPDATE Economy  SET LUIGICOIN = :BALANCE WHERE SERVERID = :SERVERID AND USERNAME = :MEMBERID'
+    con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID,BALANCE=BALANCE))
+    conn.commit()
+
+
+
+'''
+UPDATE table
+SET column_1 = new_value_1,
+    column_2 = new_value_2
+WHERE
+    search_condition
+'''
+
+
 def add_econ_member(input):
     (SERVERID,MEMBERID,AMOUNT) = input
     query = 'INSERT INTO Economy VALUES(:SERVERID, :MEMBERID, :AMOUNT)'
@@ -62,7 +99,7 @@ def create_economy(input):
     query = 'INSERT INTO Economy_Enabled VALUES(:SERVERID, :ENABLED)'
     con.execute(query,dict(SERVERID=SERVERID,ENABLED=ENABLED))
     conn.commit()
-    
+
 
 
 
@@ -76,4 +113,3 @@ def print_heroes():
         results = list(user[:])
     print(results)
     return results
-

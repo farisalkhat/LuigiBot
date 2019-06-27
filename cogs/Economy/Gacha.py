@@ -12,6 +12,7 @@ import os
 import re
 from random import randint
 from db import gachadatabase
+from db import database
 
 
 
@@ -19,6 +20,54 @@ class Gacha(commands.Cog):
 
     def __init__(self,bot):
         self.bot = bot
+
+    @commands.command(name='summon',aliases=['s'])
+    async def summon(self,ctx):
+        SERVERID = str(ctx.message.guild.id)
+        MEMBERID = str(ctx.message.author.id)
+        balance = gachadatabase.get_balance([SERVERID,MEMBERID])
+        if not balance:
+            await ctx.send("You don't have an account set up on this server!")
+            return
+
+        if balance-5 > 0:
+            balance = balance -5
+            gachadatabase.set_balance([SERVERID,MEMBERID,balance])
+            await ctx.send("Subtracted 5 coins..",delete_after=10)
+
+            value = randint(1:100)
+            if value >= 1 and value <=50:
+                threestars = gachadatabase.get_threestars(SERVERID)
+                gachaplace = randint(0:len(threestars)-1)
+                gacha = threestars[gachaplace]
+                gachadatabase.add_hero([SERVERID,MEMBERID,gacha[0],gacha[1],gacha[2],gacha[3],gacha[4]])
+                await ctx.send("You got the 4 star hero: **{}**!!".format(gacha[0])
+
+            if value >=51 and value <=90:
+                fourstars = gachadatabase.get_fourstars(SERVERID)
+                gachaplace = randint(0:len(fourstars)-1)
+                gacha = fourstars[gachaplace]
+                gachadatabase.add_hero([SERVERID,MEMBERID,gacha[0],gacha[1],gacha[2],gacha[3],gacha[4]])
+                await ctx.send("You got the 4 star hero: **{}**!!".format(gacha[0])
+
+            if value >=91 and value <=100:
+                fivestars = gachadatabase.get_fivestars(SERVERID)
+                gachaplace = randint(0:len(fivestars)-1)
+                gacha = fivestars[gachaplace]
+                gachadatabase.add_hero([SERVERID,MEMBERID,gacha[0],gacha[1],gacha[2],gacha[3],gacha[4]])
+                await ctx.send("You got the 4 star hero: **{}**!!".format(gacha[0])
+
+
+
+
+
+
+        else:
+            await ctx.send("You need at least **5 LuigiCoins** to summon!")
+
+
+
+
 
     @commands.command(name='rhero')
     async def rhero(self,ctx,*,arg):
@@ -35,6 +84,7 @@ class Gacha(commands.Cog):
             HERONAME = lmao[1]
             gachadatabase.remove_hero([SERVERID,HERONAME])
             await ctx.send("Hero has been deleted!")
+
 
 
     @commands.command(name='gcreate')
@@ -58,7 +108,7 @@ class Gacha(commands.Cog):
         T2 = [int(x) for x in gachaints]
         for intboy in T2:
             gachas.append(intboy)
-        
+
         gachadatabase.create_hero(gachas)
         await ctx.send("**{}** has created the hero: **{}**".format(ctx.message.author,gachas[1]))
 
