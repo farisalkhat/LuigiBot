@@ -22,6 +22,11 @@ class GachaEvents(commands.Cog):
         self.tools = {}
 
 
+    '''
+    @commands.Cog.listener
+    async def on_message(self,message):
+        print('lmao!')
+    '''
 
     @commands.Cog.listener()
     async def on_member_update(self,before, after):

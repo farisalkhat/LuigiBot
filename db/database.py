@@ -88,6 +88,38 @@ def delete_secondaries(input):
 
 
 
+def get_configs():
+    query = 'SELECT * FROM Race_Configs'
+    rs = con.execute(query)
+    results = []
+    for user in rs:
+        results.append(list(user[:]))
+    return results
+
+def get_config(SERVERID):
+    query = 'SELECT * FROM Race_Configs WHERE SERVERID=:SERVERID'
+    rs = con.execute(query,dict(SERVERID=SERVERID))
+    results = []
+    for result in rs:
+        results = list(result[:])
+    return results
+
+def set_prize(input):
+    (SERVERID,MIN,MAX) = input
+    query = 'UPDATE Race_Configs SET MIN_PRIZE = :MIN, MAX_PRIZE = MAX WHERE SERVERID =:SERVERID'
+    con.execute(query,dict(SERVERID=SERVERID,MIN=MIN,MAX=MAX))
+    conn.commit()
+
+
+def create_config(SERVERID):
+    query = 'INSERT INTO Race_Configs VALUES(:SERVERID,2,10,1,30)'
+    con.execute(query,dict(SERVERID=SERVERID))
+    conn.commit()
+
+def delete_config(SERVERID):
+    query = 'DELETE FROM Race_Configs WHERE SERVERID = :SERVERID'
+    con.execute(query,dict(SERVERID=SERVERID))
+    conn.commit()
 
 
 

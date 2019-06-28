@@ -19,6 +19,11 @@ class Economy(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
     
+
+
+
+
+
     @commands.command(name="createeconomy")
     async def createeconomy(self,ctx):
         """
@@ -57,5 +62,7 @@ class Economy(commands.Cog):
         await ctx.send("**{}**, you currently have **{} LuigiCoins!**".format(ctx.message.author,balance[2]))
 
 
+
+    
 
             
