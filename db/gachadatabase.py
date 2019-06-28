@@ -62,7 +62,6 @@ def remove_barracks_hero(input):
 
 
 
-
 def get_balance(input):
     (SERVERID,MEMBERID) = input
     query = 'SELECT * FROM Economy WHERE SERVER_ID = :SERVERID AND USERNAME = :MEMBERID'
@@ -157,3 +156,22 @@ def get_heroes(input):
 
 
 
+
+
+def get_primary_hero(input):
+    (SERVERID,MEMBERID) = input
+    query = 'SELECT * FROM Primary_Hero WHERE SERVERID=:SERVERID AND MEMBERID=:MEMBERID'
+    rs = con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID))
+    results = []
+    for result in rs:
+        results = list(result[:])
+    return results
+
+def get_primary_moves(input):
+    (SERVERID,HERONAME)= input
+    query = 'SELECT * FROM Movelist WHERE SERVERID=:SERVERID AND HERONAME=:HERONAME'
+    rs = con.execute(query,dict(SERVERID=SERVERID,HERONAME=HERONAME))
+    results = []
+    for result in rs:
+        results = list(result[:])
+    return results
