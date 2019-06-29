@@ -22,6 +22,9 @@ class Gacha(commands.Cog):
         self.bot = bot
 
 
+
+
+
     @commands.command(name='rhero')
     async def rhero(self,ctx,*,arg):
         author = ctx.message.author
@@ -233,7 +236,17 @@ class Gacha(commands.Cog):
         gachadatabase.delete_barracks_hero(ID)  
         await ctx.send("**{}** has been deleted. Returning **{} LuigiCoins.**".format(hero[2],coins))
 
+    @commands.command(name='setp')
+    async def setp(self,ctx,*,arg):
+        authorid = str(ctx.message.author.id)
+        serverid= str(ctx.message.guild.id)
+        hero = gachadatabase.get_barracks_hero([serverid,authorid,arg])
+        if not hero:
+            return await ctx.send("Sorry, you do not have a hero with that ID!")
+        gachadatabase.remove_primary_hero([serverid,authorid])
+        gachadatabase.place_primary_hero([serverid,authorid,hero[10]])
 
+        await ctx.send("You've set **{}** as your primary hero.".format(hero[2]))
 
 
 def create_list(barracks):
@@ -255,3 +268,7 @@ def create_filter_list(thelist):
         List = List + Labelstr + ". **" + item[0] + "**  Description: " + item[6] + " \n" 
         label = label + 1    
     return List
+
+
+
+    
