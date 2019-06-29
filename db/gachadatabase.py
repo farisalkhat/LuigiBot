@@ -7,7 +7,9 @@ import itertools
 conn = sqlite3.connect('db\gachaecon.db')  # You can create a new database by changing the name within the quotes
 con = conn.cursor()
 
-
+'''
+These queries modify or pull info from the Heroes Table.
+'''
 
 def get_threestars(SERVERID):
     query = 'SELECT Name,HP,ATK,DEF,SDEF,SPD,Description FROM Heroes WHERE SERVERID = :SERVERID AND Rating =3'
@@ -30,7 +32,6 @@ def get_fivestars(SERVERID):
     for user in rs:
         results.append(list(user[:]))
     return results
-
 def get_hero(input):
     (HERO_NAME,SERVERID) = input
     query = 'SELECT * FROM Heroes WHERE Name = :HERO_NAME AND SERVERID= :SERVERID'
@@ -39,64 +40,11 @@ def get_hero(input):
     for user in rs:
         results = list(user[:])
     return results
-
-def get_economy(SERVERID):
-    query = 'SELECT * FROM Economy_Enabled WHERE SERVERID = :SERVERID'
-    rs = con.execute(query,dict(SERVERID=SERVERID))
-    results = []
-    for result in rs:
-        results = list(result[:])
-    return results
-
 def remove_hero(input):
     (SERVERID,HERONAME) = input
     query = 'DELETE FROM Heroes WHERE SERVERID = :SERVERID AND Name= :HERONAME'
     con.execute(query,dict(SERVERID=SERVERID,HERONAME=HERONAME))
     conn.commit()
-
-
-
-
-
-def get_balance(input):
-    (SERVERID,MEMBERID) = input
-    query = 'SELECT * FROM Economy WHERE SERVER_ID = :SERVERID AND USERNAME = :MEMBERID'
-    rs = con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID))
-    results = []
-    for result in rs:
-        results = list(result[:])
-    return results
-
-def set_balance(input):
-    (SERVERID,MEMBERID,BALANCE) = input
-    query = 'UPDATE Economy  SET LUIGICOIN = :BALANCE WHERE SERVER_ID = :SERVERID AND USERNAME = :MEMBERID'
-    con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID,BALANCE=BALANCE))
-    conn.commit()
-
-
-
-def add_hero(input):
-    (SERVERID, MEMBERID,HERONAME,HP,ATK,DEF,SDEF,SPD,RARITY,ID) = input
-    query = 'INSERT INTO Barracks VALUES(:SERVERID,:MEMBERID,:HERONAME,:HP,:ATK,:DEF,:SDEF,:SPD,0,:RARITY,:ID)'
-    con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID,HERONAME=HERONAME,HP=HP,ATK=ATK,DEF=DEF,SDEF=SDEF,SPD=SPD,RARITY=RARITY,ID=ID))
-    conn.commit()
-
-
-'''
-UPDATE table
-SET column_1 = new_value_1,
-    column_2 = new_value_2
-WHERE
-    search_condition
-'''
-
-
-def add_econ_member(input):
-    (SERVERID,MEMBERID,AMOUNT) = input
-    query = 'INSERT INTO Economy VALUES(:SERVERID, :MEMBERID, :AMOUNT)'
-    con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID,AMOUNT=AMOUNT))
-    conn.commit()
-
 def create_hero(input):
     (SERVERID,Name,Portrait,Description,Creator,Type,Rating,HP,ATK,DEF,SDEF,SPD) = input
     query = 'INSERT INTO Heroes VALUES(:SERVERID,:Name,:Portrait,:Description,:Creator,:Type,:Rating,:HP,:ATK,:DEF,:SDEF,:SPD)'
@@ -104,60 +52,45 @@ def create_hero(input):
     conn.commit()
 
 
+'''
+These queries modify or pull info from the Barracks table.
+'''
 
-def create_economy(input):
-    (SERVERID,ENABLED) = input
-    query = 'INSERT INTO Economy_Enabled VALUES(:SERVERID, :ENABLED)'
-    con.execute(query,dict(SERVERID=SERVERID,ENABLED=ENABLED))
+def add_hero(input):
+    (SERVERID, MEMBERID,HERONAME,HP,ATK,DEF,SDEF,SPD,RARITY,ID) = input
+    query = 'INSERT INTO Barracks VALUES(:SERVERID,:MEMBERID,:HERONAME,:HP,:ATK,:DEF,:SDEF,:SPD,0,:RARITY,:ID)'
+    con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID,HERONAME=HERONAME,HP=HP,ATK=ATK,DEF=DEF,SDEF=SDEF,SPD=SPD,RARITY=RARITY,ID=ID))
     conn.commit()
-
-
-
-
-
 def get_heroes(input):
     (SERVER_ID,USERNAME) = input
-    query = 'SELECT *  FROM Barracks WHERE SERVER_ID = :SERVER_ID AND USERNAME= :USERNAME ORDER BY RARITY DESC, HERO_NAME ASC'
+    query = 'SELECT *  FROM Barracks WHERE SERVERID = :SERVER_ID AND MEMBERID= :USERNAME ORDER BY RARITY DESC, HERONAME ASC'
     rs = con.execute(query,dict(SERVER_ID=SERVER_ID,USERNAME=USERNAME))
     results = []
     for user in rs:
         results.append(list(user[:]))
     return results
-
-
-
-
-
-
-
-
 def delete_barracks_hero(ID):
-    query = 'DELETE FROM Barracks WHERE ID=:ID'
+    query = 'DELETE FROM Barracks WHERE HEROID=:ID'
     con.execute(query,dict(ID=ID))
-
 def get_barracks_hero(input):
     (SERVER_ID,USERNAME,ID) = input
-    query = 'SELECT * FROM Barracks WHERE SERVER_ID = :SERVER_ID AND USERNAME=:USERNAME AND ID=:ID'
+    query = 'SELECT * FROM Barracks WHERE SERVERID = :SERVER_ID AND MEMBERID=:USERNAME AND HEROID=:ID'
     rs = con.execute(query,dict(SERVER_ID=SERVER_ID,USERNAME=USERNAME,ID=ID))
     results = []
     for result in rs:
         results = list(result[:])
     return results
-
 def get_barracks_hero2(input):
     (SERVER_ID,HERO_NAME) = input
-    query = 'SELECT * FROM Barracks WHERE SERVER_ID = :SERVER_ID AND HERO_NAME=:HERO_NAME'
+    query = 'SELECT * FROM Barracks WHERE SERVERID = :SERVER_ID AND HERONAME=:HERO_NAME'
     rs = con.execute(query,dict(SERVER_ID=SERVER_ID,HERO_NAME=HERO_NAME))
     results = []
     for result in rs:
         results = list(result[:])
     return results
-
-
-
 def remove_barracks_hero(input):
     (SERVER_ID,HERO_NAME) = input
-    query = 'DELETE FROM Barracks WHERE SERVER_ID = :SERVER_ID AND HERO_NAME= :HERO_NAME'
+    query = 'DELETE FROM Barracks WHERE SERVERID = :SERVER_ID AND HERONAME= :HERO_NAME'
     con.execute(query,dict(SERVER_ID=SERVER_ID,HERO_NAME=HERO_NAME))
     conn.commit()
 
@@ -170,13 +103,11 @@ def place_primary_hero(input):
     query = 'INSERT INTO Primary_Hero VALUES(:SERVERID,:MEMBERID,:HERONAME)'
     con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID,HERONAME=HERONAME))
     conn.commit()
-
 def remove_primary_hero(input):
     (SERVERID,MEMBERID) = input
     query = 'DELETE FROM Primary_Hero WHERE SERVERID=:SERVERID AND MEMBERID=:MEMBERID'
     con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID))
     conn.commit()
-
 def get_primary_hero_ID(input):
     (SERVERID,MEMBERID)= input
     query = 'SELECT HEROID FROM Primary_Hero WHERE SERVERID=:SERVERID AND MEMBERID=:MEMBERID'
@@ -185,26 +116,24 @@ def get_primary_hero_ID(input):
     for result in rs:
         results = list(result[:])
     return results
-    
 def get_primary_hero(HEROID):
-    query = '''SELECT Barracks.HERO_NAME, Barracks.HP,Barracks.ATK,Barracks.DEF,Barracks.SDEF,Barracks.SPD FROM Barracks,
-    Primary_Hero WHERE Primary_Hero.HEROID = :HEROID AND Barracks.ID = :HEROID '''
+    query = '''SELECT Barracks.HERONAME, Barracks.HP,Barracks.ATK,Barracks.DEF,Barracks.SDEF,Barracks.SPD FROM Barracks,
+    Primary_Hero WHERE Primary_Hero.HEROID = :HEROID AND Barracks.HEROID = :HEROID '''
     rs = con.execute(query,dict(HEROID=HEROID))
     results = []
     for result in rs:
         results = list(result[:])
     return results
-
 def get_primary_moves(input):
     (HEROID,SERVERID)= input
     query = """SELECT 
-    Moveset.MOVENAME, Moveset.TYPE,Moveset.DETAIL, Moveset.POWERTYPE, Moveset.POWER,Moveset.STATUS1,Moveset.STATUS2 
+    Moveset.MOVENAME, Moveset.TYPE,Moveset.DETAIL, Moveset.POWERTYPE, Moveset.POWER,Moveset.STATUS1,Moveset.STATUS2,Moveset.STATUS3,Moveset.STATUS4,Moveset.STATUS5
     FROM Moveset,Primary_Hero,Barracks
     WHERE Primary_Hero.HEROID = :HEROID AND
     Primary_Hero.SERVERID = :SERVERID AND
-    Primary_Hero.HEROID = Barracks.ID AND 
+    Primary_Hero.HEROID = Barracks.HEROID AND 
     Moveset.SERVERID = Primary_Hero.SERVERID AND
-    Moveset.HERONAME = Barracks.HERO_NAME"""
+    Moveset.HERONAME = Barracks.HERONAME"""
     rs = con.execute(query,dict(HEROID=HEROID,SERVERID=SERVERID))
     results = []
     for user in rs:

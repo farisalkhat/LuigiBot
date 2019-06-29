@@ -51,7 +51,12 @@ class Battle:
             self.Turn = [self.Hero2,self.Hero1]
 
     def can_play(self,player):
-        if player == self.Turn[0].Owner:
+        playername = player.name + "#" + player.discriminator
+
+        print(player)
+        print(self.Turn[0].Owner)
+
+        if playername == self.Turn[0].Owner:
             return True
         return False
 
@@ -273,6 +278,9 @@ class Battle:
         Attack_Power = Attack[4]
         Attack_Status1 = Attack[5]
         Attack_Status2 = Attack[6]
+        Attack_Status3 = Attack[7]
+        Attack_Status4 = Attack[8]
+        Attack_Status5 = Attack[9]
 
         msg = []
 
@@ -347,18 +355,23 @@ class Battle:
                     self.Turn.pop(0)
 
 
+        """Poor way to check statuses, fix this later."""
         input = [Hero_Number,Attack_Status1,Attack_Status2,msg]
         msg = self.execute_status(input) 
+        input = [Hero_Number,Attack_Status3,Attack_Status4,msg]
+        msg = self.execute_status(input)
+        input = [Hero_Number,Attack_Status5,'NA',msg]
+        msg = self.execute_status(input)
 
         if self.Hero1.HP <= 0 and self.Hero2.HP <= 0:
             msg.append("Cut the credits, it's a draw!")
-            return
+            return msg
         if self.Hero1.HP <= 0:
             msg.append("**{}** faints. **{}** wins!".format(self.Hero1.HeroName,self.Hero2.HeroName))
-            return
+            return msg
         if self.Hero2.HP <= 0:
             msg.append("**{}** faints. **{}** wins!".format(self.Hero2.HeroName,self.Hero1.HeroName))
-            return
+            return msg
         
 
 
@@ -408,8 +421,10 @@ class GachaBattle(commands.Cog):
         
         if move==0:
             if(battle.turn[0].Number==1):
+                self.battles.pop(ctx.message.guild.id)
                 return await ctx.send("**{}** has forfeited. **{}** has won!".format(battle.Hero1.Owner,battle.Hero2.Owner))
             else:
+                self.battles.pop(ctx.message.guild.id)
                 return await ctx.send("**{}** has forfeited. **{}** has won!".format(battle.Hero2.Owner,battle.Hero1.Owner))
         
         msg = battle.execute_move(move)
@@ -456,23 +471,23 @@ class GachaBattle(commands.Cog):
 
         Hero1_Info = "__**" + Hero1.HeroName + "**__\n"  
         Hero1_Info= Hero1_Info + "**" + Hero1.Move1[0]+ "** -  **Type:** " + Hero1.Move1[1] + "  **Description:** " + Hero1.Move1[2] + "  **Attack Type:** " + Hero1.Move1[3] + "  **Power:** " + str(Hero1.Move1[4]) 
-        Hero1_Info= Hero1_Info + "  **S1:** " + Hero1.Move1[5] + "  **S2:** " +Hero1.Move1[6] + " \n" 
+        Hero1_Info= Hero1_Info + "  **S1:** " + Hero1.Move1[5] + "  **S2:** " +Hero1.Move1[6] + "  **S3:** " + Hero1.Move1[7] + "  **S4:** " +Hero1.Move1[8] + "  **S5:** " +Hero1.Move1[9] + " \n" 
         Hero1_Info= Hero1_Info + "**" + Hero1.Move2[0]+ "** -   **Type:** " + Hero1.Move2[1] + "  **Description:** " + Hero1.Move2[2] + "  **Attack Type:** " + Hero1.Move2[3] + "  **Power:** " + str(Hero1.Move2[4])  
-        Hero1_Info= Hero1_Info + "  **S1:** " + Hero1.Move2[5] + "  **S2:** " +Hero1.Move2[6] + " \n" 
+        Hero1_Info= Hero1_Info + "  **S1:** " + Hero1.Move2[5] + "  **S2:** " +Hero1.Move2[6] + "  **S3:** " + Hero1.Move2[7] + "  **S4:** " +Hero1.Move2[8] +"  **S5:** " +Hero1.Move2[9] +" \n" 
         Hero1_Info= Hero1_Info + "**" + Hero1.Move3[0]+ "** -   **Type:** " + Hero1.Move3[1] + "  **Description:** " + Hero1.Move3[2] + "  **Attack Type:** " + Hero1.Move3[3] + "  **Power:** " + str(Hero1.Move3[4])  
-        Hero1_Info= Hero1_Info + "  **S1:** " + Hero1.Move3[5] + "  **S2:** " +Hero1.Move3[6] + " \n" 
+        Hero1_Info= Hero1_Info + "  **S1:** " + Hero1.Move3[5] + "  **S2:** " +Hero1.Move3[6] + "  **S3:** " + Hero1.Move3[7] + "  **S4:** " +Hero1.Move3[8] +"  **S5:** " +Hero1.Move3[9] +" \n" 
         Hero1_Info= Hero1_Info + "**" + Hero1.Move4[0]+ "** -   **Type:** " + Hero1.Move4[1] + "  **Description:** " + Hero1.Move4[2] + "  **Attack Type:** " + Hero1.Move4[3] + "  **Power:** " + str(Hero1.Move4[4])  
-        Hero1_Info= Hero1_Info + "  **S1:** " + Hero1.Move4[5] + "  **S2:** " +Hero1.Move4[6] + " \n"
+        Hero1_Info= Hero1_Info + "  **S1:** " + Hero1.Move4[5] + "  **S2:** " +Hero1.Move4[6] + "  **S3:** " + Hero1.Move4[7] + "  **S4:** " +Hero1.Move4[8] +"  **S5:** " +Hero1.Move4[9] +" \n"
         
         Hero2_Info = "__**" + Hero2.HeroName + "**__\n" 
         Hero2_Info= Hero2_Info + "**" + Hero2.Move1[0]+ "** -   **Type:** " + Hero2.Move1[1] + "  **Description:** " + Hero2.Move1[2] + "  **Attack Type:** " + Hero2.Move1[3] + "  **Power:** " + str(Hero2.Move1[4]) 
-        Hero2_Info= Hero2_Info + "  **S1:** " + Hero2.Move1[5] + "  **S2:** " +Hero2.Move1[6] + " \n" 
+        Hero2_Info= Hero2_Info + "  **S1:** " + Hero2.Move1[5] + "  **S2:** " +Hero2.Move1[6] + "  **S3:** " + Hero2.Move1[7] + "  **S4:** " +Hero2.Move1[8] +"  **S5:** " +Hero2.Move1[9] +" \n" 
         Hero2_Info= Hero2_Info + "**" + Hero2.Move2[0]+ "** -   **Type:** " + Hero2.Move2[1] + "  **Description:** " + Hero2.Move2[2] + "  **Attack Type:** " + Hero2.Move2[3] + "  **Power:** " + str(Hero2.Move2[4])  
-        Hero2_Info= Hero2_Info + "  **S1:** " + Hero2.Move2[5] + "  **S2:** " +Hero2.Move2[6] + " \n" 
+        Hero2_Info= Hero2_Info + "  **S1:** " + Hero2.Move2[5] + "  **S2:** " +Hero2.Move2[6] + "  **S3:** " + Hero2.Move2[7] + "  **S4:** " +Hero2.Move2[8] +"  **S5:** " +Hero2.Move2[9] +" \n" 
         Hero2_Info= Hero2_Info + "**" + Hero2.Move3[0]+ "** -   **Type:** " + Hero2.Move3[1] + "  **Description:** " + Hero2.Move3[2] + "  **Attack Type:** " + Hero2.Move3[3] + "  **Power:** " + str(Hero2.Move3[4])  
-        Hero2_Info= Hero2_Info + "  **S1:** " + Hero2.Move3[5] + "  **S2:** " +Hero2.Move3[6] + " \n" 
+        Hero2_Info= Hero2_Info + "  **S1:** " + Hero2.Move3[5] + "  **S2:** " +Hero2.Move3[6] + "  **S3:** " + Hero2.Move3[7] + "  **S4:** " +Hero2.Move3[8] +"  **S5:** " +Hero2.Move3[9] +" \n" 
         Hero2_Info= Hero2_Info + "**" +Hero2.Move4[0]+ "** -   **Type:** " + Hero2.Move4[1] + "  **Description:** " + Hero2.Move4[2] + "  **Attack Type:** " + Hero2.Move4[3] + "  **Power:** " + str(Hero2.Move4[4]) 
-        Hero2_Info= Hero2_Info + "  **S1:** " + Hero2.Move4[5] + "  **S2:** " +Hero2.Move4[6] + " \n"
+        Hero2_Info= Hero2_Info + "  **S1:** " + Hero2.Move4[5] + "  **S2:** " +Hero2.Move4[6] + "  **S3:** " + Hero2.Move4[7] + "  **S4:** " +Hero2.Move4[8] +"  **S5:** " +Hero2.Move4[9] + " \n"
 
         Hero_Info = Hero1_Info + Hero2_Info
 
@@ -484,7 +499,7 @@ class GachaBattle(commands.Cog):
     async def battle(self,ctx, member: discord.Member):
         authorid = ctx.message.author.id
         serverid = ctx.message.guild.id
-
+        author = ctx.message.author
 
         current_battle = self.battles.get(serverid,None)
 
@@ -499,9 +514,11 @@ class GachaBattle(commands.Cog):
         Hero1_ID = Hero1_Data[0]
         HeroStats1 = gachadatabase.get_primary_hero(Hero1_ID)
         HeroMoves1 = gachadatabase.get_primary_moves([Hero1_ID,serverid])
+
         for move in HeroMoves1:
             HeroStats1.append(move)
-        HeroStats1.append(ctx.message.author)
+        starter = author.name + "#" + author.discriminator
+        HeroStats1.append(starter)
         HeroStats1.append(1)
 
         opponentid = member.id
@@ -514,6 +531,9 @@ class GachaBattle(commands.Cog):
         opponent = member.name + "#" + member.discriminator
         HeroStats2.append(opponent)
         HeroStats2.append(2)
+
+        if len(HeroMoves2)<4 or len(HeroMoves1)<4:
+            return await ctx.send("This battle is not possible. One of the heroes doesn't have 4 moves set!")
 
 
         Hero1_Info = Hero(HeroStats1)

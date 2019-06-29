@@ -50,6 +50,7 @@ async def on_ready():
 
 
 
+
 bot.run(api_key, bot=True, reconnect=True)
 
 

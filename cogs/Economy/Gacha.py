@@ -154,9 +154,10 @@ class Gacha(commands.Cog):
             await ctx.send('Sorry good sir, you do not have permission to modify the database.',delete_after=20)
             return
         
-        balance = gachadatabase.get_balance([SERVERID,MEMBERID])
+        balance = database.get_balance([SERVERID,MEMBERID])
         newbal = balance[2] + coins
-        gachadatabase.set_balance([SERVERID,MEMBERID,newbal])
+        database.set_balance([SERVERID,MEMBERID,newbal])
+        await ctx.send("**{}**, you now have a balance of **{}** LuigiCoins!".format(author,newbal))
 
     @commands.command(name='gachasetcoins',aliases=['gsc'])
     async def setcoins(self,ctx,member: discord.Member = None,coins: int = 0):
@@ -177,7 +178,8 @@ class Gacha(commands.Cog):
             await ctx.send('Sorry good sir, you do not have permission to create an economy!',delete_after=20)
             return
         
-        gachadatabase.set_balance([SERVERID,MEMBERID,coins])
+        database.set_balance([SERVERID,MEMBERID,coins])
+        await ctx.send("**{}**, you now have a balance of **{}** LuigiCoins!".format(author,coins))
 
 
     @commands.command(name='gachasummon',aliases=['summon','gs'])
@@ -194,7 +196,7 @@ class Gacha(commands.Cog):
         '''
         SERVERID = str(ctx.message.guild.id)
         MEMBERID = str(ctx.message.author.id)
-        balance = gachadatabase.get_balance([SERVERID,MEMBERID])
+        balance = database.get_balance([SERVERID,MEMBERID])
         ID = randint(0,80000)
         if not balance:
             await ctx.send("You don't have an account set up on this server!")
@@ -202,7 +204,7 @@ class Gacha(commands.Cog):
         tokens = balance[2]
         if tokens >=5:
             tokens = tokens - 5
-            gachadatabase.set_balance([SERVERID,MEMBERID,tokens])
+            database.set_balance([SERVERID,MEMBERID,tokens])
             value = randint(1,100)
             
             
@@ -330,9 +332,9 @@ class Gacha(commands.Cog):
             if hero[9] == 5:
                 coins = 10
 
-            balance = gachadatabase.get_balance([SERVERID,MEMBERID])
+            balance = database.get_balance([SERVERID,MEMBERID])
             newbal = balance[2] + coins
-            gachadatabase.set_balance([SERVERID,MEMBERID,newbal])
+            database.set_balance([SERVERID,MEMBERID,newbal])
             gachadatabase.delete_barracks_hero(ID)  
             msg = msg + "**{}** has been deleted. Returning **{} LuigiCoins.** \n".format(hero[2],coins)
         if msg != "":

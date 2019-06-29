@@ -12,6 +12,7 @@ import os
 import re
 from random import randint
 from db import gachadatabase
+from db import database
 
 
 class Economy(commands.Cog):
@@ -39,13 +40,13 @@ class Economy(commands.Cog):
             return
 
         
-        econ_enabled = gachadatabase.get_economy(guildid)
+        econ_enabled = database.get_economy(guildid)
         if not econ_enabled:
             await ctx.send("Creating economy..",delete_after=20)
-            gachadatabase.create_economy([guildid,'Enabled'])
+            database.create_economy([guildid,'Enabled'])
 
             for member in memberslist:
-                gachadatabase.add_econ_member([guildid,member.id,25])
+                database.add_econ_member([guildid,member.id,25])
 
             await ctx.send("Economy created!",delete_after=20)
 
@@ -58,7 +59,7 @@ class Economy(commands.Cog):
         authorid = ctx.message.author.id
         guildid = ctx.message.guild.id
 
-        balance = gachadatabase.get_balance([guildid,authorid])
+        balance = database.get_balance([guildid,authorid])
         await ctx.send("**{}**, you currently have **{} LuigiCoins!**".format(ctx.message.author,balance[2]))
 
 
