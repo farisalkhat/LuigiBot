@@ -25,25 +25,42 @@ class Gacha(commands.Cog):
 
 
 
-    @commands.command(name='rhero')
+    @commands.command(name='gacharemove')
     async def rhero(self,ctx,*,arg):
+        """
+        Removes the hero from being obtainable through summoning. Must have admin privileges to execute it. 
+        This command does NOT remove the hero from any users barracks. Use gachamassacre for that.
+
+        Usage:
+        !gacharemove Dio Brando
+
+        """
+
+
         author = ctx.message.author
         SERVERID = str(ctx.message.guild.id)
 
         if not author.guild_permissions.administrator:
-            await ctx.send('Sorry good sir, you do not have permission to create an economy!',delete_after=20)
+            await ctx.send('Sorry good sir, you do not have permission to modify the database!',delete_after=20)
             return
         lmao = gachadatabase.get_hero([arg,ctx.message.guild.id])
         if not lmao:
-            await ctx.send("Hero does not exist!")
+            await ctx.send("Hero does not exist!",delete_after = 20)
         else:
             HERONAME = lmao[1]
             gachadatabase.remove_hero([SERVERID,HERONAME])
-            await ctx.send("Hero has been deleted!")
+            await ctx.send("Hero has been deleted!",delete_after=20)
 
 
-    @commands.command(name='pdhero')
+    @commands.command(name='gachamassacre')
     async def pdhero(self,ctx,*,arg):
+        """
+        Removes the hero from everyones barracks. You must have admin privileges to execute this command.
+        This command does NOT remove the hero from the summoning pool. Use gacharemove for that.
+
+        Usage:
+        !gachamassacre Dio Brando
+        """
         author = ctx.message.author
         SERVERID = str(ctx.message.guild.id)
 
@@ -60,8 +77,17 @@ class Gacha(commands.Cog):
 
 
 
-    @commands.command(name='gcreate')
+    @commands.command(name='gachacreate', aliases=['gcreate'])
     async def gcreate(self,ctx,*,arg):
+        """
+        Add a new hero for the server you're in. Requires admin privileges to execute this command.
+        At the moment, this command is flawed. It is comma separated and requries 11 arguments. 
+        This means that you CANNOT use commas anywhere in your hero creation, which includes the description.
+        This will be updated in the future.
+
+        Usage:
+        !gachacreate  Swindlemelonz, http://a.espncdn.com/photo/2016/0811/r112443_1855x2651cc.jpg,One of NA Dota's greatest heroes and greatest adversaries. ,Faris,Antagonist,5,46,36,26,27,30
+        """
         SERVERID = str(ctx.message.guild.id)
         gacha = arg.split(',')
         author = ctx.message.author
@@ -84,8 +110,15 @@ class Gacha(commands.Cog):
         gachadatabase.create_hero(gachas)
         await ctx.send("**{}** has created the hero: **{}**".format(ctx.message.author,gachas[1]))
 
-    @commands.command(name="hero",aliases=['h'])
+    @commands.command(name="gachahero",aliases=['gh'])
     async def get_hero_data(self,ctx,*,arg):
+        """
+        Get some basic info for a gacha hero on this server.
+
+        Usage:
+        !gachahero Dio Brando
+        !gh Oliver
+        """
         lmao = gachadatabase.get_hero([arg,ctx.message.guild.id])
         if not lmao:
             await ctx.send("Hero does not exist!")
@@ -102,23 +135,39 @@ class Gacha(commands.Cog):
             await ctx.send(embed=embed)
 
 
-    @commands.command(name='givecoins',aliases=['gc'])
+    @commands.command(name='gachagivecoins',aliases=['ggc'])
     async def givecoins(self,ctx,member: discord.Member = None,coins: int = 0):
+        """
+        Gives coins to a user. Requires admin privileges to execute this command. 
+        Use gachasetcoins to set the coins of a user to a specific amount.
+
+        Usage:
+        !gachagivecoins @Lefty#6430 50
+        !gg @Lefty#6430 50
+        """
 
         author = ctx.message.author
         SERVERID = str(ctx.message.guild.id)
         MEMBERID = str(member.id)
 
         if not author.guild_permissions.administrator:
-            await ctx.send('Sorry good sir, you do not have permission to create an economy!',delete_after=20)
+            await ctx.send('Sorry good sir, you do not have permission to modify the database.',delete_after=20)
             return
         
         balance = gachadatabase.get_balance([SERVERID,MEMBERID])
         newbal = balance[2] + coins
         gachadatabase.set_balance([SERVERID,MEMBERID,newbal])
 
-    @commands.command(name='setcoins',aliases=['sc'])
+    @commands.command(name='gachasetcoins',aliases=['gsc'])
     async def setcoins(self,ctx,member: discord.Member = None,coins: int = 0):
+        """
+        Sets coins to a user. Requires admin privileges to execute this command. 
+        Use gachagivecoins to give coins of a specific amount to a user.
+
+        Usage:
+        !gs @Lefty#6430 50
+        !gachasetcoins @Lefty#6430 50
+        """
 
         author = ctx.message.author
         SERVERID = str(ctx.message.guild.id)
@@ -131,8 +180,18 @@ class Gacha(commands.Cog):
         gachadatabase.set_balance([SERVERID,MEMBERID,coins])
 
 
-    @commands.command(name='summon',aliases=['s'])
+    @commands.command(name='gachasummon',aliases=['summon','gs'])
     async def summon(self,ctx):
+        '''
+        Summons a hero from the pool of heroes set for the server.
+        Requires 5 LuigiCoins from the author.
+        Current summoning rates: 50% for 3 Star, 40% for 4 star, 10% for 5 star.
+
+        Usage:
+        !gachasummon
+        !summon
+        !gs
+        '''
         SERVERID = str(ctx.message.guild.id)
         MEMBERID = str(ctx.message.author.id)
         balance = gachadatabase.get_balance([SERVERID,MEMBERID])
@@ -172,24 +231,39 @@ class Gacha(commands.Cog):
             await ctx.send("Sorry, you don't have enough coins sir!")
             
 
-    @commands.command('list3stars')
+    @commands.command('gacha3', aliases = ['g3'])
     async def list3stars(self,ctx):
+        """
+        List all 3 star heroes on the server.
+        !gacha3
+        !g3
+        """
         SERVERID = str(ctx.message.guild.id)
         threestars = gachadatabase.get_threestars(SERVERID)
         await ctx.send("There are currently **{}** Three Rarity Heroes on this server.".format(len(threestars)))
         newlist = create_filter_list(threestars)
         await ctx.send(newlist)
     
-    @commands.command('list4stars')
+    @commands.command('gacha4',aliases = ['g4'])
     async def list4stars(self,ctx):
+        """
+        List all 4 star heroes on the server.
+        !gacha4
+        !g4
+        """
         SERVERID = str(ctx.message.guild.id)
         fourstars = gachadatabase.get_fourstars(SERVERID)
         await ctx.send("There are currently **{}** Four Rarity Heroes on this server.".format(len(fourstars)))
         newlist = create_filter_list(fourstars)
         await ctx.send(newlist)
     
-    @commands.command('list5stars')
+    @commands.command('gacha5',aliases = ['g5'])
     async def list5stars(self,ctx):
+        """
+        List all 5 star heroes on the server.
+        !gacha5
+        !g5
+        """
         SERVERID = str(ctx.message.guild.id)
         fivestars = gachadatabase.get_fivestars(SERVERID)
         await ctx.send("There are currently **{}** Five Rarity Heroes on this server.".format(len(fivestars)))
@@ -201,8 +275,15 @@ class Gacha(commands.Cog):
 
 
 
-    @commands.command(name='checkbox',aliases=['cb','pc'])
+    @commands.command(name='gachapc',aliases=['gpc','pc'])
     async def checkbox(self,ctx):
+        """
+        Lists all of the author's heroes.
+        Usage:
+        !gachapc
+        !gpc
+        !pc
+        """
         SERVERID = str(ctx.message.guild.id)
         MEMBERID = str(ctx.message.author.id)
 
@@ -210,34 +291,61 @@ class Gacha(commands.Cog):
         if not barracks:
             await ctx.send("You got no boys, bro!")
         barrackslist = create_list(barracks)
-        await ctx.send(barrackslist)
-        print(barracks)
+        await ctx.send(barrackslist,delete_after=30)
+        
     
-    @commands.command(name='killhero',aliases =['kh'])
-    async def killhero(self,ctx,ID: int = 0):
+    @commands.command(name='gachareturn',aliases =['gr','gk'])
+    async def killhero(self,ctx,*,arg):
+        """
+        Release a hero the author owns. Gives back LuigiCoins for the following rarities:
+        3 star = 2 LuigiCoins
+        4 star = 4 LuigiCoins
+        5 star = 10 LuigiCoins
+
+        Requires the user to input their hero ID. Use the gachapc command to see it.
+        Usage:
+        !gr 11435
+        """
         SERVERID = ctx.message.guild.id
         MEMBERID = ctx.author.id
+        heroids = arg.split(';')
+        heroid_ints = []
+        for hero in heroids:
+            heroid_ints.append(int(hero))
+        print(heroid_ints)
+        msg = ""
 
-        hero = gachadatabase.get_barracks_hero([SERVERID,MEMBERID,ID])
-        if not hero:
-            await ctx.send("You do not own a hero with this ID.")
-            return
 
-        if hero[9] == 3:
-            coins = 2
-        if hero[9] == 4:
-            coins = 4
-        if hero[9] == 5:
-            coins = 10
+        for ID in heroid_ints:
 
-        balance = gachadatabase.get_balance([SERVERID,MEMBERID])
-        newbal = balance[2] + coins
-        gachadatabase.set_balance([SERVERID,MEMBERID,newbal])
-        gachadatabase.delete_barracks_hero(ID)  
-        await ctx.send("**{}** has been deleted. Returning **{} LuigiCoins.**".format(hero[2],coins))
+            hero = gachadatabase.get_barracks_hero([SERVERID,MEMBERID,ID])
+            if not hero:
+                await ctx.send("You do not own a hero with this ID: **{}**".format(ID),delete_after=10)
+                continue
 
-    @commands.command(name='setp')
+            if hero[9] == 3:
+                coins = 2
+            if hero[9] == 4:
+                coins = 4
+            if hero[9] == 5:
+                coins = 10
+
+            balance = gachadatabase.get_balance([SERVERID,MEMBERID])
+            newbal = balance[2] + coins
+            gachadatabase.set_balance([SERVERID,MEMBERID,newbal])
+            gachadatabase.delete_barracks_hero(ID)  
+            msg = msg + "**{}** has been deleted. Returning **{} LuigiCoins.** \n".format(hero[2],coins)
+        if msg != "":
+            await ctx.send(msg,delete_after=20)
+        
+    @commands.command(name='gachaprimary',aliases=['gp','gsp'])
     async def setp(self,ctx,*,arg):
+        """
+        Sets the primary hero for the user on the current server. Requires the hero to have 4 moves already, as well as the Hero ID.
+
+        Usage:
+        !gachaprimary 11123
+        """
         authorid = str(ctx.message.author.id)
         serverid= str(ctx.message.guild.id)
         hero = gachadatabase.get_barracks_hero([serverid,authorid,arg])
