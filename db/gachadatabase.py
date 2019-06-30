@@ -12,21 +12,21 @@ These queries modify or pull info from the Heroes Table.
 '''
 
 def get_threestars(SERVERID):
-    query = 'SELECT Name,HP,ATK,DEF,SDEF,SPD,Description FROM Heroes WHERE SERVERID = :SERVERID AND Rating =3'
+    query = 'SELECT Name,HP,ATK,DEF,SDEF,SPD,Description,TYPE FROM Heroes WHERE SERVERID = :SERVERID AND Rating =3'
     rs = con.execute(query,dict(SERVERID=SERVERID))
     results = []
     for user in rs:
         results.append(list(user[:]))
     return results
 def get_fourstars(SERVERID):
-    query = 'SELECT Name,HP,ATK,DEF,SDEF,SPD,Description FROM Heroes WHERE SERVERID = :SERVERID AND Rating =4'
+    query = 'SELECT Name,HP,ATK,DEF,SDEF,SPD,Description,TYPE FROM Heroes WHERE SERVERID = :SERVERID AND Rating =4'
     rs = con.execute(query,dict(SERVERID=SERVERID))
     results = []
     for user in rs:
         results.append(list(user[:]))
     return results
 def get_fivestars(SERVERID):
-    query = 'SELECT Name,HP,ATK,DEF,SDEF,SPD,Description FROM Heroes WHERE SERVERID = :SERVERID AND Rating =5'
+    query = 'SELECT Name,HP,ATK,DEF,SDEF,SPD,Description,TYPE FROM Heroes WHERE SERVERID = :SERVERID AND Rating =5'
     rs = con.execute(query,dict(SERVERID=SERVERID))
     results = []
     for user in rs:
@@ -57,9 +57,9 @@ These queries modify or pull info from the Barracks table.
 '''
 
 def add_hero(input):
-    (SERVERID, MEMBERID,HERONAME,HP,ATK,DEF,SDEF,SPD,RARITY,ID) = input
-    query = 'INSERT INTO Barracks VALUES(:SERVERID,:MEMBERID,:HERONAME,:HP,:ATK,:DEF,:SDEF,:SPD,0,:RARITY,:ID)'
-    con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID,HERONAME=HERONAME,HP=HP,ATK=ATK,DEF=DEF,SDEF=SDEF,SPD=SPD,RARITY=RARITY,ID=ID))
+    (SERVERID, MEMBERID,HERONAME,HP,ATK,DEF,SDEF,SPD,RARITY,ID,TYPE) = input
+    query = 'INSERT INTO Barracks VALUES(:SERVERID,:MEMBERID,:HERONAME,:HP,:ATK,:DEF,:SDEF,:SPD,0,:RARITY,:ID,:TYPE)'
+    con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID,HERONAME=HERONAME,HP=HP,ATK=ATK,DEF=DEF,SDEF=SDEF,SPD=SPD,RARITY=RARITY,ID=ID,TYPE=TYPE))
     conn.commit()
 def get_heroes(input):
     (SERVER_ID,USERNAME) = input
@@ -98,11 +98,28 @@ def remove_barracks_hero(input):
 
 
 
-def place_primary_hero(input):
-    (SERVERID,MEMBERID,HERONAME) = input
-    query = 'INSERT INTO Primary_Hero VALUES(:SERVERID,:MEMBERID,:HERONAME)'
-    con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID,HERONAME=HERONAME))
+def place_primary_hero1(input):
+    (SERVERID,MEMBERID,HEROID1) = input
+    query = 'INSERT INTO Primary_Hero(SERVERID,MEMBERID,HEROID1) VALUES(:SERVERID,:MEMBERID,:HEROID1)'
+    con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID,HEROID1=HEROID1))
     conn.commit()
+def place_primary_hero2(input):
+    (SERVERID,MEMBERID,HEROID1,HEROID2) = input
+    query = 'INSERT INTO Primary_Hero(SERVERID,MEMBERID,HEROID1,HEROID2) VALUES(:SERVERID,:MEMBERID,:HEROID1,:HEROID2)'
+    con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID,HEROID1=HEROID1,HEROID2=HEROID2))
+    conn.commit()
+def place_primary_hero3(input):
+    (SERVERID,MEMBERID,HEROID1,HEROID2,HEROID3) = input
+    query = 'INSERT INTO Primary_Hero(SERVERID,MEMBERID,HEROID1,HEROID2,HEROID3) VALUES(:SERVERID,:MEMBERID,:HEROID1,:HEROID2,:HEROID3)'
+    con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID,HEROID1=HEROID1,HEROID2=HEROID2,HEROID3=HEROID3))
+    conn.commit()
+def place_primary_hero4(input):
+    (SERVERID,MEMBERID,HEROID1,HEROID2,HEROID3,HEROID4) = input
+    query = 'INSERT INTO Primary_Hero(SERVERID,MEMBERID,HEROID1,HEROID2,HEROID3,HEROID4) VALUES(:SERVERID,:MEMBERID,:HEROID1,HEROID2,HEROID3,HEROID4)'
+    con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID,HEROID1=HEROID1,HEROID2=HEROID2,HEROID3=HEROID3,HEROID4=HEROID4))
+    conn.commit()
+
+
 def remove_primary_hero(input):
     (SERVERID,MEMBERID) = input
     query = 'DELETE FROM Primary_Hero WHERE SERVERID=:SERVERID AND MEMBERID=:MEMBERID'
@@ -110,28 +127,22 @@ def remove_primary_hero(input):
     conn.commit()
 def get_primary_hero_ID(input):
     (SERVERID,MEMBERID)= input
-    query = 'SELECT HEROID FROM Primary_Hero WHERE SERVERID=:SERVERID AND MEMBERID=:MEMBERID'
+    query = 'SELECT HEROID1,HEROID2,HEROID3,HEROID4 FROM Primary_Hero WHERE SERVERID=:SERVERID AND MEMBERID=:MEMBERID'
     rs = con.execute(query,dict(SERVERID=SERVERID,MEMBERID=MEMBERID))
     results = []
     for result in rs:
         results = list(result[:])
     return results
-def get_primary_hero(HEROID):
-    query = '''SELECT Barracks.HERONAME, Barracks.HP,Barracks.ATK,Barracks.DEF,Barracks.SDEF,Barracks.SPD FROM Barracks,
-    Primary_Hero WHERE Primary_Hero.HEROID = :HEROID AND Barracks.HEROID = :HEROID '''
-    rs = con.execute(query,dict(HEROID=HEROID))
-    results = []
-    for result in rs:
-        results = list(result[:])
-    return results
-def get_primary_moves(input):
+
+
+def get_primary_moves1(input):
     (HEROID,SERVERID)= input
     query = """SELECT 
     Moveset.MOVENAME, Moveset.TYPE,Moveset.DETAIL, Moveset.POWERTYPE, Moveset.POWER,Moveset.STATUS1,Moveset.STATUS2,Moveset.STATUS3,Moveset.STATUS4,Moveset.STATUS5
     FROM Moveset,Primary_Hero,Barracks
-    WHERE Primary_Hero.HEROID = :HEROID AND
+    WHERE Primary_Hero.HEROID1 = :HEROID AND
     Primary_Hero.SERVERID = :SERVERID AND
-    Primary_Hero.HEROID = Barracks.HEROID AND 
+    Primary_Hero.HEROID1 = Barracks.HEROID AND 
     Moveset.SERVERID = Primary_Hero.SERVERID AND
     Moveset.HERONAME = Barracks.HERONAME"""
     rs = con.execute(query,dict(HEROID=HEROID,SERVERID=SERVERID))
@@ -139,3 +150,85 @@ def get_primary_moves(input):
     for user in rs:
         results.append(list(user[:]))
     return results
+def get_primary_moves2(input):
+    (HEROID,SERVERID)= input
+    query = """SELECT 
+    Moveset.MOVENAME, Moveset.TYPE,Moveset.DETAIL, Moveset.POWERTYPE, Moveset.POWER,Moveset.STATUS1,Moveset.STATUS2,Moveset.STATUS3,Moveset.STATUS4,Moveset.STATUS5
+    FROM Moveset,Primary_Hero,Barracks
+    WHERE Primary_Hero.HEROID2 = :HEROID AND
+    Primary_Hero.SERVERID = :SERVERID AND
+    Primary_Hero.HEROID2 = Barracks.HEROID AND 
+    Moveset.SERVERID = Primary_Hero.SERVERID AND
+    Moveset.HERONAME = Barracks.HERONAME"""
+    rs = con.execute(query,dict(HEROID=HEROID,SERVERID=SERVERID))
+    results = []
+    for user in rs:
+        results.append(list(user[:]))
+    return results
+def get_primary_moves3(input):
+    (HEROID,SERVERID)= input
+    query = """SELECT 
+    Moveset.MOVENAME, Moveset.TYPE,Moveset.DETAIL, Moveset.POWERTYPE, Moveset.POWER,Moveset.STATUS1,Moveset.STATUS2,Moveset.STATUS3,Moveset.STATUS4,Moveset.STATUS5
+    FROM Moveset,Primary_Hero,Barracks
+    WHERE Primary_Hero.HEROID3 = :HEROID AND
+    Primary_Hero.SERVERID = :SERVERID AND
+    Primary_Hero.HEROID3 = Barracks.HEROID AND 
+    Moveset.SERVERID = Primary_Hero.SERVERID AND
+    Moveset.HERONAME = Barracks.HERONAME"""
+    rs = con.execute(query,dict(HEROID=HEROID,SERVERID=SERVERID))
+    results = []
+    for user in rs:
+        results.append(list(user[:]))
+    return results
+def get_primary_moves4(input):
+    (HEROID,SERVERID)= input
+    query = """SELECT 
+    Moveset.MOVENAME, Moveset.TYPE,Moveset.DETAIL, Moveset.POWERTYPE, Moveset.POWER,Moveset.STATUS1,Moveset.STATUS2,Moveset.STATUS3,Moveset.STATUS4,Moveset.STATUS5
+    FROM Moveset,Primary_Hero,Barracks
+    WHERE Primary_Hero.HEROID4 = :HEROID AND
+    Primary_Hero.SERVERID = :SERVERID AND
+    Primary_Hero.HEROID4 = Barracks.HEROID AND 
+    Moveset.SERVERID = Primary_Hero.SERVERID AND
+    Moveset.HERONAME = Barracks.HERONAME"""
+    rs = con.execute(query,dict(HEROID=HEROID,SERVERID=SERVERID))
+    results = []
+    for user in rs:
+        results.append(list(user[:]))
+    return results
+def get_primary_hero1(HEROID):
+    query = '''SELECT Barracks.HERONAME, Barracks.HP,Barracks.ATK,Barracks.DEF,Barracks.SDEF,Barracks.SPD,Barracks.TYPE FROM Barracks,
+    Primary_Hero WHERE Primary_Hero.HEROID1 = :HEROID AND Barracks.HEROID = :HEROID '''
+    rs = con.execute(query,dict(HEROID=HEROID))
+    results = []
+    for result in rs:
+        results = list(result[:])
+    return results
+def get_primary_hero2(HEROID):
+    query = '''SELECT Barracks.HERONAME, Barracks.HP,Barracks.ATK,Barracks.DEF,Barracks.SDEF,Barracks.SPD,Barracks.TYPE FROM Barracks,
+    Primary_Hero WHERE Primary_Hero.HEROID2 = :HEROID AND Barracks.HEROID = :HEROID '''
+    rs = con.execute(query,dict(HEROID=HEROID))
+    results = []
+    for result in rs:
+        results = list(result[:])
+    return results
+def get_primary_hero3(HEROID):
+    query = '''SELECT Barracks.HERONAME, Barracks.HP,Barracks.ATK,Barracks.DEF,Barracks.SDEF,Barracks.SPD,Barracks.TYPE FROM Barracks,
+    Primary_Hero WHERE Primary_Hero.HEROID3 = :HEROID AND Barracks.HEROID = :HEROID '''
+    rs = con.execute(query,dict(HEROID=HEROID))
+    results = []
+    for result in rs:
+        results = list(result[:])
+    return results
+def get_primary_hero4(HEROID):
+    query = '''SELECT Barracks.HERONAME, Barracks.HP,Barracks.ATK,Barracks.DEF,Barracks.SDEF,Barracks.SPD,Barracks.TYPE FROM Barracks,
+    Primary_Hero WHERE Primary_Hero.HEROID4 = :HEROID AND Barracks.HEROID = :HEROID '''
+    rs = con.execute(query,dict(HEROID=HEROID))
+    results = []
+    for result in rs:
+        results = list(result[:])
+    return results
+
+
+
+
+

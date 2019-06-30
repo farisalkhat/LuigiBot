@@ -47,8 +47,12 @@ async def on_ready():
     print(f'Successfully logged in and booted...!')
 
 
-
-
+'''
+@bot.event
+async def on_message(message):
+    print(message.author.id)
+    await message.add_reaction(":WutFace:288534331763458048")
+'''
 
 
 bot.run(api_key, bot=True, reconnect=True)

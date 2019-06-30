@@ -213,21 +213,21 @@ class Gacha(commands.Cog):
                 threestars = gachadatabase.get_threestars(SERVERID)
                 gachaplace = randint(0,len(threestars)-1)
                 gacha = threestars[gachaplace]
-                gachadatabase.add_hero([SERVERID,MEMBERID,gacha[0],gacha[1],gacha[2],gacha[3],gacha[4],gacha[5],3,ID])
+                gachadatabase.add_hero([SERVERID,MEMBERID,gacha[0],gacha[1],gacha[2],gacha[3],gacha[4],gacha[5],3,ID,gacha[7]])
                 await ctx.send("You got the 3 star hero: **{}**!! ID: {} Description: {}".format(gacha[0],ID,gacha[6]))
             
             if value >=51 and value <=90:
                 fourstars = gachadatabase.get_fourstars(SERVERID)
                 gachaplace = randint(0,len(fourstars)-1)
                 gacha = fourstars[gachaplace]
-                gachadatabase.add_hero([SERVERID,MEMBERID,gacha[0],gacha[1],gacha[2],gacha[3],gacha[4],gacha[5],4,ID])
+                gachadatabase.add_hero([SERVERID,MEMBERID,gacha[0],gacha[1],gacha[2],gacha[3],gacha[4],gacha[5],4,ID,gacha[7]])
                 await ctx.send("You got the 4 star hero: **{}**!! Description: {}".format(gacha[0],gacha[6]))
 
             if value >=91 and value <=100:
                 fivestars = gachadatabase.get_fivestars(SERVERID)
                 gachaplace = randint(0,len(fivestars)-1)
                 gacha = fivestars[gachaplace]
-                gachadatabase.add_hero([SERVERID,MEMBERID,gacha[0],gacha[1],gacha[2],gacha[3],gacha[4],gacha[5],5,ID])
+                gachadatabase.add_hero([SERVERID,MEMBERID,gacha[0],gacha[1],gacha[2],gacha[3],gacha[4],gacha[5],5,ID,gacha[7]])
                 await ctx.send("You got the 5 star hero: **{}**!! Description: {}".format(gacha[0],gacha[6]))
         else:
             await ctx.send("Sorry, you don't have enough coins sir!")
@@ -340,23 +340,51 @@ class Gacha(commands.Cog):
         if msg != "":
             await ctx.send(msg,delete_after=20)
         
+
+    
+
+
     @commands.command(name='gachaprimary',aliases=['gp','gsp'])
     async def setp(self,ctx,*,arg):
         """
         Sets the primary hero for the user on the current server. Requires the hero to have 4 moves already, as well as the Hero ID.
 
         Usage:
-        !gachaprimary 11123
+        !gachaprimary 11123;12345;12333;14141
         """
         authorid = str(ctx.message.author.id)
         serverid= str(ctx.message.guild.id)
-        hero = gachadatabase.get_barracks_hero([serverid,authorid,arg])
-        if not hero:
-            return await ctx.send("Sorry, you do not have a hero with that ID!")
-        gachadatabase.remove_primary_hero([serverid,authorid])
-        gachadatabase.place_primary_hero([serverid,authorid,hero[10]])
+        HEROIDS =  arg.split(' ')
+        OWN_HEROID = []
+        msg = "Your primary team is now: "
 
-        await ctx.send("You've set **{}** as your primary hero.".format(hero[2]))
+
+        if len(HEROIDS)>4:
+            return await ctx.send("Sorry, you can only set up to 4 primary heroes max!")
+
+        for HEROID in HEROIDS:
+            hero = gachadatabase.get_barracks_hero([serverid,authorid,HEROID])
+            if not hero:
+                await ctx.send("Sorry, you do not have a hero with the following ID: **{}**".format(HEROID))
+            else:
+                OWN_HEROID.append(HEROID)
+                msg = msg + "**"+hero[2]+"**, "
+
+        if not OWN_HEROID:
+            return await ctx.send("Sorry, you don't own any heroes with the IDS you gave.")
+        gachadatabase.remove_primary_hero([serverid,authorid])
+        if len(OWN_HEROID) == 1:
+            gachadatabase.place_primary_hero1([serverid,authorid,OWN_HEROID[0]])
+        if len(OWN_HEROID) == 2:
+            gachadatabase.place_primary_hero2([serverid,authorid,OWN_HEROID[0],OWN_HEROID[1]])
+        if len(OWN_HEROID) == 3:
+            gachadatabase.place_primary_hero3([serverid,authorid,OWN_HEROID[0],OWN_HEROID[1],OWN_HEROID[2]])
+        if len(OWN_HEROID) == 4:
+            gachadatabase.place_primary_hero4([serverid,authorid,OWN_HEROID[0],OWN_HEROID[1],OWN_HEROID[2],OWN_HEROID[3]])
+
+
+        
+        await ctx.send(msg)
 
 
 def create_list(barracks):
