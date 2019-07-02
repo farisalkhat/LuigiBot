@@ -13,6 +13,7 @@ import re
 from random import randint
 from db import gachadatabase
 from db import database
+from core.helper import permission
 
 
 class Economy(commands.Cog):
@@ -34,7 +35,8 @@ class Economy(commands.Cog):
         memberslist = ctx.message.guild.members
         author = ctx.message.author
         
-
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         if not author.guild_permissions.administrator:
             await ctx.send('Sorry good sir, you do not have permission to create an economy!',delete_after=20)
             return
@@ -58,7 +60,8 @@ class Economy(commands.Cog):
     async def balance(self,ctx):
         authorid = ctx.message.author.id
         guildid = ctx.message.guild.id
-
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         balance = database.get_balance([guildid,authorid])
         await ctx.send("**{}**, you currently have **{} LuigiCoins!**".format(ctx.message.author,balance[2]))
 

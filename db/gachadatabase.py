@@ -232,3 +232,66 @@ def get_primary_hero4(HEROID):
 
 
 
+def set_gacha_channel(input):
+    (SERVERID,CHANNELID) = input
+    query = 'INSERT INTO Gacha_Channels VALUES(:SERVERID,:CHANNELID)'
+    con.execute(query,dict(SERVERID=SERVERID,CHANNELID=CHANNELID))
+    conn.commit()
+
+def get_gacha_channel(input):
+    (SERVERID,CHANNELID) = input
+    query = 'SELECT * FROM Gacha_Channels WHERE SERVERID=:SERVERID AND CHANNELID=:CHANNELID'
+    rs = con.execute(query,dict(SERVERID=SERVERID,CHANNELID=CHANNELID))
+    results = []
+    for result in rs:
+        results = list(result[:])
+    if results:
+        return True
+    return False
+
+def add_gacha_move(input):
+    if len(input) == 6:
+    #Serverid;Heroname;Movename;Type;PT;Power;
+        (SERVERID,HERONAME,MOVENAME,TYPE,PT,POWER) = input
+        query = "INSERT INTO Moveset VALUES(:SERVERID,:HERONAME,:MOVENAME,:TYPE,'No detail',:PT,:POWER,'NA','NA','NA','NA','NA')"
+        rs = con.execute(query,dict(SERVERID=SERVERID,HERONAME=HERONAME,MOVENAME=MOVENAME,TYPE=TYPE,PT=PT,POWER=POWER))
+        conn.commit
+        return
+    if len(input) == 7:
+    #Serverid;Heroname;Movename;Type;PT;Power,Status1;
+        (SERVERID,HERONAME,MOVENAME,TYPE,PT,POWER,STATUS1) = input
+        query = "INSERT INTO Moveset VALUES(:SERVERID,:HERONAME,:MOVENAME,:TYPE,'No detail',:PT,:POWER,:STATUS1,'NA','NA','NA','NA')"
+        rs = con.execute(query,dict(SERVERID=SERVERID,HERONAME=HERONAME,MOVENAME=MOVENAME,TYPE=TYPE,PT=PT,POWER=POWER,STATUS1=STATUS1))
+        conn.commit
+        return
+    if len(input) == 8:
+    #Serverid;Heroname;Movename;Type;PT;Power;Status1;Status2
+        (SERVERID,HERONAME,MOVENAME,TYPE,PT,POWER,STATUS1,STATUS2) = input
+        query = "INSERT INTO Moveset VALUES(:SERVERID,:HERONAME,:MOVENAME,:TYPE,'No detail',:PT,:POWER,:STATUS1,:STATUS2,'NA','NA','NA')"
+        rs = con.execute(query,dict(SERVERID=SERVERID,HERONAME=HERONAME,MOVENAME=MOVENAME,TYPE=TYPE,PT=PT,POWER=POWER,STATUS1=STATUS1,STATUS2=STATUS2))
+        conn.commit
+        return
+    if len(input) == 9:
+    #Serverid;Heroname;Movename;Type;PT;Power;
+        (SERVERID,HERONAME,MOVENAME,TYPE,PT,POWER,STATUS1,STATUS2,STATUS3) = input
+        query = "INSERT INTO Moveset VALUES(:SERVERID,:HERONAME,:MOVENAME,:TYPE,'No detail',:PT,:POWER,:STATUS1,:STATUS2,:STATUS3,'NA','NA')"
+        rs = con.execute(query,dict(SERVERID=SERVERID,HERONAME=HERONAME,MOVENAME=MOVENAME,TYPE=TYPE,PT=PT,POWER=POWER,STATUS1=STATUS1,STATUS2=STATUS2,STATUS3=STATUS3))
+        conn.commit
+        return
+    if len(input) == 10:
+    #Serverid;Heroname;Movename;Type;PT;Power;
+        (SERVERID,HERONAME,MOVENAME,TYPE,PT,POWER,STATUS1,STATUS2,STATUS3,STATUS4) = input
+        query = "INSERT INTO Moveset VALUES(:SERVERID,:HERONAME,:MOVENAME,:TYPE,'No detail',:PT,:POWER,:STATUS1,:STATUS2,:STATUS3,:STATUS4,'NA')"
+        rs = con.execute(query,dict(SERVERID=SERVERID,HERONAME=HERONAME,MOVENAME=MOVENAME,TYPE=TYPE,PT=PT,POWER=POWER,STATUS1=STATUS1,STATUS2=STATUS2,STATUS3=STATUS3,STATUS4=STATUS4))
+        conn.commit
+        return
+    if len(input) == 11:
+    #Serverid;Heroname;Movename;Type;PT;Power;
+        (SERVERID,HERONAME,MOVENAME,TYPE,PT,POWER,STATUS1,STATUS2,STATUS3,STATUS4,STATUS5) = input
+        query = "INSERT INTO Moveset VALUES(:SERVERID,:HERONAME,:MOVENAME,:TYPE,'No detail',:PT,:POWER,:STATUS1,:STATUS2,:STATUS3,:STATUS4,:STATUS5)"
+        rs = con.execute(query,dict(SERVERID=SERVERID,HERONAME=HERONAME,MOVENAME=MOVENAME,TYPE=TYPE,PT=PT,POWER=POWER,STATUS1=STATUS1,STATUS2=STATUS2,STATUS3=STATUS3,STATUS4=STATUS4,STATUS5=STATUS5))
+        conn.commit
+        return
+    
+        
+   

@@ -13,18 +13,13 @@ import re
 from random import randint
 from db import gachadatabase
 from db import database
-
+from core.helper import gacha_allowed
 
 
 class Gacha(commands.Cog):
 
     def __init__(self,bot):
         self.bot = bot
-
-
-
-
-
     @commands.command(name='gacharemove')
     async def rhero(self,ctx,*,arg):
         """
@@ -35,10 +30,13 @@ class Gacha(commands.Cog):
         !gacharemove Dio Brando
 
         """
-
+        
 
         author = ctx.message.author
         SERVERID = str(ctx.message.guild.id)
+        channelid = ctx.message.channel.id
+        if not gachadatabase.get_gacha_channel([SERVERID,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
 
         if not author.guild_permissions.administrator:
             await ctx.send('Sorry good sir, you do not have permission to modify the database!',delete_after=20)
@@ -63,7 +61,9 @@ class Gacha(commands.Cog):
         """
         author = ctx.message.author
         SERVERID = str(ctx.message.guild.id)
-
+        channelid = ctx.message.channel.id
+        if not gachadatabase.get_gacha_channel([SERVERID,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
         if not author.guild_permissions.administrator:
             await ctx.send('Sorry good sir, you do not have permission to create an economy!',delete_after=20)
             return
@@ -91,7 +91,9 @@ class Gacha(commands.Cog):
         SERVERID = str(ctx.message.guild.id)
         gacha = arg.split(',')
         author = ctx.message.author
-
+        channelid = ctx.message.channel.id
+        if not gachadatabase.get_gacha_channel([SERVERID,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
         if not author.guild_permissions.administrator:
             await ctx.send('Sorry good sir, you do not have permission to create an economy!',delete_after=20)
             return
@@ -119,6 +121,10 @@ class Gacha(commands.Cog):
         !gachahero Dio Brando
         !gh Oliver
         """
+        SERVERID = ctx.message.guild.id
+        channelid = ctx.message.channel.id
+        if not gachadatabase.get_gacha_channel([SERVERID,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
         lmao = gachadatabase.get_hero([arg,ctx.message.guild.id])
         if not lmao:
             await ctx.send("Hero does not exist!")
@@ -149,6 +155,9 @@ class Gacha(commands.Cog):
         author = ctx.message.author
         SERVERID = str(ctx.message.guild.id)
         MEMBERID = str(member.id)
+        channelid = ctx.message.channel.id
+        if not gachadatabase.get_gacha_channel([SERVERID,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
 
         if not author.guild_permissions.administrator:
             await ctx.send('Sorry good sir, you do not have permission to modify the database.',delete_after=20)
@@ -173,7 +182,9 @@ class Gacha(commands.Cog):
         author = ctx.message.author
         SERVERID = str(ctx.message.guild.id)
         MEMBERID = str(member.id)
-
+        channelid = ctx.message.channel.id
+        if not gachadatabase.get_gacha_channel([SERVERID,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
         if not author.guild_permissions.administrator:
             await ctx.send('Sorry good sir, you do not have permission to create an economy!',delete_after=20)
             return
@@ -198,6 +209,9 @@ class Gacha(commands.Cog):
         MEMBERID = str(ctx.message.author.id)
         balance = database.get_balance([SERVERID,MEMBERID])
         ID = randint(0,80000)
+        channelid = ctx.message.channel.id
+        if not gachadatabase.get_gacha_channel([SERVERID,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
         if not balance:
             await ctx.send("You don't have an account set up on this server!")
             return
@@ -241,6 +255,9 @@ class Gacha(commands.Cog):
         !g3
         """
         SERVERID = str(ctx.message.guild.id)
+        channelid = ctx.message.channel.id
+        if not gachadatabase.get_gacha_channel([SERVERID,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
         threestars = gachadatabase.get_threestars(SERVERID)
         await ctx.send("There are currently **{}** Three Rarity Heroes on this server.".format(len(threestars)))
         newlist = create_filter_list(threestars)
@@ -254,6 +271,10 @@ class Gacha(commands.Cog):
         !g4
         """
         SERVERID = str(ctx.message.guild.id)
+        
+        channelid = ctx.message.channel.id
+        if not gachadatabase.get_gacha_channel([SERVERID,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
         fourstars = gachadatabase.get_fourstars(SERVERID)
         await ctx.send("There are currently **{}** Four Rarity Heroes on this server.".format(len(fourstars)))
         newlist = create_filter_list(fourstars)
@@ -267,6 +288,9 @@ class Gacha(commands.Cog):
         !g5
         """
         SERVERID = str(ctx.message.guild.id)
+        channelid = ctx.message.channel.id
+        if not gachadatabase.get_gacha_channel([SERVERID,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
         fivestars = gachadatabase.get_fivestars(SERVERID)
         await ctx.send("There are currently **{}** Five Rarity Heroes on this server.".format(len(fivestars)))
         newlist = create_filter_list(fivestars)
@@ -288,6 +312,10 @@ class Gacha(commands.Cog):
         """
         SERVERID = str(ctx.message.guild.id)
         MEMBERID = str(ctx.message.author.id)
+        channelid = ctx.message.channel.id
+
+        if not gachadatabase.get_gacha_channel([SERVERID,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
 
         barracks = gachadatabase.get_heroes([SERVERID,MEMBERID])
         if not barracks:
@@ -316,6 +344,10 @@ class Gacha(commands.Cog):
             heroid_ints.append(int(hero))
         print(heroid_ints)
         msg = ""
+
+        channelid = ctx.message.channel.id
+        if not gachadatabase.get_gacha_channel([SERVERID,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
 
 
         for ID in heroid_ints:
@@ -358,6 +390,10 @@ class Gacha(commands.Cog):
         OWN_HEROID = []
         msg = "Your primary team is now: "
 
+        channelid = ctx.message.channel.id
+
+        if not gachadatabase.get_gacha_channel([serverid,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
 
         if len(HEROIDS)>4:
             return await ctx.send("Sorry, you can only set up to 4 primary heroes max!")
@@ -385,6 +421,38 @@ class Gacha(commands.Cog):
 
         
         await ctx.send(msg)
+
+    @commands.command(name='setgacha')
+    async def setgacha(self,ctx):
+        """
+        Sets the channel for gacha commands to occur.
+        """
+        author = ctx.message.author
+        SERVERID = str(ctx.message.guild.id)
+        CHANNELID = str(ctx.message.channel.id)
+
+
+        if not author.guild_permissions.administrator:
+            await ctx.send('Sorry good sir, you do not have permission to modify the database!',delete_after=10)
+            return
+        gachadatabase.set_gacha_channel([SERVERID,CHANNELID])
+        await ctx.send("Battles have been set to the **{}** channel.".format(ctx.message.channel),delete_after = 10)
+
+    @commands.command(name='createmove')
+    async def addgachamove(self,ctx,*,arg):
+        arg = arg.split(';')
+        author = ctx.message.author
+        SERVERID = str(ctx.message.guild.id)
+        CHANNELID = str(ctx.message.channel.id)
+        if not gachadatabase.get_gacha_channel([SERVERID,CHANNELID]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
+        if not author.guild_permissions.administrator:
+            await ctx.send('Sorry good sir, you do not have permission to modify the database!',delete_after=10)
+            return
+        arg.insert(0,SERVERID)
+        gachadatabase.add_gacha_move(arg)
+        await ctx.send("You have created the move **{}** for the Hero: **{}**.".format(arg[2],arg[1]))
+
 
 
 def create_list(barracks):

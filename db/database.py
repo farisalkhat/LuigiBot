@@ -141,3 +141,21 @@ def get_balance(input):
     for result in rs:
         results = list(result[:])
     return results
+
+
+def set_botchannel(input):
+    (SERVERID,CHANNELID) = input
+    query = 'INSERT INTO Botcommand_Channels VALUES(:SERVERID,:CHANNELID)'
+    con.execute(query,dict(SERVERID=SERVERID,CHANNELID=CHANNELID))
+    conn.commit()
+
+def get_botchannel(input):
+    (SERVERID,CHANNELID) = input
+    query = 'SELECT * FROM Botcommand_Channels WHERE SERVERID=:SERVERID AND CHANNELID=:CHANNELID'
+    rs = con.execute(query,dict(SERVERID=SERVERID,CHANNELID=CHANNELID))
+    results = []
+    for result in rs:
+        results = list(result[:])
+    if results:
+        return True
+    return False

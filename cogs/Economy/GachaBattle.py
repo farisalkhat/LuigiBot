@@ -12,9 +12,9 @@ import os
 import re
 from random import randint
 from db import gachadatabase
+from core.helper import gacha_allowed
 import datetime
 import threading
-
 
 class Owner:
     def __init__(self,Player_Primaries):
@@ -711,6 +711,10 @@ class GachaBattle(commands.Cog):
 
     @commands.command(name='gachateam',aliases =['gteam','gt','team'])
     async def team(self,ctx):
+        channelid = ctx.message.channel.id
+        serverid = ctx.message.guild.id
+        if not gachadatabase.get_gacha_channel([serverid,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
         authorid = ctx.message.author.id
         serverid = ctx.message.guild.id
         author = ctx.message.author
@@ -733,6 +737,10 @@ class GachaBattle(commands.Cog):
     @commands.command(name='battleswap')
     async def battleswap(self,ctx,move:int):
         battle = self.battles.get(ctx.message.guild.id)
+        serverid= ctx.message.guild.id
+        channelid = ctx.message.channel.id
+        if not gachadatabase.get_gacha_channel([serverid,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
         if not battle:
             return await ctx.send("There isn't a battle currently!")
         if not battle.can_play(ctx.message.author):
@@ -865,6 +873,11 @@ class GachaBattle(commands.Cog):
     @commands.command(name='battlemove')
     async def battlemove(self,ctx,move:int):
         battle = self.battles.get(ctx.message.guild.id)
+        serverid = ctx.message.guild.id
+        channelid = ctx.message.channel.id
+
+        if not gachadatabase.get_gacha_channel([serverid,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
         if not battle:
             return await ctx.send("There isn't a battle currently!")
         if not battle.can_play(ctx.message.author):
@@ -902,9 +915,12 @@ class GachaBattle(commands.Cog):
     async def battle_stats(self,ctx):
         authorid = ctx.message.author.id
         serverid = ctx.message.guild.id
+        channelid = ctx.message.channel.id
         battle =  self.battles.get(serverid,None)
         if not battle:
             return await ctx.send("There's no battle currently happening!")
+        if not gachadatabase.get_gacha_channel([serverid,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
         
         Hero1 = battle.Hero1
         Hero2 = battle.Hero2
@@ -918,11 +934,16 @@ class GachaBattle(commands.Cog):
         
     @commands.command(name="battlemovesets")   
     async def battle_movesets(self,ctx):
+        
         authorid = ctx.message.author.id
         serverid = ctx.message.guild.id
+        channelid = ctx.message.channel.id
+        
         battle =  self.battles.get(serverid,None)
         if not battle:
             return await ctx.send("There's no battle currently happening!")
+        if not gachadatabase.get_gacha_channel([serverid,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
         
         Hero1 = battle.Hero1
         Hero2 = battle.Hero2
@@ -953,8 +974,14 @@ class GachaBattle(commands.Cog):
     
     @commands.command(name="battle")
     async def battle(self,ctx, member: discord.Member):
+        
         authorid = ctx.message.author.id
         serverid = ctx.message.guild.id
+        channelid = ctx.message.channel.id
+
+        if not gachadatabase.get_gacha_channel([serverid,channelid]):
+            return await ctx.send("This channel was not set for Gacha Commands to be used.")
+
         author = ctx.message.author
         current_battle = self.battles.get(serverid,None)
 
@@ -1010,5 +1037,3 @@ def print_turn(battle):
 
 
 
-
-    

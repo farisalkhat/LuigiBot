@@ -11,6 +11,8 @@ import copy
 import os
 import re
 import shlex
+from core.helper import permission
+from db import database
 
 default_ban_message = 'You have been banned, '
 default_kick_message = ' has been kicked.'
@@ -106,6 +108,25 @@ class Admin(commands.Cog):
         tools = self.get_tools(ctx)
         print("Tools added.")
 
+    @commands.command(name='setbotcommands')
+    async def setbotcommands(self,ctx):
+        """
+        Sets the channel for botcommands to occur.
+        """
+        author = ctx.message.author
+        SERVERID = str(ctx.message.guild.id)
+        CHANNELID = str(ctx.message.channel.id)
+
+        if not author.guild_permissions.administrator:
+            await ctx.send('Sorry good sir, you do not have permission to modify the database!',delete_after=10)
+            return
+        database.set_botchannel([SERVERID,CHANNELID])
+        await ctx.send("Botcommands have been set to the **{}** channel.".format(ctx.message.channel),delete_after = 10)
+
+
+
+
+
     @commands.command(name='addrole', pass_context=True)
     async def addrole(self, ctx, rolename: discord.Role = None,member: discord.Member = None):
         """
@@ -114,6 +135,9 @@ class Admin(commands.Cog):
         """
 
         author = ctx.message.author
+
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
 
         if not author.guild_permissions.manage_roles:
             embed = create_embed('addrole error: No permission', 'You do not have permission to add roles.',RED)
@@ -149,6 +173,9 @@ class Admin(commands.Cog):
         if member is None:
             member = ctx.message.author
 
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+
         if not author.guild_permissions.manage_roles:
             embed = create_embed('delete error: No permission', 'You do not have permission to remove roles.',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -171,6 +198,8 @@ class Admin(commands.Cog):
 
     @commands.command(name='kill')
     async def kill(self,ctx):
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         if ctx.message.author.id == 88047132937822208:
             await ctx.send("Bot is shutting down. Good night!")
             
@@ -194,7 +223,9 @@ class Admin(commands.Cog):
         roleName = discord.utils.get(ctx.message.guild.roles, name=roleName)
         author = ctx.message.author
 
-
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        
         if not author.guild_permissions.manage_roles:
             embed = create_embed('editrolecolor error: No permission', 'You do not have permission to edit roles.',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -245,7 +276,8 @@ class Admin(commands.Cog):
         """
         author = ctx.message.author
         server= ctx.guild
-
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         if not user:
             embed = create_embed('!kick error: No member selected.', 'You did not provide a username to kick.',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -280,6 +312,8 @@ class Admin(commands.Cog):
         !ban @Lefty#6430 You're an idiot
         !ban @Lefty#6430
         """
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         author = ctx.message.author
         server= ctx.guild
         if not user:
@@ -312,6 +346,8 @@ class Admin(commands.Cog):
         !unban @Lefty#6430 Hey you're pretty cool : )
         !unban @Lefty#6430
         """
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         author = ctx.message.author
         server= ctx.guild
         if not user:
@@ -343,7 +379,8 @@ class Admin(commands.Cog):
 
 
         author = ctx.message.author
-
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         if not emote:
             embed = create_embed('setemoterole error:','You did not specify an emote.',RED)
             await ctx.send(embed=embed, delete_after = 20)
@@ -384,7 +421,8 @@ class Admin(commands.Cog):
 
 
         author = ctx.message.author
-
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         if not emote:
             embed = create_embed('setemoterole error:','You did not specify an emote.',RED)
             await ctx.send(embed=embed, delete_after = 20)
@@ -420,6 +458,8 @@ class Admin(commands.Cog):
         """
         author = ctx.message.author
         arg = shlex.split(arg)
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         if len(arg) <=1:
             embed = create_embed('renamerole error: Not enough arguments ','You must provide 2 arguments for this command.',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -456,6 +496,8 @@ class Admin(commands.Cog):
         guild = ctx.message.guild
         channel = ctx.message.guild.get_channel(channelid)
         author = ctx.message.author
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         if not author.guild_permissions.administrator:
             embed = create_embed('greet error: No permission', 'You do not have permission to modify greets',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -478,6 +520,8 @@ class Admin(commands.Cog):
         """Modifies the greet message."""
 
         author = ctx.message.author
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         if not author.guild_permissions.administrator:
             embed = create_embed('greetmsg error: No permission', 'You do not have permission to modify greet messages.',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -497,6 +541,8 @@ class Admin(commands.Cog):
         """
 
         author = ctx.message.author
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         if not author.guild_permissions.administrator:
             embed = create_embed('greetdm error: No permission', 'You do not have permission to modify greet dms.',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -516,6 +562,8 @@ class Admin(commands.Cog):
     @commands.command(name='greetdmmsg', pass_context=True)
     async def greetdmmsg(self,ctx,*,arg):
         author = ctx.message.author
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         if not author.guild_permissions.administrator:
             embed = create_embed('greetdmmsg error: No permission', 'You do not have permission to modify greet dms.',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -525,10 +573,7 @@ class Admin(commands.Cog):
         tool.greetdmmsg[1] = arg
         await ctx.send("Greetdm is now set!",delete_after=20)
 
-    @commands.command(name='channelid', pass_context=True)
-    async def channelid(self,ctx):
-        channelid = ctx.message.channel.id
-        await ctx.send(channelid,delete_after=20)
+
 
     '''
     @commands.command(name='editrolecolor', pass_context=True)
