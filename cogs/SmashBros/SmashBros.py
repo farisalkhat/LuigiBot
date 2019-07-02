@@ -15,17 +15,17 @@ from db import database
 
 RED = 0xc9330a
 GREEN = 0x16820d
-Smash_Characters = ['Mario','Luigi','Peach','Bowser','Dr.Mario','Rosalina & Luma','Bowser Jr.','Yoshi',
-                            'Donkey Kong','Diddy Kong','Link','Zelda','Sheik','Young Link','Ganondorf','Toon Link',
+Smash_Characters = ['Mario','Luigi','Peach','Bowser','Dr.Mario','Rosalina & Luma','Bowser Jr.','Yoshi','ZSS','Jiggs','MK','dedede','ddd','trainer,'
+                            'Donkey Kong','Diddy Kong','Link','Zelda','Sheik','Young Link','Ganondorf','Toon Link','Falcon','Wii Fit','Mii',
                             'Samus','Zero Suit Samus','Kirby','Meta Knight','King Dedede','Fox','Falco','Wolf',
                             'Pikachu','Jigglypuff','Pichu','Mewtwo','Pokemon Trainer',
                             'Lucario','Greninja','Captain Falcon','Ness','Lucas','Ice Climbers','Marth','Roy',
-                            'Ike','Lucina','Robin','Corrin','Mr.Game & Watch','Pit','Palutena','Dark Pit',
-                            'Wario','Olima','R.O.B.','Villager','Wii Fit Trainer','Little Mac','Shulk','Duck Hunt',
-                            'Snake','Sonic','Mega Man','Pac-Man','Ryu','Cloud','Bayonetta',
+                            'Ike','Lucina','Robin','Corrin','Mr.Game&Watch','Pit','Palutena','Dark Pit',
+                            'Wario','Olimar','ROB','R.O.B.','Villager','Wii Fit Trainer','Little Mac','Shulk','Duck Hunt',
+                            'Snake','Sonic','Mega Man','Pac-Man','Ryu','Cloud','Bayonetta', 'Pac Man' 'Pacman', 'King k rool','King K Rool'
                             'Mii Brawler','Mii Swordfighter','Mii Gunner','Daisy','Piranha Plant','King K. Rool',
                             'Ridley','Dark Samus','Incineroar','Chrom','Isabelle','Inkling','Ken','Simon','Richter',
-                            'Joker','Hero','Banjo & Kazooie']
+                            'Joker','Hero','Banjo & Kazooie','Banjo','Banjo-Kazooie','Belmont','MegaMan']
 
 
 
@@ -73,7 +73,6 @@ def check_secondaries(secondaries):
     for secondary in secondaries:
         if secondary in Smash_Characters:
             secondariesList.append(secondary)
-
     return secondariesList
 
 
@@ -113,16 +112,27 @@ class SmashBros(commands.Cog):
 
 
 
+    @commands.group(pass_context=True)
+    async def smash(self, ctx):
+        if ctx.invoked_subcommand is None:
+            await ctx.send("This is not a subcommand for Smash Bros.")
 
-
-    @commands.command(name='createsp',pass_context = True)
+    @smash.command(name='create',pass_context = True)
     async def createsmashprofile(self,ctx,*,arg):
+        '''
+Create a smash profile on the server. Arguments are semicolon separated, and are case sensitive for smash characters. 
+Note: Do not end the command with a semicolon.
+
+Usage:
+!smash create 111122223333;Luigi;Fox
+        '''
         author = ctx.message.author
         server = ctx.message.guild.id
-        arg = shlex.split(arg)
+        #arg = shlex.split(arg)
+        arg = arg.split(';')
 
         if len(arg)<2:
-            embed = create_embed('createsmashprofile error: Not enough arguments ','You must provide at least 2 arguments for this command.',RED)
+            embed = create_embed('Smash Create Error: Not enough arguments ','You must provide at least 2 arguments for this command.',RED)
             await ctx.send(embed=embed,delete_after=20)
             return
 
@@ -164,8 +174,13 @@ class SmashBros(commands.Cog):
 
         await ctx.send('Profile created!')
 
-    @commands.command(name='viewprofiles',pass_context = True)
+    @smash.command(name='viewprofiles',pass_context = True)
     async def viewprofiles(self,ctx):
+        '''
+Shows all of the smash profiles currently on the server.
+Usage: 
+!smash viewprofiles
+        '''
         server = ctx.message.guild
         serverid = ctx.message.guild.id
 
@@ -189,8 +204,14 @@ class SmashBros(commands.Cog):
 
 
 
-    @commands.command(name='profile',pass_context = True)
+    @smash.command(name='profile',pass_context = True)
     async def profile(self,ctx, user:discord.Member = None):
+        """
+Shows the smash profile of a user. If no user is specified, it will attempt to show the profile of the author.
+Usage:
+!smash profile
+!smash profile @Lefty#6430
+        """
         author = ctx.message.author
         server = ctx.message.guild.id
         secondaries = ""
@@ -230,8 +251,14 @@ class SmashBros(commands.Cog):
             await ctx.send(embed=embed)
 
 
-    @commands.command(name='switchcode',pass_context = True)
+    @smash.command(name='switchcode',pass_context = True)
     async def switchcode(self,ctx,*,arg):
+        '''
+        Modifies the switchcode of the author. Requires a 12 digit switchcode.
+
+        Usage:
+        !switchcode 123412341234
+        '''
         author = ctx.message.author
         server = ctx.message.guild.id
         name = author.name + "@" + author.discriminator
@@ -254,8 +281,14 @@ class SmashBros(commands.Cog):
             return
 
 
-    @commands.command(name='main',pass_context = True)
+    @smash.command(name='main',pass_context = True)
     async def main(self,ctx,*,arg):
+        '''
+        Modifies the smash main of the author. Case sensitive. Use !smash characters to see the character format.
+
+        Usage:
+        !switchcode 123412341234
+        '''
         author = ctx.message.author
         server = ctx.message.guild.id
         tool = self.get_tools(ctx)
@@ -282,13 +315,19 @@ class SmashBros(commands.Cog):
             return
 
 
-    @commands.command(name='secondaries',pass_context = True)
+    @smash.command(name='secondaries',pass_context = True)
     async def secondaries(self,ctx,*,arg):
+        '''
+        Modifies the smash secondaries of the author. Case sensitive. Use !smash characters to see the character format.
+
+        Usage:
+        !smash secondaries Luigi;Mario;Fox
+        '''
         author = ctx.message.author
         server = ctx.message.guild.id
-        tool = self.get_tools(ctx)
+
         name = author.name + "@" + author.discriminator
-        arg = shlex.split(arg)
+        arg = arg.split(';')
 
 
         secondaries = check_secondaries(arg)
@@ -310,19 +349,23 @@ class SmashBros(commands.Cog):
             await ctx.send(embed=embed,delete_after=20)
             return
 
-    @commands.command(name='deletesp',pass_context = True)
-    async def delete(self,ctx,user: discord.Member = None):
+    @smash.command(name='delete',pass_context = True)
+    async def smash_delete(self,ctx,user: discord.Member = None):
+        '''
+        Deletes the smash profile of the author. If a user is specified, then the author requires admin privileges. 
 
-
+        Usage:
+        !smash delete
+        !smash delete @Lefty#6430
+        '''
         author = ctx.message.author
-        server = ctx.message.guild
-        tool = self.get_tools(ctx)
-        secondaries = ""
+        serverid = ctx.message.guild.id
 
         if user is None:
             name = author.name + "@" + author.discriminator
             try:
-                tool.smashprofiles.pop(name)
+                database.delete_profile([serverid,name])
+                database.delete_secondaries([serverid,name])
                 embed = create_embed('Profile deleted', "You have deleted **{}** from this server's database.".format(name),GREEN)
                 await ctx.send(embed=embed)
                 return
@@ -341,7 +384,8 @@ class SmashBros(commands.Cog):
 
             name = user.name + "@" + user.discriminator
             try:
-                tool.smashprofiles.pop(name)
+                database.delete_profile([serverid,name])
+                database.delete_secondaries([serverid,name])
                 embed = create_embed('Profile deleted', "You have deleted **{}** from this server's database.".format(name),GREEN)
                 await ctx.send(embed=embed)
                 return
@@ -351,8 +395,8 @@ class SmashBros(commands.Cog):
                 return
 
     @commands.cooldown(1,20,commands.BucketType.guild)
-    @commands.command(name='sscformat',pass_context = True)
-    async def sscformat(self,ctx):
+    @smash.command(name='characters',pass_context = True)
+    async def smash_characters(self,ctx):
         label = 1
         List = ""
         for item in Smash_Characters:
@@ -360,5 +404,5 @@ class SmashBros(commands.Cog):
             List = List + Labelstr + ". " + item + "\n"
             label = label +1
 
-        embed = create_embed("Smash Characters",List,GREEN)
+        embed = create_embed("Smash Characters Format",List,GREEN)
         await ctx.send(embed=embed, delete_after=20)

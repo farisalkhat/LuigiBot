@@ -12,7 +12,7 @@ con = conn.cursor()
 The following commands are meant for the SmashBros commands!
 '''
 def get_smashplayers(SERVERID):
-    query = 'SELECT USERNAME, SWITCHCODE, MAIN  FROM SmashUsers WHERE SERVER_ID = :SERVERID'
+    query = 'SELECT USERNAME, SWITCHCODE, MAIN  FROM SmashUsers WHERE SERVERID = :SERVERID'
     rs = con.execute(query,dict(SERVERID=SERVERID))
     results = {}
     for user in rs:
@@ -27,14 +27,14 @@ def get_smashprofile(SERVERID,USERNAME):
     profile.append(secondaries)
     return profile
 def get_smashplayer(SERVERID,USERNAME):
-    query = 'SELECT USERNAME, SWITCHCODE, MAIN  FROM SmashUsers WHERE SERVER_ID = :SERVERID AND USERNAME= :USERNAME'
+    query = 'SELECT USERNAME, SWITCHCODE, MAIN  FROM SmashUsers WHERE SERVERID = :SERVERID AND USERNAME= :USERNAME'
     rs = con.execute(query,dict(SERVERID=SERVERID,USERNAME=USERNAME))
     results = []
     for user in rs:
         results = list(user[:])
     return results
 def get_smashplayers_secondaries(SERVERID,USERNAME):
-    query = 'SELECT SECONDARY FROM SmashUsers_Secondaries WHERE SERVER_ID = :SERVERID AND USERNAME= :USERNAME'
+    query = 'SELECT SECONDARY FROM SmashUsers_Secondaries WHERE SERVERID = :SERVERID AND USERNAME= :USERNAME'
     rs = con.execute(query,dict(SERVERID=SERVERID,USERNAME=USERNAME))
     results = []
     for user in rs:
@@ -53,19 +53,25 @@ def make_profile_secondaries(input):
     conn.commit()
 def edit_profile_switchcode(input):
     (SERVERID, USERNAME, SWITCHCODE) = input
-    query = 'UPDATE SmashUsers SET SWITCHCODE = :SWITCHCODE WHERE SERVER_ID = :SERVERID AND USERNAME = :USERNAME ;'
+    query = 'UPDATE SmashUsers SET SWITCHCODE = :SWITCHCODE WHERE SERVERID = :SERVERID AND USERNAME = :USERNAME ;'
     con.execute(query,dict(SERVERID=SERVERID,USERNAME=USERNAME,SWITCHCODE=SWITCHCODE))
     conn.commit()
 def edit_profile_main(input):
     (SERVERID, USERNAME, MAIN) = input
-    query = 'UPDATE SmashUsers SET MAIN = :MAIN WHERE SERVER_ID = :SERVERID AND USERNAME = :USERNAME ;'
+    query = 'UPDATE SmashUsers SET MAIN = :MAIN WHERE SERVERID = :SERVERID AND USERNAME = :USERNAME ;'
     con.execute(query,dict(SERVERID=SERVERID,USERNAME=USERNAME,MAIN=MAIN))
     conn.commit()
 def delete_secondaries(input):
-    (SERVERID, USERNAME, SECONDARY) = input
-    query = 'DELETE FROM SmashUsers_Secondaries WHERE SERVER_ID = :SERVERID AND USERNAME = :USERNAME ;'
-    con.execute(query,dict(SERVERID=SERVERID,USERNAME=USERNAME,SECONDARY=SECONDARY))
+    (SERVERID, USERNAME) = input
+    query = 'DELETE FROM SmashUsers_Secondaries WHERE SERVERID = :SERVERID AND USERNAME = :USERNAME ;'
+    con.execute(query,dict(SERVERID=SERVERID,USERNAME=USERNAME))
     conn.commit()
+def delete_profile(input):
+    (SERVERID, USERNAME) = input
+    query = 'DELETE FROM SmashUsers WHERE SERVERID = :SERVERID AND USERNAME = :USERNAME ;'
+    con.execute(query,dict(SERVERID=SERVERID,USERNAME=USERNAME))
+    conn.commit()
+    
 
 
          
