@@ -18,6 +18,7 @@ import requests
 import tokens
 from requests.exceptions import HTTPError
 from db import dota
+import operator
 
 dota_api_key = tokens.dota_api
 GREEN = 0x16820d
@@ -107,6 +108,129 @@ class Dota(commands.Cog):
             return
         dota.set_dota_channel([SERVERID,CHANNELID])
         await ctx.send("Dota commands have been set to the **{}** channel.".format(ctx.message.channel),delete_after = 10)
+
+
+    @commands.command(name='wordcloud',aliases=['wc'])
+    async def dota_wordcloud(self, ctx, member:discord.Member = None):
+        if permission(ctx.guild.id,ctx.channel.id) is False:
+            return await ctx.send("This channel has not been set to use **Dota Commands**.")
+        if member is None:
+            userid = ctx.message.author.id
+        else:
+            userid = member.id
+        STEAMID = dota.get_steamid(userid)
+        if not STEAMID:
+            return await ctx.send("You do not have a STEAMID linked to you!",delete_after=10)
+
+        print(STEAMID)
+        #Get Win/Loss
+        request = requests.get('https://api.opendota.com/api/players/{}/wordcloud?api_key={}'.format(STEAMID,dota_api_key))
+        js = request.json()
+        wordcounts = js['my_word_counts']
+        wordcounts = sorted(wordcounts.items(), key=operator.itemgetter(1),reverse=True)
+        print(wordcounts)
+        msg = ''
+        i = 0
+        while i!=10:
+            msg = msg + wordcounts[i][0] + ': ' + str(wordcounts[i][1]) + ' \n'
+            i = i+1
+        
+        await ctx.send('Here are the top 10 words for **{}** \n'.format(ctx.author) + msg,delete_after=10)
+
+
+
+    @commands.command(name='friendstats',aliases=['fs'])
+    async def dota_friendstats(self, ctx, member:discord.Member = None):
+        '''
+        Show the top 5 friends you play with it.
+        '''
+        if permission(ctx.guild.id,ctx.channel.id) is False:
+            return await ctx.send("This channel has not been set to use **Dota Commands**.")
+        if member is None:
+            userid = ctx.message.author.id
+        else:
+            userid = member.id
+        STEAMID = dota.get_steamid(userid)
+        if not STEAMID:
+            return await ctx.send("You do not have a STEAMID linked to you!",delete_after=10)
+        request = requests.get('https://api.opendota.com/api/players/{}/peers?api_key={}'.format(STEAMID,dota_api_key))
+        js = request.json()
+
+
+
+        personanames = [js[0]['personaname'], js[1]['personaname'], js[2]['personaname'], js[3]['personaname'], js[4]['personaname']]
+        lastplayed = [js[0]['last_played'], js[1]['last_played'], js[2]['last_played'], js[3]['last_played'], js[4]['last_played']]
+        wins = [js[0]['win'], js[1]['win'], js[2]['win'], js[3]['win'], js[4]['win']]
+        losses =[js[0]['games'] - js[0]['win']  ,js[1]['games'] - js[1]['win'], js[2]['games'] - js[2]['win'],js[3]['games'] - js[3]['win'],js[4]['games'] - js[4]['win']]
+
+        lastplayedlinks = []
+
+        for last in lastplayed:
+            lastplayedlinks.append( 'https://www.opendota.com/matches/' + str(last))
+
+
+
+
+        personalist = ''
+        lastplayedlinkslist= ''
+        WLlist = []
+
+
+
+        i = 0
+        while i!=5:
+            WL = '('+str(wins[i]) + '-' + str(losses[i])+')'
+            WLlist.append(WL)
+            i = i+1
+        i = 0
+        while i!=5:
+            personalist = personalist + personanames[i] + ' {}'.format(WLlist[i]) + '\n'
+            i = i+1
+
+
+
+        for last in lastplayedlinks:
+            lastplayedlinkslist= lastplayedlinkslist + last + '\n'
+        
+
+
+
+        print(personalist)
+        print(lastplayedlinkslist)
+        print(WLlist)
+
+        author = ctx.author.name
+
+        embed=discord.Embed(title=author, description="Dota Friend Stats", color=0x800000)
+        embed.add_field(name='Friends', value=personalist, inline=True)
+        embed.add_field(name='Last Played', value=lastplayedlinkslist, inline=True)
+        await ctx.send(embed=embed)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @commands.command(name='dota')

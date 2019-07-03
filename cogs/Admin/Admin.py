@@ -162,7 +162,7 @@ class Admin(commands.Cog):
 
 
 
-    @commands.command(name='deleterole', pass_context=True)
+    @commands.command(name='removerole', pass_context=True)
     async def deleterole(self, ctx, rolename: discord.Role = None, member: discord.Member = None):
         """
         Deletes a role off a user.
@@ -177,7 +177,7 @@ class Admin(commands.Cog):
             return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
 
         if not author.guild_permissions.manage_roles:
-            embed = create_embed('delete error: No permission', 'You do not have permission to remove roles.',RED)
+            embed = create_embed('removerole error: No permission', 'You do not have permission to remove roles.',RED)
             await ctx.send(embed=embed,delete_after=20)
             return
 
@@ -188,21 +188,15 @@ class Admin(commands.Cog):
 
         except discord.Forbidden:
             if not rolename:
-                embed = create_embed('deleterole error: Role does not exist.',"This role does not exist!",RED)
+                embed = create_embed('removerole error: Role does not exist.',"This role does not exist!",RED)
                 await ctx.send(embed=embed, delete_after = 20)
             else:
-                embed = create_embed('deleterole error:',NOPERMISSION.format('delete',rolename,member),RED)
+                embed = create_embed('removerole error:',NOPERMISSION.format('delete',rolename,member),RED)
                 await ctx.send(embed=embed, delete_after = 20)
 
 
 
-    @commands.command(name='kill')
-    async def kill(self,ctx):
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        if ctx.message.author.id == 88047132937822208:
-            await ctx.send("Bot is shutting down. Good night!")
-            exit()
+
 
     @commands.command(name='clean')
     async def clean_messages(self,ctx,amount:int = 1):
