@@ -202,7 +202,7 @@ class Fun(commands.Cog):
         Creates a poll on the server. Arguments are semicolon separated. 
 
         Usage:
-        !poll Am I nice?;yes;no;maybe?
+        !poll question;choice1;choice2;choice3;choice4
         '''
         args = arg.split(';')
         serverid = ctx.message.guild.id
@@ -228,6 +228,12 @@ class Fun(commands.Cog):
     
     @commands.command(name='pollstats')
     async def poll_stats(self,ctx):
+        '''
+        Get the current stats of the server poll, if it exists. 
+
+        Usage:
+        !pollstats
+        '''
         serverid = ctx.message.guild.id
         try:
             if self.poll[serverid] is not None:
@@ -238,6 +244,12 @@ class Fun(commands.Cog):
 
     @commands.command(name='pollend')
     async def poll_end(self,ctx):
+        '''
+        End the current poll on the server, if it exists.
+
+        Usage:
+        !pollend
+        '''
         serverid = ctx.message.guild.id
         try:
             if self.poll[serverid] is not None:
@@ -251,6 +263,13 @@ class Fun(commands.Cog):
 
     @commands.command(name='vote')
     async def vote(self,ctx,vote:int = 0):
+        '''
+        Vote on one of the poll options on the server, if the option and poll exists.
+
+        Usage:
+        !vote 1
+        !vote 4
+        '''
 
         serverid = ctx.message.guild.id
         authorid = ctx.message.author.id
