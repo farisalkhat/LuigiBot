@@ -28,39 +28,16 @@ class Dota(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
 
-    @commands.group(pass_context=True)
-    async def dota(self, ctx):
-        if permission(ctx.guild.id,ctx.channel.id) is False:
-            return await ctx.send("This channel has not been set to use **Dota Commands**.")
-        if ctx.invoked_subcommand is None:
-            await ctx.send("This is not a subcommand for dota.")
-       
-        
-        
 
 
 
-    
-
-    @dota.command(name='help')
-    async def help(self,ctx):
-        msg = ''' To set up the Dota commands and profiles, you need to do the following:
-**!setdota**    *Requires a user with admin privileges, this allows a discord channel for dota commands. 
-**!dota setsteam STEAM32ID**      *To get your STEAM32ID, you should use https://steamid.xyz/ , or do !dota STEAMID https://steamcommunity.com/id/Lefty43/ 
-
-Then, simply do !dotaprofile to see your profile! There are plenty of other dota commands you can do when you link your STEAM32ID, do !dota commands to see them!
-
-'''
-        await ctx.send(msg,delete_after=15)
-
-
-    @dota.command(name='setsteam')
+    @commands.command(name='setsteam')
     async def create_id(self,ctx,*,arg):
         """
         Link a STEAM32ID to a discord profile. 
 
         Usage:
-        !dota create 97985854
+        !setsteam 97985854
         """
         if permission(ctx.guild.id,ctx.channel.id) is False:
             return await ctx.send("This channel has not been set to use **Dota Commands**.")
@@ -83,20 +60,26 @@ Then, simply do !dotaprofile to see your profile! There are plenty of other dota
         dota.set_steamid([ctx.message.author.id,arg])
         await ctx.send("**{}** has created his profile with the STEAMID: **{}**".format(ctx.message.author,arg),delete_after=10)
 
-    @dota.command(name='delete')
+    @commands.command(name='deletesteam')
     async def delete_id(self,ctx):
         """
         Delete the STEAMID associated with the author.
+
+        Usage:
+        !deletesteam
         """
         if permission(ctx.guild.id,ctx.channel.id) is False:
             return await ctx.send("This channel has not been set to use **Dota Commands**.")
         dota.delete_steamid(ctx.message.author.id)
         await ctx.send("**{}** has deleted their STEAMID.".format(ctx.message.author),delete_after=10)
     
-    @dota.command(name='profile')
-    async def profile(self,ctx):
+    @commands.command(name='mysteam')
+    async def mysteam(self,ctx):
         """
         Shows basic information about the author, if they have a STEAMID linked to them.
+
+        Usage:
+        !mysteam
         """
 
         author = ctx.message.author.name
@@ -111,6 +94,9 @@ Then, simply do !dotaprofile to see your profile! There are plenty of other dota
     async def setdota(self,ctx):
         """
         Sets the channel for dota commands to occur.
+
+        Usage:
+        !setdota
         """
         author = ctx.message.author
         SERVERID = str(ctx.message.guild.id)
@@ -123,12 +109,19 @@ Then, simply do !dotaprofile to see your profile! There are plenty of other dota
         await ctx.send("Dota commands have been set to the **{}** channel.".format(ctx.message.channel),delete_after = 10)
 
 
-    @commands.command(name='dotaprofile')
+    @commands.command(name='dota')
     async def dotaprofile(self, ctx, member:discord.Member = None):
         """
         Retrieves the dota profile of a user who has a STEAM32ID linked to their discord. 
-        By default it provides the profile of the author/
+        By default it provides the profile of the author.
+
         Author can optionally tag a user and get their profile. 
+
+        Usage:
+        !dota 
+        !dota @Lefty#6430
+
+
         """
 
         if permission(ctx.guild.id,ctx.channel.id) is False:
@@ -141,9 +134,11 @@ Then, simply do !dotaprofile to see your profile! There are plenty of other dota
         if not STEAMID:
             return await ctx.send("You do not have a STEAMID linked to you!",delete_after=10)
 
+        print(STEAMID)
         #Get Win/Loss
         request = requests.get('https://api.opendota.com/api/players/{}/wl?api_key={}'.format(STEAMID,dota_api_key))
         js = request.json()
+        print(js)
         winlossper = js['win'] / (js['win'] + js['lose'])
         winlosscorr = "%.1f" % round(winlossper * 100,1)
         winloss = str(js['win']) + '/' + str(js['lose']) + " ({}%)".format(winlosscorr)

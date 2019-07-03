@@ -112,19 +112,14 @@ class SmashBros(commands.Cog):
 
 
 
-    @commands.group(pass_context=True)
-    async def smash(self, ctx):
-        if ctx.invoked_subcommand is None:
-            await ctx.send("This is not a subcommand for Smash Bros.")
-
-    @smash.command(name='create',pass_context = True)
+    @commands.command(name='setsmash',pass_context = True)
     async def createsmashprofile(self,ctx,*,arg):
         '''
 Create a smash profile on the server. Arguments are semicolon separated, and are case sensitive for smash characters. 
 Note: Do not end the command with a semicolon.
 
 Usage:
-!smash create 111122223333;Luigi;Fox
+!setsmash 111122223333;Luigi;Fox
         '''
         author = ctx.message.author
         server = ctx.message.guild.id
@@ -132,14 +127,14 @@ Usage:
         arg = arg.split(';')
 
         if len(arg)<2:
-            embed = create_embed('Smash Create Error: Not enough arguments ','You must provide at least 2 arguments for this command.',RED)
+            embed = create_embed('!setsmash Error: Not enough arguments ','You must provide at least 2 arguments for this command.',RED)
             await ctx.send(embed=embed,delete_after=20)
             return
 
 
         switchcode = arg[0]
         if len(switchcode)!=12:
-            embed = create_embed('createsmashprofile error: Bad Switch Code ','The length of a switch code is 12 digits.',RED)
+            embed = create_embed('!setsmash error: Bad Switch Code ','The length of a switch code is 12 digits.',RED)
             await ctx.send(embed=embed,delete_after=20)
             return
         else:
@@ -148,7 +143,7 @@ Usage:
         main = arg[1]
         main = check_smash_character(main)
         if not main:
-            embed = create_embed('createsmashprofile error: Incorrect format for main. ','You did not input a smash character. Try the sschar command to see correct format.',RED)
+            embed = create_embed('!setsmash error: Incorrect format for main. ','You did not input a smash character. Try the sschar command to see correct format.',RED)
             await ctx.send(embed=embed,delete_after=20)
             return
 
@@ -174,12 +169,12 @@ Usage:
 
         await ctx.send('Profile created!')
 
-    @smash.command(name='viewprofiles',pass_context = True)
+    @commands.command(name='smashprofiles',pass_context = True)
     async def viewprofiles(self,ctx):
         '''
 Shows all of the smash profiles currently on the server.
 Usage: 
-!smash viewprofiles
+!smashprofiles
         '''
         server = ctx.message.guild
         serverid = ctx.message.guild.id
@@ -204,13 +199,13 @@ Usage:
 
 
 
-    @smash.command(name='profile',pass_context = True)
-    async def profile(self,ctx, user:discord.Member = None):
+    @commands.command(name='smash',pass_context = True)
+    async def smashprofile(self,ctx, user:discord.Member = None):
         """
 Shows the smash profile of a user. If no user is specified, it will attempt to show the profile of the author.
 Usage:
-!smash profile
-!smash profile @Lefty#6430
+!smash 
+!smash @Lefty#6430
         """
         author = ctx.message.author
         server = ctx.message.guild.id
@@ -251,7 +246,7 @@ Usage:
             await ctx.send(embed=embed)
 
 
-    @smash.command(name='switchcode',pass_context = True)
+    @commands.command(name='smashcode',pass_context = True)
     async def switchcode(self,ctx,*,arg):
         '''
         Modifies the switchcode of the author. Requires a 12 digit switchcode.
@@ -265,7 +260,7 @@ Usage:
         arg = shlex.split(arg)
         switchcode = arg[0]
         if len(switchcode)!=12:
-            embed = create_embed('createsmashprofile error: Bad Switch Code ','The length of a switch code is 12 digits.',RED)
+            embed = create_embed('smashcode error: Bad Switch Code ','The length of a switch code is 12 digits.',RED)
             await ctx.send(embed=embed,delete_after=20)
             return
         else:
@@ -281,24 +276,23 @@ Usage:
             return
 
 
-    @smash.command(name='main',pass_context = True)
-    async def main(self,ctx,*,arg):
+    @commands.command(name='smashmain',pass_context = True)
+    async def smashmain(self,ctx,*,arg):
         '''
         Modifies the smash main of the author. Case sensitive. Use !smash characters to see the character format.
 
         Usage:
-        !switchcode 123412341234
+        !smashmain Luigi
         '''
         author = ctx.message.author
         server = ctx.message.guild.id
-        tool = self.get_tools(ctx)
         name = author.name + "@" + author.discriminator
         arg = shlex.split(arg)
         main = arg[0]
 
         main = check_smash_character(main)
         if not main:
-            embed = create_embed('createsmashprofile error: Incorrect format for main. ','You did not input a smash character. Try the sschar command to see correct format.',RED)
+            embed = create_embed('smashmain error: Incorrect format for main. ','You did not input a smash character. Try the sschar command to see correct format.',RED)
             await ctx.send(embed=embed,delete_after=20)
             return
 
@@ -315,13 +309,14 @@ Usage:
             return
 
 
-    @smash.command(name='secondaries',pass_context = True)
-    async def secondaries(self,ctx,*,arg):
+    @commands.command(name='smashsecond',pass_context = True)
+    async def secondaries(self,ctx,*,arg=''):
         '''
-        Modifies the smash secondaries of the author. Case sensitive. Use !smash characters to see the character format.
+        Modifies the smash secondaries of the author. Case sensitive. Use !smashcharacters to see the character format.
 
         Usage:
-        !smash secondaries Luigi;Mario;Fox
+        !smashsecond Luigi;Mario;Fox
+        !smashsecond
         '''
         author = ctx.message.author
         server = ctx.message.guild.id
@@ -345,18 +340,18 @@ Usage:
             await ctx.send(embed=embed,delete_after=20)
             return
         except KeyError:
-            embed = create_embed('Profile does not exist!','Try creating a profile first.!',GREEN)
+            embed = create_embed('Profile does not exist!','Try creating a profile first!',GREEN)
             await ctx.send(embed=embed,delete_after=20)
             return
 
-    @smash.command(name='delete',pass_context = True)
+    @commands.command(name='deletesmash',pass_context = True)
     async def smash_delete(self,ctx,user: discord.Member = None):
         '''
         Deletes the smash profile of the author. If a user is specified, then the author requires admin privileges. 
 
         Usage:
-        !smash delete
-        !smash delete @Lefty#6430
+        !deletesmash
+        !deletesmash @Lefty#6430
         '''
         author = ctx.message.author
         serverid = ctx.message.guild.id
@@ -378,7 +373,7 @@ Usage:
 
         else:
             if not author.guild_permissions.administrator:
-                embed = create_embed('deletesp error: No permission.', 'You must have admin privileges to do this command',GREEN)
+                embed = create_embed('!deletesmash error: No permission.', 'You must have admin privileges to do this command',GREEN)
                 await ctx.send(embed=embed,delete_after=20)
                 return
 
@@ -395,8 +390,14 @@ Usage:
                 return
 
     @commands.cooldown(1,20,commands.BucketType.guild)
-    @smash.command(name='characters',pass_context = True)
+    @commands.command(name='smashcharacters',pass_context = True)
     async def smash_characters(self,ctx):
+        '''
+        List all the smash characters you can enter when creating and modifying a smash profile.
+
+        Usage:
+        !smashcharacters
+        '''
         label = 1
         List = ""
         for item in Smash_Characters:
@@ -405,4 +406,4 @@ Usage:
             label = label +1
 
         embed = create_embed("Smash Characters Format",List,GREEN)
-        await ctx.send(embed=embed, delete_after=20)
+        await ctx.send(embed=embed, delete_after=15)

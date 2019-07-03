@@ -11,7 +11,6 @@ import copy
 import os
 import re
 from random import randint
-from db import gachadatabase
 from db import database
 from core.helper import permission
 
@@ -67,6 +66,56 @@ class Economy(commands.Cog):
 
 
 
+
+    @commands.command(name='givecoins',aliases=['gc'])
+    async def givecoins(self,ctx,member: discord.Member = None,coins: int = 0):
+        """
+        Gives coins to a user. Requires admin privileges to execute this command. 
+        Use setcoins to set the coins of a user to a specific amount.
+
+        Usage:
+        !givecoins @Lefty#6430 50
+        !gc @Lefty#6430 50
+        """
+
+        author = ctx.message.author
+        SERVERID = str(ctx.message.guild.id)
+        MEMBERID = str(member.id)
+
+        if not author.guild_permissions.administrator:
+            await ctx.send('Sorry good sir, you do not have permission to modify the database.',delete_after=20)
+            return
+        if member is None:
+            await ctx.send('**{]**, you must target a user first before using this command.',delete_after=20)
+        balance = database.get_balance([SERVERID,MEMBERID])
+        newbal = balance[2] + coins
+        database.set_balance([SERVERID,MEMBERID,newbal])
+        await ctx.send("**{}**, you now have a balance of **{}** LuigiCoins!".format(author,newbal))
+
+
     
 
             
+    @commands.command(name='setcoins',aliases=['sc'])
+    async def setcoins(self,ctx,member: discord.Member = None,coins: int = 0):
+        """
+        Sets coins to a user. Requires admin privileges to execute this command. 
+        Use !givecoins to give coins of a specific amount to a user.
+
+        Usage:
+        !setcoins @Lefty#6430 50
+        !sc @Lefty#6430 50
+        """
+
+        author = ctx.message.author
+        SERVERID = str(ctx.message.guild.id)
+        MEMBERID = str(member.id)
+    
+        
+        if not author.guild_permissions.administrator:
+            await ctx.send('Sorry good sir, you do not have permission to create an economy!',delete_after=20)
+            return
+        if member is None:
+            await ctx.send('**{]**, you must target a user first before using this command.',delete_after=20)
+        database.set_balance([SERVERID,MEMBERID,coins])
+        await ctx.send("**{}**, you now have a balance of **{}** LuigiCoins!".format(author,coins))

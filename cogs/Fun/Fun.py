@@ -287,6 +287,18 @@ class Fun(commands.Cog):
         except KeyError:
             return await ctx.send("There is no poll going on right now.")
 
+    @commands.command(name='avatar')
+    async def get_avatar(self,ctx,member:discord.Member = None):
+        '''
+        Retrieves the avatar of a user.
+        '''
+        if member is None:
+            avatar_url = ctx.author.avatar_url_as(static_format='png')
+        else:
+            avatar_url = member.avatar_url_as(static_format='png')
+        await ctx.send(avatar_url)
+
+
 
 def poll(arg,results):
     embed=discord.Embed(title='**Question: ' + arg[0]+'**')
