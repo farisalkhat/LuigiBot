@@ -55,8 +55,8 @@ class ServerTools:
         self.channel = ctx.channel
         self.emoteroles = {}
         self.reportlogs={}
-        self.greetmsg = [0,"Welcome to the server!",None]
-        self.greetdmmsg = [0,"Psst. Welcome! :3",None]
+        
+        
 
 
 class Admin(commands.Cog):
@@ -68,11 +68,11 @@ class Admin(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self,member):
+        serverid = member.guild.id
         guild = member.guild
         try:
-            tool = self.tools[guild.id]
-            greet = tool.greetmsg
-            greetdm = tool.greetdmmsg
+            greet = database.get_greet(serverid)
+            greetdm = database.get_greetdm(serverid)
 
             if greet[0] == 1:
                 channel = guild.get_channel(greet[2])
@@ -516,7 +516,7 @@ class Admin(commands.Cog):
 
 
     @commands.command(name='greet', pass_context=True)
-    async def greet(self,ctx, channelid: int = 0):
+    async def greet(self,ctx):
         """
         Enables the bot to greet new users.
         0 = Greet is disabled.
@@ -526,8 +526,10 @@ class Admin(commands.Cog):
         The user can use the channelid command to get the ID of the channel they're in.
         """
         guild = ctx.message.guild
+        channelid = ctx.channel.id
         channel = ctx.message.guild.get_channel(channelid)
         author = ctx.message.author
+        serverid = ctx.message.guild.id
         if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
             return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         if not author.guild_permissions.administrator:
@@ -538,14 +540,27 @@ class Admin(commands.Cog):
             await ctx.send("Please provide us with a channel id..")
             return
 
-        tool = self.get_tools(ctx)
-        if tool.greetmsg[0] == 0:
-            tool.greetmsg[0] = 1
-            tool.greetmsg[2] = channelid
-            await ctx.send("Bot greeting is now enabled! Bot will currently say the following line when a user joins: **{}**".format(tool.greetmsg[1]))
+
+        greetmsg = database.get_greet(serverid)
+        if not greetmsg:
+            database.create_greet([serverid,channelid])
+            await ctx.send("Bot greeting is now enabled!")
+            print('if')
+            #await ctx.send("Bot greeting is now enabled! Bot will currently say the following line when a user joins: **{}**".format(greetmsg[1]))
         else:
-            tool.greetmsg[0] = 0
-            await ctx.send("Bot greeting is now disabled!")
+            print(greetmsg)
+            if greetmsg[0] == 1:
+                update = [serverid,0]
+                database.update_greet(update)
+                await ctx.send("Bot greeting is now disabled!")
+                print('else1')
+            elif greetmsg[0] == 0:
+                update = [serverid,1]
+                database.update_greet(update)
+                await ctx.send("Bot greeting is now enabled!")
+                print('else2')
+        print('end')
+
 
     @commands.command(name='greetmsg', pass_context=True)
     async def greetmsg(self,ctx,*,arg):
@@ -559,8 +574,9 @@ class Admin(commands.Cog):
             await ctx.send(embed=embed,delete_after=20)
             return
 
-        tool = self.get_tools(ctx)
-        tool.greetmsg[1] = arg
+        serverid = ctx.guild.id
+        msg = arg
+        database.update_greetmsg([serverid,msg])
         await ctx.send("Greet message is now set!",delete_after=20)
 
 
@@ -571,8 +587,11 @@ class Admin(commands.Cog):
         0 = greetdm is disabled.
         1 = greetdm is enabled.
         """
-
+        channelid = ctx.channel.id
         author = ctx.message.author
+        channel = ctx.message.guild.get_channel(channelid)
+        serverid = ctx.guild.id
+
         if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
             return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         if not author.guild_permissions.administrator:
@@ -581,13 +600,23 @@ class Admin(commands.Cog):
             return
 
 
-        tool = self.get_tools(ctx)
-        if tool.greetdmmsg[0] == 0:
-            tool.greetdmmsg[0] = 1
-            await ctx.send("DM greeting is now enabled! Bot will currently say the following line when a user joins: **{}**".format(tool.greetdmmsg[1]))
+        serverid = ctx.guild.id
+        greetdm = database.get_greetdm(serverid)
+        if not greetdm:
+            database.create_greet([serverid,channelid])
+            update = [serverid,1]
+            database.update_greetdm(update)
+            await ctx.send("DM Greeting is now enabled!")
+            #await ctx.send("DM Greeting is now enabled! Bot will currently say the following line when a user joins: **{}**".format(greetmsg[1]))
         else:
-            tool.greetdmmsg[0] = 0
-            await ctx.send("Bot greeting is now disabled!")
+            if greetdm[0] == 1:
+                update = [serverid,0]
+                database.update_greetdm(update)
+                await ctx.send("DM Greets are now disabled!")
+            elif greetdm[0] == 0:
+                update = [serverid,1]
+                database.update_greetdm(update)
+                await ctx.send("DM Greets are now enabled!")
 
 
 
@@ -601,8 +630,9 @@ class Admin(commands.Cog):
             await ctx.send(embed=embed,delete_after=20)
             return
 
-        tool = self.get_tools(ctx)
-        tool.greetdmmsg[1] = arg
+        serverid = ctx.guild.id
+        msg = arg
+        database.update_greetdmmsg([serverid,msg])
         await ctx.send("Greetdm is now set!",delete_after=20)
 
 

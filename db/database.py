@@ -165,3 +165,58 @@ def get_botchannel(input):
     if results:
         return True
     return False
+
+
+
+
+
+
+
+def get_greet(serverid):
+    query = 'SELECT GREETENABLED,GREETMSG,CHANNELID  FROM AutoMessages WHERE SERVERID= :serverid'
+    rs = con.execute(query,dict(serverid=serverid))
+    results = []
+    for result in rs:
+        results = list(result[:])
+    return results
+
+def get_greetdm(serverid):
+    query = 'SELECT DMENABLED,DMMSG  FROM AutoMessages WHERE SERVERID= :serverid'
+    rs = con.execute(query,dict(serverid=serverid))
+    results = []
+    for result in rs:
+        results = list(result[:])
+    return results
+
+def update_greet(input):
+    (serverid,greet) = input
+    query = 'UPDATE AutoMessages SET GREETENABLED = :greet WHERE SERVERID = :serverid'
+    con.execute(query,dict(serverid=serverid,greet=greet))
+    conn.commit()
+
+def update_greetdm(input):
+    (serverid,greet) = input
+    query = 'UPDATE AutoMessages SET DMENABLED = :greet WHERE SERVERID = :serverid'
+    con.execute(query,dict(serverid=serverid,greet=greet))
+    conn.commit()
+
+
+def create_greet(input):
+    (serverid,channelid) = input
+    query = 'INSERT INTO AutoMessages(SERVERID,CHANNELID) VALUES(:serverid,:channelid)'
+    con.execute(query,dict(serverid=serverid,channelid=channelid))
+    conn.commit()
+
+
+
+def update_greetmsg(input):
+    (serverid,msg) = input
+    query = 'UPDATE AutoMessages SET GREETMSG = :msg WHERE SERVERID = :serverid'
+    con.execute(query,dict(serverid=serverid,msg=msg))
+    conn.commit()
+
+def update_greetdmmsg(input):
+    (serverid,msg) = input
+    query = 'UPDATE AutoMessages SET DMMSG = :msg WHERE SERVERID = :serverid'
+    con.execute(query,dict(serverid=serverid,msg=msg))
+    conn.commit()
