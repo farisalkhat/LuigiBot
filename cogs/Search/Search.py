@@ -13,7 +13,7 @@ import re
 from random import randint
 import requests
 import cat
-
+import urllib.parse
 from geopy import geocoders
 from tzwhere import tzwhere
 from youtube_api import YouTubeDataAPI
@@ -22,6 +22,10 @@ from pyosu import OsuApi
 
 google_key = tokens.google_api
 api = OsuApi(tokens.osu_api)
+google_search_key = tokens.google_search_key
+urban_search_key = tokens.urban_search_key
+google_image_key = tokens.google_image_key
+
 GREEN = 0x16820d
 
 
@@ -87,8 +91,40 @@ class Search(commands.Cog):
         await ctx.send('The time in **{}** is: **{}**'.format(place,timezone))
         #print (tz.tzNameAt(lat, lng))
 
+    @commands.command(name="google",aliases=['g'])
+    async def google(self,ctx,*,arg):
+        '''
+        Retrieves the first result for the given search. 
+        '''
+
+        query = 'https://www.googleapis.com/customsearch/v1?key={}&cx={}&q='.format(google_key,google_search_key) + urllib.parse.quote_plus(arg) + "&start=1"
+        
+        r = requests.get(query)
+        js = r.json()
+        
+        result = js['items'][0]
+        link = result['link']
+        await ctx.send(link)
+
+
+    @commands.command(name='urban',aliases=['u'])
+    async def urban(self,ctx,*,arg):
+        '''
+        Retrieves the first urban dictionary result for the given argument.
+        '''
+        query = 'http://api.urbandictionary.com/v0/define?term={}'.format(urllib.parse.quote_plus(arg))
+        r = requests.get(query)
+        js = r.json()
+
+        result = js['list'][0]['definition']
+        await ctx.send('**{}**: '.format(arg)+result)
 
     
+
+
+
+
+
     @commands.command(name='osu')
     async def osu(self,ctx,*,arg):
         """
