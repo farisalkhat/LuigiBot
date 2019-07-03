@@ -30,15 +30,16 @@ def create_embed(atitle,adescription,color):
     return embed
 
 class Fun(commands.Cog):
+
+    __slots__ = ('bot','poll')
     def __init__(self,bot):
         self.bot = bot
         self.config= database.get_configs()
         self.cooldown = {}
+        self.poll = {}
+        self.pollstats={}
+        self.pollvoters={}
 
-
-
-
-    
 
     @commands.group(pass_context=True)
     async def race(self,ctx):
@@ -195,6 +196,88 @@ class Fun(commands.Cog):
         N = str(N1) + " " + str(N2) + " "  + str(N3)
         await ctx.send(N)
 
+    @commands.command(name='poll')
+    async def start_poll(self,ctx,*,arg):
+        '''
+        Creates a poll on the server. Arguments are semicolon separated. 
 
+        Usage:
+        !poll Am I nice?;yes;no;maybe?
+        '''
+        args = arg.split(';')
+        serverid = ctx.message.guild.id
+        try:
+            if self.poll[serverid] is not None:
+                return await ctx.send("There is already a poll going on right now. Please wait for that one to finish.")
+        except KeyError:
+            if len(args)>5 or len(args)<3:
+                return await ctx.send("**{}**, you need to provide at least 1 question and 2 options!")
+            results = []
+            result = len(args)-1
+            while result!=0:
+                results.append(0)
+                result = result-1
+            self.poll[serverid] = args
+            self.pollstats[serverid] = results
+            self.pollvoters[serverid] = []
+            print(self.pollstats[serverid])
+            await ctx.send("**{}** has created a new poll, the question is..".format(ctx.author))
+            embed = poll(self.poll[serverid],self.pollstats[serverid])
+            await ctx.send(embed=embed)
+
+    
+    @commands.command(name='pollstats')
+    async def poll_stats(self,ctx):
+        serverid = ctx.message.guild.id
+        try:
+            if self.poll[serverid] is not None:
+                embed = poll(self.poll[serverid],self.pollstats[serverid])
+                return await ctx.send(embed=embed,delete_after=20)    
+        except KeyError:
+            return await ctx.send("There is no poll going on right now.")
+
+    @commands.command(name='pollend')
+    async def poll_end(self,ctx):
+        serverid = ctx.message.guild.id
+        try:
+            if self.poll[serverid] is not None:
+                await ctx.send('The poll has ended! Here are the final results: ')
+                embed = poll(self.poll[serverid],self.pollstats[serverid])
+                self.poll.pop(serverid,None)
+                self.pollstats.pop(serverid,None)
+                return await ctx.send(embed=embed,delete_after=20)    
+        except KeyError:
+            return await ctx.send("There is no poll going on right now.")
+
+    @commands.command(name='vote')
+    async def vote(self,ctx,vote:int = 0):
+
+        serverid = ctx.message.guild.id
+        authorid = ctx.message.author.id
+        try:
+            if self.poll[serverid] is not None:
+                if authorid in self.pollvoters[serverid]:
+                    return await ctx.send('**{}**, you have already voted on this poll. Please wait until the next one.'.format(ctx.message.author),delete_after=10)
+                vote = vote - 1
+                try:
+                   self.pollstats[serverid][vote] = self.pollstats[serverid][vote] + 1
+                   self.pollvoters[serverid].append(ctx.message.author.id)
+                   return await ctx.send('You have voted on the option: **{}**'.format(self.poll[serverid][vote+1]))
+                except IndexError:
+                    return await ctx.send('That is not an option on the poll.')
+        except KeyError:
+            return await ctx.send("There is no poll going on right now.")
+
+
+def poll(arg,results):
+    embed=discord.Embed(title='**Question: ' + arg[0]+'**')
+    answers= arg[1:]
+
+    i = 0
+    max = len(answers)
+    while i!=max:
+        embed.add_field(name='**Choice {}: **'.format(str(i+1)) + answers[i], value=results[i], inline=False)
+        i = i+1
+    return embed
 
 

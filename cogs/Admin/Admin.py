@@ -202,8 +202,40 @@ class Admin(commands.Cog):
             return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         if ctx.message.author.id == 88047132937822208:
             await ctx.send("Bot is shutting down. Good night!")
-            
             exit()
+
+    @commands.command(name='clean')
+    async def clean_messages(self,ctx,amount:int = 1):
+        """
+        Removes messages from the channel. By default, it removes a single message. 
+        Requires admin privileges from both the author and the bot.
+
+        Usage:
+        !clean
+        !clean 10
+        
+        """
+        author = ctx.message.author
+        channel = ctx.message.channel
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        if not author.guild_permissions.administrator:
+            embed = create_embed('!clean error: No permission', 'You do not have permission to clean messages.',RED)
+            return await ctx.send(embed=embed,delete_after=5)
+
+        try:
+            messages = await channel.history(limit = amount).flatten()
+            await channel.delete_messages(messages)
+
+        except discord.Forbidden:
+            embed = create_embed('!clean error:','I attempted to clean messages from this channel, but I do not have permission to do so.',RED)
+            await ctx.send(embed=embed, delete_after = 20)
+    
+    
+        
+        
+
+            
 
 
 
