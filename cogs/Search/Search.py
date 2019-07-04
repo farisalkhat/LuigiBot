@@ -19,12 +19,19 @@ from tzwhere import tzwhere
 from youtube_api import YouTubeDataAPI
 import tokens
 from pyosu import OsuApi
+import praw
+from core.helper import permission
+
 
 google_key = tokens.google_api
 api = OsuApi(tokens.osu_api)
 google_search_key = tokens.google_search_key
 urban_search_key = tokens.urban_search_key
 google_image_key = tokens.google_image_key
+
+reddit_client = tokens.reddit_client
+reddit_secret = tokens.reddit_secret
+user_agent = tokens.user_agent
 
 GREEN = 0x16820d
 
@@ -241,3 +248,166 @@ class Search(commands.Cog):
         else:
             await ctx.send('Invalid format. Try using an actual link.',delete_after=20)
             return
+
+    
+    @commands.command(name='smashbros')
+    async def smashbros(self,ctx, *,arg=None):
+        reddit = praw.Reddit(client_id = reddit_client,
+        client_secret =reddit_secret,
+        user_agent= user_agent)
+        titles = []
+        links = []
+
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        if arg is None:
+            for submission in reddit.subreddit('smashbros').hot(limit=5):
+                titles.append(submission.title)
+                links.append(submission.url)
+        elif arg == 'controversial' or arg == 'contro':
+            for submission in reddit.subreddit('smashbros').controversial('week',limit=5):
+                titles.append(submission.title)
+                links.append(submission.url)
+        elif arg == 'gild' or arg =='gilded':
+            for submission in reddit.subreddit('smashbros').gilded('week',limit=5):
+                titles.append(submission.title)
+                links.append(submission.url)
+        elif arg == 'hot':
+            for submission in reddit.subreddit('smashbros').hot(limit=5):
+                titles.append(submission.title)
+                links.append(submission.url)
+        elif arg =='new':
+            for submission in reddit.subreddit('smashbros').new('week',limit=5):
+                titles.append(submission.title)
+                links.append(submission.url)
+        elif arg == 'rise' or arg =='rising':
+            for submission in reddit.subreddit('smashbros').rising('week',limit=5):
+                titles.append(submission.title)
+                links.append(submission.url)
+        elif arg == 'top':
+            for submission in reddit.subreddit('smashbros').top('week',limit=5):
+                titles.append(submission.title)
+                links.append(submission.url)
+        else:
+            for submission in reddit.subreddit('smashbros').hot('week',limit=5):
+                titles.append(submission.title)
+                links.append(submission.url)
+
+        title = ''
+        i = 0
+        while i!=5:
+            title =title+  '**'+titles[i] + ':** ' + links[i] + '\n'
+            i = i+1
+
+        title = title + "**This post will be deleted after 30 seconds.**"
+        await ctx.send(title,delete_after=30)
+
+
+
+    @commands.command(name='smashrand')
+    async def smashrand(self,ctx):
+        reddit = praw.Reddit(client_id = reddit_client,
+        client_secret =reddit_secret,
+        user_agent= user_agent)
+        titles = []
+        links = []
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        for submission in reddit.subreddit('smashbros').top('week',limit=20):
+                titles.append(submission.title)
+                links.append(submission.url)
+        print(titles)
+        print(links)
+        r = randint(0,10)
+        title = titles[r]
+        link = links[r]
+
+        result = '**'+title + ':** ' + link
+        await ctx.send(result,delete_after=20)
+
+    
+
+    @commands.command(name='dota2rand')
+    async def dota2rand(self,ctx):
+        reddit = praw.Reddit(client_id = reddit_client,
+        client_secret =reddit_secret,
+        user_agent= user_agent)
+        titles = []
+        links = []
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        for submission in reddit.subreddit('dota2').hot(limit=20):
+                titles.append(submission.title)
+                links.append(submission.url)
+        print(titles)
+        print(links)
+        r = randint(0,10)
+        title = titles[r]
+        link = links[r]
+
+        result = '**'+title + ':** ' + link
+        await ctx.send(result,delete_after=20)
+
+
+    @commands.command(name='gamingrand')
+    async def gamingrand(self,ctx):
+        reddit = praw.Reddit(client_id = reddit_client,
+        client_secret =reddit_secret,
+        user_agent= user_agent)
+        titles = []
+        links = []
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        for submission in reddit.subreddit('gaming').hot(limit=20):
+                titles.append(submission.title)
+                links.append(submission.url)
+        print(titles)
+        print(links)
+        r = randint(0,10)
+        title = titles[r]
+        link = links[r]
+
+        result = '**'+title + ':** ' + link
+        await ctx.send(result,delete_after=20)
+    
+    @commands.command(name='wholesomerand')
+    async def wholesomerand(self,ctx):
+        reddit = praw.Reddit(client_id = reddit_client,
+        client_secret =reddit_secret,
+        user_agent= user_agent)
+        titles = []
+        links = []
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        for submission in reddit.subreddit('wholesomememes').hot(limit=20):
+                titles.append(submission.title)
+                links.append(submission.url)
+        print(titles)
+        print(links)
+        r = randint(0,10)
+        title = titles[r]
+        link = links[r]
+
+        result = '**'+title + ':** ' + link
+        await ctx.send(result,delete_after=20)
+    
+    @commands.command(name='fehrand')
+    async def fehrand(self,ctx):
+        reddit = praw.Reddit(client_id = reddit_client,
+        client_secret =reddit_secret,
+        user_agent= user_agent)
+        titles = []
+        links = []
+        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
+            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        for submission in reddit.subreddit('fireemblemheroes').hot(limit=20):
+                titles.append(submission.title)
+                links.append(submission.url)
+        print(titles)
+        print(links)
+        r = randint(0,10)
+        title = titles[r]
+        link = links[r]
+
+        result = '**'+title + ':** ' + link
+        await ctx.send(result,delete_after=20)

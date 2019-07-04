@@ -407,3 +407,6 @@ Usage:
 
         embed = create_embed("Smash Characters Format",List,GREEN)
         await ctx.send(embed=embed, delete_after=15)
+
+
+    

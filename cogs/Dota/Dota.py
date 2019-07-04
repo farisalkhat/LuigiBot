@@ -155,7 +155,7 @@ class Dota(commands.Cog):
             return await ctx.send("You do not have a STEAMID linked to you!",delete_after=10)
         request = requests.get('https://api.opendota.com/api/players/{}/peers?api_key={}'.format(STEAMID,dota_api_key))
         js = request.json()
-
+        print(js)
 
 
         personanames = [js[0]['personaname'], js[1]['personaname'], js[2]['personaname'], js[3]['personaname'], js[4]['personaname']]
