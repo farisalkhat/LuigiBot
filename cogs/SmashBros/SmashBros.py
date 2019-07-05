@@ -12,6 +12,7 @@ import os
 import re
 import shlex
 from db import database
+import json
 
 RED = 0xc9330a
 GREEN = 0x16820d
@@ -88,6 +89,8 @@ class SmashTools:
         self.guild = ctx.guild
         self.channel = ctx.channel
 
+        
+
 
 
 
@@ -97,6 +100,46 @@ class SmashBros(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
         self.tools = {}
+
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+            self.users = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+            self.items = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+            self.shop = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
+            self.servers = json.load(f)
+
+    async def save_users(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
+            json.dump(self.users,f,indent=4)
+    async def save_items(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
+            json.dump(self.items,f,indent=4)
+    async def save_shop(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
+            json.dump(self.shop,f,indent=4)
+    async def save_servers(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'w') as f:
+            json.dump(self.servers,f,indent=4)
+
+    
+    async def load_users(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+            self.users = json.load(f)
+    async def load_items(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+            self.items = json.load(f)
+    async def load_shop(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+            self.shop = json.load(f)
+    async def load_servers(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
+            self.servers = json.load(f)
+
+
+
+
 
     def get_tools(self, ctx):
         """Retrieve the guild player, or generate one."""
@@ -121,6 +164,8 @@ Note: Do not end the command with a semicolon.
 Usage:
 !setsmash 111122223333;Luigi;Fox
         '''
+        await self.load_users(self)
+
         author = ctx.message.author
         server = ctx.message.guild.id
         #arg = shlex.split(arg)
@@ -146,7 +191,6 @@ Usage:
             embed = create_embed('!setsmash error: Incorrect format for main. ','You did not input a smash character. Try the sschar command to see correct format.',RED)
             await ctx.send(embed=embed,delete_after=20)
             return
-
         if len(arg)==2:
             secondaries = '--'
         else:
@@ -154,19 +198,13 @@ Usage:
             secondaries = check_secondaries(secondaries)
             if not secondaries:
                 secondaries = '--'
-
-        profile = []
         name = author.name + "@" + author.discriminator
-
-
-        profile = [server,name,switchcode,main]
-        database.make_profile(profile)
-        profile2 = [server,name,'']
-
-        for secondary in secondaries:
-            profile2[2] = secondary
-            database.make_profile_secondaries(profile2)
-
+        user = self.users[str(ctx.author.id)]
+        user['SmashProfile']['Name'] = name
+        user['SmashProfile']['SwitchCode'] = switchcode
+        user['SmashProfile']['Main'] = main
+        user['SmashProfile']['Secondaries'] = secondaries
+        await self.save_users(self)
         await ctx.send('Profile created!')
 
     @commands.command(name='smashprofiles',pass_context = True)
@@ -176,23 +214,26 @@ Shows all of the smash profiles currently on the server.
 Usage: 
 !smashprofiles
         '''
+        await self.load_users(self)
         server = ctx.message.guild
-        serverid = ctx.message.guild.id
+        members = ctx.guild.members
+
 
         name = ""
         switchcode = ""
         main = ""
 
-        server_smashprofiles = database.get_smashplayers(serverid)
-        if not server_smashprofiles:
-            embed = create_embed('No Profiles.', 'There are no profiles on this server!',GREEN)
-            await ctx.send(embed=embed,delete_after=20)
-            return
-        
-        for item in server_smashprofiles.values():
-            name = name + item[0] + "\n"
-            switchcode = switchcode + item[1] + "\n"
-            main = main + item[2] + "\n"
+        for member in members:
+            try:
+                memberid = str(member.id)
+                if self.users[memberid]['SmashProfile']['Name'] is None:
+                    continue
+                name = name + self.users[memberid]['SmashProfile']['Name'] + "\n"
+                switchcode = switchcode + self.users[memberid]['SmashProfile']['SwitchCode'] + "\n"
+                main = main + self.users[memberid]['SmashProfile']['Main'] + "\n"
+            except KeyError:
+                continue
+  
 
         embed = csmash_embed(name,switchcode,main,server.name)
         await ctx.send(embed=embed)
@@ -207,43 +248,26 @@ Usage:
 !smash 
 !smash @Lefty#6430
         """
-        author = ctx.message.author
-        server = ctx.message.guild.id
-        secondaries = ""
-
+        await self.load_users(self)
         if user is None:
-            name = author.name + "@" + author.discriminator
-            switchprofile = database.get_smashprofile(server,name)
-            if not switchprofile:
-                embed = create_embed('No Profile.', 'You do not have a profile set up currently.',GREEN)
-                await ctx.send(embed=embed,delete_after=20)
-                return
-
-            switchcode = switchprofile[1]
-            main = switchprofile[2]
-            for item in switchprofile[3]:
-                secondaries = secondaries + item + ", "
-            embed = profile_embed(name,switchcode,main,secondaries)
-
-
-            await ctx.send(embed=embed)
-
+            username = ctx.author
+            userid = str(ctx.author.id)
         else:
-            name = user.name + "@" + user.discriminator
-            switchprofile = database.get_smashprofile(server,name)
-            if not switchprofile:
-                embed = create_embed('No Profile', '**{}** does not have a profile on this server.'.format(name),GREEN)
-                await ctx.send(embed=embed,delete_after=20)
-                return
+            username = user
+            userid = str(user.id)
+        name = self.users[userid]['SmashProfile']['Name']
+        if not name:
+            return await ctx.send("**{}** does not have a profile!".format(username))
+        switchcode = self.users[userid]['SmashProfile']['SwitchCode']
+        main = self.users[userid]['SmashProfile']['Main']
+        secondarylist = self.users[userid]['SmashProfile']['Secondaries']
+        secondaries = ''
+        for secondary in secondarylist:
+            secondaries =secondaries + secondary + ', '
+        embed = profile_embed(name,switchcode,main,secondaries)
+        await ctx.send(embed=embed)
 
-            switchcode = switchprofile[1]
-            main = switchprofile[2]
-            for item in switchprofile[3]:
-                secondaries = secondaries + item + ", "
-            embed = profile_embed(name,switchcode,main,secondaries)
 
-
-            await ctx.send(embed=embed)
 
 
     @commands.command(name='smashcode',pass_context = True)
@@ -254,9 +278,7 @@ Usage:
         Usage:
         !switchcode 123412341234
         '''
-        author = ctx.message.author
-        server = ctx.message.guild.id
-        name = author.name + "@" + author.discriminator
+        await self.load_users(self)
         arg = shlex.split(arg)
         switchcode = arg[0]
         if len(switchcode)!=12:
@@ -265,15 +287,15 @@ Usage:
             return
         else:
             switchcode = fix_switch_code(switchcode)
-        try:
-            database.edit_profile_switchcode([server,name,switchcode])
-            embed = create_embed('Modified profile','Your switch code has been updated.',GREEN)
-            await ctx.send(embed=embed,delete_after=20)
-            return
-        except KeyError:
-            embed = create_embed('Profile does not exist!','Try creating a profile first.!',GREEN)
-            await ctx.send(embed=embed,delete_after=20)
-            return
+        
+        userid = str(ctx.author.id)
+        name = self.users[userid]['SmashProfile']['Name']
+        if not name:
+            return await ctx.send("**{}**, you do not have a profile!".format(ctx.author))
+        self.users[userid]['SmashProfile']['SwitchCode'] = switchcode
+        await self.save_users(self)
+        await ctx.send('**{}** has modified their switchcode!'.format(ctx.author))
+        
 
 
     @commands.command(name='smashmain',pass_context = True)
@@ -284,8 +306,8 @@ Usage:
         Usage:
         !smashmain Luigi
         '''
+        await self.load_users(self)
         author = ctx.message.author
-        server = ctx.message.guild.id
         name = author.name + "@" + author.discriminator
         arg = shlex.split(arg)
         main = arg[0]
@@ -297,16 +319,13 @@ Usage:
             return
 
 
-        profile = [server,name,main]
-        try:
-            database.edit_profile_main(profile)
-            embed = create_embed('Modified profile','Your main has been updated.',GREEN)
-            await ctx.send(embed=embed,delete_after=20)
-            return
-        except KeyError:
-            embed = create_embed('Profile does not exist!','Try creating a profile first.!',GREEN)
-            await ctx.send(embed=embed,delete_after=20)
-            return
+        userid = str(ctx.author.id)
+        name = self.users[userid]['SmashProfile']['Name']
+        if not name:
+            return await ctx.send("**{}**, you do not have a profile!".format(ctx.author))
+        self.users[userid]['SmashProfile']['Main'] = main
+        await self.save_users(self)
+        await ctx.send('**{}** has modified their main!'.format(ctx.author))
 
 
     @commands.command(name='smashsecond',pass_context = True)
@@ -318,31 +337,18 @@ Usage:
         !smashsecond Luigi;Mario;Fox
         !smashsecond
         '''
-        author = ctx.message.author
-        server = ctx.message.guild.id
-
-        name = author.name + "@" + author.discriminator
+        await self.load_users(self)
         arg = arg.split(';')
-
-
-        secondaries = check_secondaries(arg)
-        if not secondaries:
-            secondaries = '--'
-
-        profile2 = [server,name,'']
-        database.delete_secondaries(profile2)
-
-        try:
-            for secondary in secondaries:
-                profile2[2] = secondary
-                database.make_profile_secondaries(profile2)
-            embed = create_embed('Modified profile','Your switch code has been updated.',GREEN)
-            await ctx.send(embed=embed,delete_after=20)
-            return
-        except KeyError:
-            embed = create_embed('Profile does not exist!','Try creating a profile first!',GREEN)
-            await ctx.send(embed=embed,delete_after=20)
-            return
+        secondarylist = check_secondaries(arg)
+        if not secondarylist:
+            secondarylist = ['--']
+        userid = str(ctx.author.id)
+        name = self.users[userid]['SmashProfile']['Name']
+        if not name:
+            return await ctx.send("**{}**, you do not have a profile!".format(ctx.author))
+        self.users[userid]['SmashProfile']['Secondaries'] = secondarylist
+        await self.save_users(self)
+        await ctx.send('**{}** has modified their secondaries!'.format(ctx.author))
 
     @commands.command(name='deletesmash',pass_context = True)
     async def smash_delete(self,ctx,user: discord.Member = None):
@@ -353,41 +359,26 @@ Usage:
         !deletesmash
         !deletesmash @Lefty#6430
         '''
-        author = ctx.message.author
-        serverid = ctx.message.guild.id
-
-        if user is None:
-            name = author.name + "@" + author.discriminator
-            try:
-                database.delete_profile([serverid,name])
-                database.delete_secondaries([serverid,name])
-                embed = create_embed('Profile deleted', "You have deleted **{}** from this server's database.".format(name),GREEN)
-                await ctx.send(embed=embed)
-                return
-
-            except KeyError:
-                embed = create_embed('Profile does not exist!', 'Try making a profile first before deleting yourself, friend.',GREEN)
-                await ctx.send(embed=embed,delete_after=20)
-                return
-
-
-        else:
-            if not author.guild_permissions.administrator:
+        await self.load_users(self)
+        if not ctx.author.guild_permissions.administrator:
                 embed = create_embed('!deletesmash error: No permission.', 'You must have admin privileges to do this command',GREEN)
                 await ctx.send(embed=embed,delete_after=20)
                 return
+        
+        if user is None:
+            userid = ctx.author.id
+        else:
+            userid = user.id
+        self.users[userid]['SmashProfile'] = { 'Name':'' ,
+                                    'SwitchCode': '',
+                                    'Main': '',
+                                    'Secondaries': []
+        }
+        await self.save_users
+        await ctx.send("**{}**'s Smash Profile has been wiped.")
+            
 
-            name = user.name + "@" + user.discriminator
-            try:
-                database.delete_profile([serverid,name])
-                database.delete_secondaries([serverid,name])
-                embed = create_embed('Profile deleted', "You have deleted **{}** from this server's database.".format(name),GREEN)
-                await ctx.send(embed=embed)
-                return
-            except KeyError:
-                embed = create_embed('No Profiles.', 'There are no profiles on this server!',GREEN)
-                await ctx.send(embed=embed,delete_after=20)
-                return
+            
 
     @commands.cooldown(1,20,commands.BucketType.guild)
     @commands.command(name='smashcharacters',pass_context = True)

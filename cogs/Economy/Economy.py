@@ -25,8 +25,8 @@ class Economy(commands.Cog):
 
 
 
-    @commands.command(name="createeconomy")
-    async def createeconomy(self,ctx):
+    @commands.command(name="bee")
+    async def bee(self,ctx):
         """
         Sets up the economy for the server.
         """
@@ -45,7 +45,7 @@ class Economy(commands.Cog):
         if not econ_enabled:
             await ctx.send("Creating economy..",delete_after=20)
             database.create_economy([guildid,'Enabled'])
-
+            
             for member in memberslist:
                 database.add_econ_member([guildid,member.id,25])
 
@@ -55,8 +55,8 @@ class Economy(commands.Cog):
             await ctx.send('Economy already enabled for this server!')
             return
     
-    @commands.command(name="balance")
-    async def balance(self,ctx):
+    @commands.command(name="b2")
+    async def baaa(self,ctx):
         authorid = ctx.message.author.id
         guildid = ctx.message.guild.id
         if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
@@ -96,26 +96,4 @@ class Economy(commands.Cog):
     
 
             
-    @commands.command(name='setcoins',aliases=['sc'])
-    async def setcoins(self,ctx,member: discord.Member = None,coins: int = 0):
-        """
-        Sets coins to a user. Requires admin privileges to execute this command. 
-        Use !givecoins to give coins of a specific amount to a user.
-
-        Usage:
-        !setcoins @Lefty#6430 50
-        !sc @Lefty#6430 50
-        """
-
-        author = ctx.message.author
-        SERVERID = str(ctx.message.guild.id)
-        MEMBERID = str(member.id)
-    
-        
-        if not author.guild_permissions.administrator:
-            await ctx.send('Sorry good sir, you do not have permission to create an economy!',delete_after=20)
-            return
-        if member is None:
-            await ctx.send('**{]**, you must target a user first before using this command.',delete_after=20)
-        database.set_balance([SERVERID,MEMBERID,coins])
-        await ctx.send("**{}**, you now have a balance of **{}** LuigiCoins!".format(author,coins))
+   

@@ -19,6 +19,7 @@ import tokens
 from requests.exceptions import HTTPError
 from db import dota
 import operator
+import json
 
 dota_api_key = tokens.dota_api
 GREEN = 0x16820d
@@ -28,7 +29,41 @@ class Dota(commands.Cog):
 
     def __init__(self,bot):
         self.bot = bot
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+            self.users = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+            self.items = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+            self.shop = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
+            self.servers = json.load(f)
 
+    async def save_users(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
+            json.dump(self.users,f,indent=4)
+    async def save_items(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
+            json.dump(self.items,f,indent=4)
+    async def save_shop(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
+            json.dump(self.shop,f,indent=4)
+    async def save_servers(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'w') as f:
+            json.dump(self.servers,f,indent=4)
+
+    
+    async def load_users(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+            self.users = json.load(f)
+    async def load_items(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+            self.items = json.load(f)
+    async def load_shop(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+            self.shop = json.load(f)
+    async def load_servers(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
+            self.servers = json.load(f)
 
 
 
@@ -40,10 +75,8 @@ class Dota(commands.Cog):
         Usage:
         !setsteam 97985854
         """
-        if permission(ctx.guild.id,ctx.channel.id) is False:
-            return await ctx.send("This channel has not been set to use **Dota Commands**.")
-
-
+        await self.load_users(self)
+        userid = str(ctx.author.id)
         try:
             response = requests.get('https://api.opendota.com/api/players/{}?api_key={}'.format(arg,dota_api_key))
             response.raise_for_status()
@@ -53,12 +86,12 @@ class Dota(commands.Cog):
         except Exception as err:
             print(f'Other error occurred: {err}') 
             return await ctx.send("The STEAMID you provided does not exist.") 
-
-        #js = response.json()
-        STEAMID = dota.get_steamid(ctx.message.author.id)
+        STEAMID = self.users[userid]['DotaProfile']['Steam32id']
         if STEAMID:
             return await ctx.send("**{}**, you already have STEAMID linked: **{}**".format(ctx.message.author,STEAMID),delete_after=10)
-        dota.set_steamid([ctx.message.author.id,arg])
+        self.users[userid]['DotaProfile']['Steam32id'] = arg
+        print(self.users[userid]['DotaProfile']['Steam32id'])
+        await self.save_users(self)
         await ctx.send("**{}** has created his profile with the STEAMID: **{}**".format(ctx.message.author,arg),delete_after=10)
 
     @commands.command(name='deletesteam')
@@ -69,10 +102,11 @@ class Dota(commands.Cog):
         Usage:
         !deletesteam
         """
-        if permission(ctx.guild.id,ctx.channel.id) is False:
-            return await ctx.send("This channel has not been set to use **Dota Commands**.")
-        dota.delete_steamid(ctx.message.author.id)
-        await ctx.send("**{}** has deleted their STEAMID.".format(ctx.message.author),delete_after=10)
+        await self.load_users(self)
+        userid = str(ctx.author.id)
+        self.users[userid]['DotaProfile'] = {'Name':'', 'Steam32id': ''}
+        await self.save_users(self)
+        await ctx.send("**{}** has wiped their STEAMID.".format(ctx.message.author),delete_after=10)
     
     @commands.command(name='mysteam')
     async def mysteam(self,ctx):
@@ -82,23 +116,22 @@ class Dota(commands.Cog):
         Usage:
         !mysteam
         """
-
-        author = ctx.message.author.name
-        if permission(ctx.guild.id,ctx.channel.id) is False:
-            return await ctx.send("This channel has not been set to use **Dota Commands**.")
-        STEAMID = dota.get_steamid(ctx.message.author.id)
+        await self.load_users(self)
+        userid = str(ctx.author.id)
+        STEAMID = self.users[userid]['DotaProfile']['Steam32id']
         if not STEAMID:
             return await ctx.send("You do not have a STEAMID linked to you!",delete_after=10)
-        await ctx.send("**{}**, this is the STEAMID linked to you: **{}**".format(author,STEAMID))
+        await ctx.send("**{}**, this is the STEAMID linked to you: **{}**".format(ctx.author,STEAMID))
         
     @commands.command(name='setdota')
     async def setdota(self,ctx):
+        print('lol')
         """
         Sets the channel for dota commands to occur.
 
         Usage:
         !setdota
-        """
+        
         author = ctx.message.author
         SERVERID = str(ctx.message.guild.id)
         CHANNELID = str(ctx.message.channel.id)
@@ -108,22 +141,20 @@ class Dota(commands.Cog):
             return
         dota.set_dota_channel([SERVERID,CHANNELID])
         await ctx.send("Dota commands have been set to the **{}** channel.".format(ctx.message.channel),delete_after = 10)
+        """
 
 
     @commands.command(name='wordcloud',aliases=['wc'])
     async def dota_wordcloud(self, ctx, member:discord.Member = None):
-        if permission(ctx.guild.id,ctx.channel.id) is False:
-            return await ctx.send("This channel has not been set to use **Dota Commands**.")
+        await self.load_users(self)
         if member is None:
-            userid = ctx.message.author.id
+            userid = str(ctx.message.author.id)
         else:
-            userid = member.id
-        STEAMID = dota.get_steamid(userid)
+            userid = str(member.id)
+        STEAMID = self.users[userid]['DotaProfile']['Steam32id']
         if not STEAMID:
             return await ctx.send("You do not have a STEAMID linked to you!",delete_after=10)
 
-        print(STEAMID)
-        #Get Win/Loss
         request = requests.get('https://api.opendota.com/api/players/{}/wordcloud?api_key={}'.format(STEAMID,dota_api_key))
         js = request.json()
         wordcounts = js['my_word_counts']
@@ -134,7 +165,6 @@ class Dota(commands.Cog):
         while i!=10:
             msg = msg + wordcounts[i][0] + ': ' + str(wordcounts[i][1]) + ' \n'
             i = i+1
-        
         await ctx.send('Here are the top 10 words for **{}** \n'.format(ctx.author) + msg,delete_after=10)
 
 
@@ -144,13 +174,12 @@ class Dota(commands.Cog):
         '''
         Show the top 5 friends you play with it.
         '''
-        if permission(ctx.guild.id,ctx.channel.id) is False:
-            return await ctx.send("This channel has not been set to use **Dota Commands**.")
+        await self.load_users(self)
         if member is None:
-            userid = ctx.message.author.id
+            userid = str(ctx.message.author.id)
         else:
-            userid = member.id
-        STEAMID = dota.get_steamid(userid)
+            userid = str(member.id)
+        STEAMID = self.users[userid]['DotaProfile']['Steam32id']
         if not STEAMID:
             return await ctx.send("You do not have a STEAMID linked to you!",delete_after=10)
         request = requests.get('https://api.opendota.com/api/players/{}/peers?api_key={}'.format(STEAMID,dota_api_key))
@@ -224,13 +253,58 @@ class Dota(commands.Cog):
 
 
 
+    '''
+    @commands.command(name='dotarecent')
+    async def dotarecent(self, ctx, member:discord.Member = None):
+        self.load_users(self)
+        if member is None:
+            userid = ctx.message.author.id
+        else:
+            userid = member.id
+        STEAMID = self.users[userid]['DotaProfile']['Steam32id']
+        if not STEAMID:
+            return await ctx.send("You do not have a STEAMID linked to you!",delete_after=10)
+
+        print(STEAMID)
+        request = requests.get('https://api.opendota.com/api/players/{}/recentMatches?api_key={}'.format(STEAMID,dota_api_key))
+        js = request.json()
+        print(js)
+
+        matchid = [js[0]['match_id'], js[1]['match_id'], js[2]['match_id'], js[3]['match_id'], js[4]['match_id'],
+        js[5]['match_id'],js[6]['match_id'],js[7]['match_id'],js[8]['match_id'],js[9]['match_id']]
+
+        playerslot = [js[0]['player_slot'], js[1]['player_slot'], js[2]['player_slot'], js[3]['player_slot'], js[4]['player_slot'],
+        js[5]['player_slot'],js[6]['player_slot'],js[7]['player_slot'],js[8]['player_slot'],js[9]['player_slot']]
+
+        result = [js[0]['radiant_win'], js[1]['radiant_win'], js[2]['radiant_win'], js[3]['radiant_win'], js[4]['radiant_win'],
+        js[5]['radiant_win'],js[6]['radiant_win'],js[7]['radiant_win'],js[8]['radiant_win'],js[9]['radiant_win']]
+
+        heroes = [js[0]['hero_id'], js[1]['hero_id'], js[2]['hero_id'], js[3]['hero_id'], js[4]['hero_id'],
+        js[5]['hero_id'],js[6]['hero_id'],js[7]['hero_id'],js[8]['hero_id'],js[9]['hero_id']]
+
+        kda = []
+    '''
+
+    @commands.command(name='whoishere')
+    async def whoishere(self, ctx):
+        await self.load_users(self)
+        members = ctx.guild.members
+        names = ''
+        steams = ''
+
+        for member in members:
+            memberid = str(member.id)
+            if self.users[memberid]['DotaProfile']['Steam32id'] is not None:
+                names = names + self.users[memberid]['Name'] + '\n'
+                steams = steams + self.users[memberid]['DotaProfile']['Steam32id'] +'\n'
 
 
-
-
-
-
-
+        embed=discord.Embed(title='Steam Users')
+        embed.add_field(name='Discord Name', value=names, inline=True)
+        embed.add_field(name='Steam32ID', value=steams, inline=True)
+        await ctx.send(embed=embed,delete_after=20)
+        
+        
 
 
     @commands.command(name='dota')
@@ -248,18 +322,15 @@ class Dota(commands.Cog):
 
         """
 
-        if permission(ctx.guild.id,ctx.channel.id) is False:
-            return await ctx.send("This channel has not been set to use **Dota Commands**.")
+        await self.load_users(self)
         if member is None:
-            userid = ctx.message.author.id
+            userid = str(ctx.message.author.id)
         else:
-            userid = member.id
-        STEAMID = dota.get_steamid(userid)
+            userid = str(member.id)
+        STEAMID = self.users[userid]['DotaProfile']['Steam32id']
         if not STEAMID:
             return await ctx.send("You do not have a STEAMID linked to you!",delete_after=10)
 
-        print(STEAMID)
-        #Get Win/Loss
         request = requests.get('https://api.opendota.com/api/players/{}/wl?api_key={}'.format(STEAMID,dota_api_key))
         js = request.json()
         print(js)

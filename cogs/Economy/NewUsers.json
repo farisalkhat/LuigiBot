@@ -1,0 +1,584 @@
+{
+    "88047132937822208": {
+        "Name": "Lefty",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "Lefty@6430",
+            "SwitchCode": "SW-1111-2222-3333",
+            "Main": "Mario",
+            "Secondaries": [
+                "Mario"
+            ]
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "94265300622512128": {
+        "Name": "Gergoos",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "95594620464930816": {
+        "Name": "anthonylmao",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "95646510762438656": {
+        "Name": "Charge301",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "95928549810143232": {
+        "Name": "Swampus",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "99288066883059712": {
+        "Name": "Pookiemookie",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "100303452705402880": {
+        "Name": "Chet",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "105406640857071616": {
+        "Name": "generic",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "109390602235293696": {
+        "Name": "MilkBoyTeo",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "123523530502438912": {
+        "Name": "MasterMatt64",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "127652492795314177": {
+        "Name": "Michael M. 2L-17",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "138771288427593729": {
+        "Name": "bun",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "140651350194126849": {
+        "Name": "Bad Will",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "163510258864488448": {
+        "Name": "GORBOGRANDMAN",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "179064115141148672": {
+        "Name": "otterinwater",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "183030825292398593": {
+        "Name": "Boozayy",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "185202545319215104": {
+        "Name": "law",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "329802640487874566": {
+        "Name": "tokyo",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "407075090425970688": {
+        "Name": "wizbot",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "533438895699001364": {
+        "Name": "LuigiBot",
+        "Level": 1,
+        "Experience": 0,
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Name": "",
+            "SwitchCode": "",
+            "Main": "",
+            "Secondaries": []
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    }
+}

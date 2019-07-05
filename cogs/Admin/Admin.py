@@ -13,7 +13,7 @@ import re
 import shlex
 from core.helper import permission
 from db import database
-
+import json
 default_ban_message = 'You have been banned, '
 default_kick_message = ' has been kicked.'
 kick_reason = 'not specified.'
@@ -65,6 +65,28 @@ class Admin(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
         self.tools = {}
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+            self.users = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+            self.items = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+            self.shop = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
+            self.servers = json.load(f)
+
+    async def save_users(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
+            json.dump(self.users,f,indent=4)
+    async def save_items(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
+            json.dump(self.items,f,indent=4)
+    async def save_shop(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
+            json.dump(self.shop,f,indent=4)
+    async def save_servers(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'w') as f:
+            json.dump(self.servers,f,indent=4)
+
 
     @commands.Cog.listener()
     async def on_member_join(self,member):

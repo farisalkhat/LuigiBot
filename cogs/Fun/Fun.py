@@ -20,6 +20,7 @@ eightballkey = ['It is certain.','As I see it, yes.','Reply hazy, try again.',"D
 RED = 0xc9330a
 GREEN = 0x16820d
 
+import json
 
 
 def create_embed(atitle,adescription,color):
@@ -39,6 +40,12 @@ class Fun(commands.Cog):
         self.poll = {}
         self.pollstats={}
         self.pollvoters={}
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+            self.users = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+            self.items = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+            self.shop = json.load(f)
 
 
     @commands.group(pass_context=True)
@@ -173,14 +180,36 @@ class Fun(commands.Cog):
         !roll
         !roll 1000 2000
         """
+        authorid = str(ctx.author.id)
+        
+
 
         if left > right:
             embed = create_embed('roll error: Invalid left range', 'The left range is greater than the right range.',RED)
             await ctx.send(embed=embed)
             return
 
-        N = randint(left,right)
-        await ctx.send(N)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+            self.users = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+            self.items = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+            self.shop = json.load(f)
+
+        try:
+            if self.users[authorid]['Rigged']== 1:
+                N = right
+                self.users[authorid]['Rigged']=0
+                await self.save_users(self)
+                return await ctx.send(N)
+            else:
+                N = randint(left,right)
+                return await ctx.send(N)
+        except KeyError:
+            N = randint(left,right)
+            return await ctx.send(N)
+
+        
 
     @commands.command(name="roll3")
     async def roll3(self,ctx):
@@ -192,9 +221,41 @@ class Fun(commands.Cog):
         N1 = randint(1,6)
         N2 = randint(1,6)
         N3 = randint(1,6)
+        authorid = str(ctx.author.id)
 
-        N = str(N1) + " " + str(N2) + " "  + str(N3)
-        await ctx.send(N)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+            self.users = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+            self.items = json.load(f)
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+            self.shop = json.load(f)
+
+        try:
+            if self.users[authorid]['Rigged']== 1:
+                N1 = 6
+                N2 = 6
+                N3 = 6
+                N = str(N1) + " " + str(N2) + " "  + str(N3)
+                self.users[authorid]['Rigged']=0
+                self.save_users(self)
+                return await ctx.send(N)
+            else:
+                N1 = randint(1,6)
+                N2 = randint(1,6)
+                N3 = randint(1,6)
+                N = str(N1) + " " + str(N2) + " "  + str(N3)
+                return await ctx.send(N)
+        except KeyError:
+            N1 = randint(1,6)
+            N2 = randint(1,6)
+            N3 = randint(1,6)
+            N = str(N1) + " " + str(N2) + " "  + str(N3)
+            return await ctx.send(N)
+
+
+
+
+        
 
     @commands.command(name='poll')
     async def start_poll(self,ctx,*,arg):
@@ -297,7 +358,18 @@ class Fun(commands.Cog):
         else:
             avatar_url = member.avatar_url_as(static_format='png')
         await ctx.send(avatar_url)
+    
+    async def save_users(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
+            json.dump(self.users,f,indent=4)
 
+    async def save_items(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
+            json.dump(self.items,f,indent=4)
+
+    async def save_shop(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
+            json.dump(self.shop,f,indent=4)
 
 
 def poll(arg,results):

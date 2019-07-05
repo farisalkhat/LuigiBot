@@ -1,0 +1,58 @@
+{
+    "0":{
+        "ItemID": "0",
+        "ItemName": "Armads",
+        "ItemType": "Weapon",
+        "Url": "NA",
+        "Use": "No",
+
+        "Description": "An unwieldly axe, it feels as though the axe has a mind of it's own..",
+        "Ability": "Do a random amount of damage.",
+
+        "Sell": "No",
+        "Price": "0"
+    },
+    "1":{
+        "ItemID": "1",
+        "ItemName": "Rare Candy",
+        "ItemType": "Item",
+        "Url": "Placeholder",
+        "Use": "Yes",
+
+        "Description": "A piece of candy with a strange power..",
+        "Ability": "Increase the level of the user by 1.",
+        
+        "Sell": "Yes",
+        "Price": "50"
+    },
+    "2":{
+        "ItemID": "2",
+        "ItemName": "Goku's Sash",
+        "ItemType": "Item",
+        "Url": "Placeholder",
+        "Use": "Yes",
+
+        "Description": "Belongs to the latest Smash Bros character.",
+        "Ability": "Change someone's Smash main to 'Goku'",
+        
+        "Sell": "Yes",
+        "Price": "10"
+    },
+    
+    "3":{
+        "ItemID": "3",
+        "ItemName": "Rigged Dice",
+        "ItemType": "Item",
+        "Url": "Placeholder",
+        "Use": "Yes",
+
+        "Description": "With these, you're bound to get lucky!",
+        "Ability": "Rig the system, you'll get the highest possible roll!",
+        
+        "Sell": "Yes",
+        "Price": "5"
+    }
+
+    
+
+}
