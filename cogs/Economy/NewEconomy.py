@@ -15,6 +15,13 @@ from db import database
 from core.helper import permission
 import json
 from db import dota
+from datetime import datetime,timedelta,date
+
+
+
+
+
+
 
 class NewEconomy(commands.Cog):
 
@@ -68,14 +75,31 @@ class NewEconomy(commands.Cog):
                     'Level': 1,
                     'Experience': 0,
 
+                    'Daily': {'Year':1990,
+                        'Month':5,
+                        'Day': 15,
+                        'Hour':1,
+                        },
+                    'Weekly': {'Year':1990,
+                        'Month':5,
+                        'Day': 15,
+                        'Hour':1,
+                        },
+
                     'Inventory': ['1','1','2','2','2','2'],
                     'Coins': 25,
                     'Rigged':0,
 
-                    'SmashProfile': { 'Name':'' ,
+                    'SmashProfile': { 'Tag':'' ,
                                     'SwitchCode': '',
-                                    'Main': '',
-                                    'Secondaries': []
+                                    'Main': [],
+                                    'Secondaries': [],
+                                    'Pockets':[],
+                                    'Games':[],
+                                    'Region':'',
+                                    'Note':'',
+                                    'Colour':'',
+                                    'Image':''
                     },
                     'OsuProfile' : {'Name':'', 'OsuTag':''},
                     'DotaProfile': {'Name':'', 'Steam32id': ''}
@@ -84,6 +108,38 @@ class NewEconomy(commands.Cog):
 
         await self.save_users(self)
     
+    @commands.command(name="daily")
+    async def daily(self,ctx):
+        await self.load_users(self)
+        userid = str(ctx.author.id)
+        time = self.users[userid]['Daily']
+        date = datetime(time['Year'], time['Month'], time['Day'], 0, 0)
+        if date.day == datetime.today().day:
+            return await ctx.send("You cannot collect any daily rewards for today!")
+        time['Year'] = datetime.today().year
+        time['Day'] = datetime.today().day
+        time['Month'] = datetime.today().month
+        self.users[userid]['Coins'] = self.users[userid]['Coins'] + 20
+        await self.save_users(self)
+        await ctx.send('**{}** has claimed his daily reward of **20 coins!**'.format(ctx.author))
+    
+    @commands.command(name="weekly")
+    async def weekly(self,ctx):
+        await self.load_users(self)
+        userid = str(ctx.author.id)
+        time = self.users[userid]['Weekly']
+        date = datetime(time['Year'], time['Month'], time['Day'], 0, 0)
+        today = datetime.today()
+        if (today - date).days < 7:
+            return await ctx.send("You cannot collect any weekly rewards today!")
+        time['Year'] = datetime.today().year
+        time['Day'] = datetime.today().day
+        time['Month'] = datetime.today().month
+        self.users[userid]['Coins'] = self.users[userid]['Coins'] + 100
+        await self.save_users(self)
+        await ctx.send('**{}** has claimed his weekly reward of **100 coins!**'.format(ctx.author))
+
+
 
     @commands.command(name="balance")
     async def newbalance(self,ctx,member:discord.Member = None): 
@@ -326,11 +382,33 @@ class NewEconomy(commands.Cog):
                 self.users[userid]['Inventory'].remove(index)
                 await self.save_users(self)
             return await ctx.send("**{}** has used **{}** and is now insanely lucky!".format(author,item['ItemName']))
+        if index =='4':
+            if member is None:
+                return await ctx.send("**{}**, you must target a user to bless their Smash Profile.".format(author))
+            roles = ctx.guild.roles
+            for role in roles:
+                if role.name =='BANNED':
+                    await member.add_roles(role)
+                    self.users[userid]['Inventory'].remove(index)
+                    await self.save_users(self)
+                    return await ctx.send('**{}** has banned **{}**! Hilarious!'.format(ctx.author,member))
+            
+            await ctx.guild.create_role(name='BANNED',colour=discord.Colour.dark_grey())
+            await member.add_roles(role)
+            self.users[userid]['Inventory'].remove(index)
+            await self.save_users(self)
+            return await ctx.send('**{}** has banned **{}**! Hilarious!'.format(ctx.author,member))
+
+            
 
 
 
 
-    
+
+days = 9465
+start = date(1990,1,1)
+delta = timedelta(days)   
+offset = start + delta
 
 
     

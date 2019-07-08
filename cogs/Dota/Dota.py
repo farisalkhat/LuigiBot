@@ -20,7 +20,7 @@ from requests.exceptions import HTTPError
 from db import dota
 import operator
 import json
-
+from PIL import Image
 dota_api_key = tokens.dota_api
 GREEN = 0x16820d
 
@@ -76,6 +76,14 @@ class Dota(commands.Cog):
         !setsteam 97985854
         """
         await self.load_users(self)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         userid = str(ctx.author.id)
         try:
             response = requests.get('https://api.opendota.com/api/players/{}?api_key={}'.format(arg,dota_api_key))
@@ -94,15 +102,23 @@ class Dota(commands.Cog):
         await self.save_users(self)
         await ctx.send("**{}** has created his profile with the STEAMID: **{}**".format(ctx.message.author,arg),delete_after=10)
 
-    @commands.command(name='deletesteam')
+    @commands.command(name='steamdelete')
     async def delete_id(self,ctx):
         """
         Delete the STEAMID associated with the author.
 
         Usage:
-        !deletesteam
+        !steamdelete
         """
         await self.load_users(self)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         userid = str(ctx.author.id)
         self.users[userid]['DotaProfile'] = {'Name':'', 'Steam32id': ''}
         await self.save_users(self)
@@ -117,36 +133,34 @@ class Dota(commands.Cog):
         !mysteam
         """
         await self.load_users(self)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         userid = str(ctx.author.id)
         STEAMID = self.users[userid]['DotaProfile']['Steam32id']
         if not STEAMID:
             return await ctx.send("You do not have a STEAMID linked to you!",delete_after=10)
         await ctx.send("**{}**, this is the STEAMID linked to you: **{}**".format(ctx.author,STEAMID))
         
-    @commands.command(name='setdota')
-    async def setdota(self,ctx):
-        print('lol')
-        """
-        Sets the channel for dota commands to occur.
 
-        Usage:
-        !setdota
-        
-        author = ctx.message.author
-        SERVERID = str(ctx.message.guild.id)
-        CHANNELID = str(ctx.message.channel.id)
-
-        if not author.guild_permissions.administrator:
-            await ctx.send('Sorry good sir, you do not have permission to modify the database!',delete_after=10)
-            return
-        dota.set_dota_channel([SERVERID,CHANNELID])
-        await ctx.send("Dota commands have been set to the **{}** channel.".format(ctx.message.channel),delete_after = 10)
-        """
 
 
     @commands.command(name='wordcloud',aliases=['wc'])
     async def dota_wordcloud(self, ctx, member:discord.Member = None):
         await self.load_users(self)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         if member is None:
             userid = str(ctx.message.author.id)
         else:
@@ -175,6 +189,14 @@ class Dota(commands.Cog):
         Show the top 5 friends you play with it.
         '''
         await self.load_users(self)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         if member is None:
             userid = str(ctx.message.author.id)
         else:
@@ -288,6 +310,14 @@ class Dota(commands.Cog):
     @commands.command(name='whoishere')
     async def whoishere(self, ctx):
         await self.load_users(self)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         members = ctx.guild.members
         names = ''
         steams = ''
@@ -304,8 +334,17 @@ class Dota(commands.Cog):
         embed.add_field(name='Steam32ID', value=steams, inline=True)
         await ctx.send(embed=embed,delete_after=20)
         
-        
+    @commands.command(name='dotahelp')
+    async def dotahelp(self, ctx):
+        author = ctx.author
+        msg = """To setup a dota profile, you first need to link up your Steam32id. To get that, I reccommend you use https://steamid.xyz/ to get it.
+Then, you simply use the !setsteam command.
+!setsteam 97985854
 
+Then you can see your profile as well as others with !dota. Use !help Dota to see all of the dota commands.
+
+"""
+        author.send(msg)
 
     @commands.command(name='dota')
     async def dotaprofile(self, ctx, member:discord.Member = None):
@@ -323,6 +362,16 @@ class Dota(commands.Cog):
         """
 
         await self.load_users(self)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            print(self.servers[serverid]['Channelid'])
+            print(channelid)
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         if member is None:
             userid = str(ctx.message.author.id)
         else:
@@ -387,7 +436,7 @@ class Dota(commands.Cog):
         embed = dota_profile(username,comprank_url,comprank_str,winloss,recent,HeroList,opendota,dotabuff)
         await ctx.send(embed=embed)
 
-
+    
 
     
     

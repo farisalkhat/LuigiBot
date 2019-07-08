@@ -7,6 +7,7 @@ import youtube_dl
 from itertools import cycle
 import sqlite3
 import tokens
+import json
 
 api_key = tokens.discord_api
 #
@@ -28,7 +29,7 @@ def get_prefix(bot, message):
     return commands.when_mentioned_or(*prefixes)(bot, message)
 
 
-initial_extensions = ['cogs.Admin', 'cogs.Audio',
+initial_extensions = ['cogs.Administrator', 'cogs.Audio',
                       'cogs.SmashBros', 'cogs.Events', 'cogs.Fun', 'cogs.Help','cogs.Search','cogs.Economy','cogs.Dota',
                       'cogs.Utility']
 bot = commands.Bot(command_prefix=get_prefix,
@@ -41,6 +42,7 @@ if __name__ == '__main__':
 
 @bot.event
 async def on_ready():
+    
     print(
         f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
     await bot.change_presence(activity=discord.Game(name='World of Warcraft', type=1, url='https://twitch.tv/Lefty43'))

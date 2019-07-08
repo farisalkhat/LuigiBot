@@ -16,17 +16,20 @@ import json
 
 RED = 0xc9330a
 GREEN = 0x16820d
-Smash_Characters = ['Mario','Luigi','Peach','Bowser','Dr.Mario','Rosalina & Luma','Bowser Jr.','Yoshi','ZSS','Jiggs','MK','dedede','ddd','trainer,'
-                            'Donkey Kong','Diddy Kong','Link','Zelda','Sheik','Young Link','Ganondorf','Toon Link','Falcon','Wii Fit','Mii',
-                            'Samus','Zero Suit Samus','Kirby','Meta Knight','King Dedede','Fox','Falco','Wolf',
+
+Smash_Characters = {'Mario','Luigi','Peach','Bowser','Dr.Mario','RosaLuma','Bowser Jr','Yoshi','ZSS',
+                            'Donkey Kong','Diddy Kong','Link','Zelda','Sheik','Young Link','Ganondorf','Toon Link',
+                            'Samus','ZSS','Kirby','Meta Knight','King Dedede','Fox','Falco','Wolf',
                             'Pikachu','Jigglypuff','Pichu','Mewtwo','Pokemon Trainer',
-                            'Lucario','Greninja','Captain Falcon','Ness','Lucas','Ice Climbers','Marth','Roy',
-                            'Ike','Lucina','Robin','Corrin','Mr.Game&Watch','Pit','Palutena','Dark Pit',
-                            'Wario','Olimar','ROB','R.O.B.','Villager','Wii Fit Trainer','Little Mac','Shulk','Duck Hunt',
-                            'Snake','Sonic','Mega Man','Pac-Man','Ryu','Cloud','Bayonetta', 'Pac Man' 'Pacman', 'King k rool','King K Rool'
-                            'Mii Brawler','Mii Swordfighter','Mii Gunner','Daisy','Piranha Plant','King K. Rool',
+                            'Lucario','Greninja','Falcon','Ness','Lucas','Ice Climbers','Marth','Roy',
+                            'Ike','Lucina','Robin','Corrin','G&W','Pit','Palutena','Dark Pit',
+                            'Wario','Olimar','ROB','Villager','Wii Fit Trainer','Little Mac','Shulk','Duck Hunt',
+                            'Snake','Sonic','Megaman','Pacman','Ryu','Cloud','Bayonetta',
+                            'Mii Brawler','Mii Swordfighter','Mii Gunner','Daisy','Piranha Plant','King K Rool',
                             'Ridley','Dark Samus','Incineroar','Chrom','Isabelle','Inkling','Ken','Simon','Richter',
-                            'Joker','Hero','Banjo & Kazooie','Banjo','Banjo-Kazooie','Belmont','MegaMan']
+                            'Joker','Hero','Banjo','Megaman'}
+
+
 
 
 
@@ -152,60 +155,14 @@ class SmashBros(commands.Cog):
 
 
 
+    
+
+    
 
 
 
-    @commands.command(name='setsmash',pass_context = True)
-    async def createsmashprofile(self,ctx,*,arg):
-        '''
-Create a smash profile on the server. Arguments are semicolon separated, and are case sensitive for smash characters. 
-Note: Do not end the command with a semicolon.
-
-Usage:
-!setsmash 111122223333;Luigi;Fox
-        '''
-        await self.load_users(self)
-
-        author = ctx.message.author
-        server = ctx.message.guild.id
-        #arg = shlex.split(arg)
-        arg = arg.split(';')
-
-        if len(arg)<2:
-            embed = create_embed('!setsmash Error: Not enough arguments ','You must provide at least 2 arguments for this command.',RED)
-            await ctx.send(embed=embed,delete_after=20)
-            return
 
 
-        switchcode = arg[0]
-        if len(switchcode)!=12:
-            embed = create_embed('!setsmash error: Bad Switch Code ','The length of a switch code is 12 digits.',RED)
-            await ctx.send(embed=embed,delete_after=20)
-            return
-        else:
-            switchcode = fix_switch_code(switchcode)
-
-        main = arg[1]
-        main = check_smash_character(main)
-        if not main:
-            embed = create_embed('!setsmash error: Incorrect format for main. ','You did not input a smash character. Try the sschar command to see correct format.',RED)
-            await ctx.send(embed=embed,delete_after=20)
-            return
-        if len(arg)==2:
-            secondaries = '--'
-        else:
-            secondaries = arg[2:]
-            secondaries = check_secondaries(secondaries)
-            if not secondaries:
-                secondaries = '--'
-        name = author.name + "@" + author.discriminator
-        user = self.users[str(ctx.author.id)]
-        user['SmashProfile']['Name'] = name
-        user['SmashProfile']['SwitchCode'] = switchcode
-        user['SmashProfile']['Main'] = main
-        user['SmashProfile']['Secondaries'] = secondaries
-        await self.save_users(self)
-        await ctx.send('Profile created!')
 
     @commands.command(name='smashprofiles',pass_context = True)
     async def viewprofiles(self,ctx):
@@ -240,32 +197,8 @@ Usage:
 
 
 
-    @commands.command(name='smash',pass_context = True)
-    async def smashprofile(self,ctx, user:discord.Member = None):
-        """
-Shows the smash profile of a user. If no user is specified, it will attempt to show the profile of the author.
-Usage:
-!smash 
-!smash @Lefty#6430
-        """
-        await self.load_users(self)
-        if user is None:
-            username = ctx.author
-            userid = str(ctx.author.id)
-        else:
-            username = user
-            userid = str(user.id)
-        name = self.users[userid]['SmashProfile']['Name']
-        if not name:
-            return await ctx.send("**{}** does not have a profile!".format(username))
-        switchcode = self.users[userid]['SmashProfile']['SwitchCode']
-        main = self.users[userid]['SmashProfile']['Main']
-        secondarylist = self.users[userid]['SmashProfile']['Secondaries']
-        secondaries = ''
-        for secondary in secondarylist:
-            secondaries =secondaries + secondary + ', '
-        embed = profile_embed(name,switchcode,main,secondaries)
-        await ctx.send(embed=embed)
+    
+        
 
 
 
@@ -289,9 +222,6 @@ Usage:
             switchcode = fix_switch_code(switchcode)
         
         userid = str(ctx.author.id)
-        name = self.users[userid]['SmashProfile']['Name']
-        if not name:
-            return await ctx.send("**{}**, you do not have a profile!".format(ctx.author))
         self.users[userid]['SmashProfile']['SwitchCode'] = switchcode
         await self.save_users(self)
         await ctx.send('**{}** has modified their switchcode!'.format(ctx.author))
@@ -307,27 +237,90 @@ Usage:
         !smashmain Luigi
         '''
         await self.load_users(self)
-        author = ctx.message.author
-        name = author.name + "@" + author.discriminator
-        arg = shlex.split(arg)
-        main = arg[0]
-
-        main = check_smash_character(main)
+        arg = arg.split(';')
+        main = check_secondaries(arg)
         if not main:
             embed = create_embed('smashmain error: Incorrect format for main. ','You did not input a smash character. Try the sschar command to see correct format.',RED)
             await ctx.send(embed=embed,delete_after=20)
             return
-
-
         userid = str(ctx.author.id)
-        name = self.users[userid]['SmashProfile']['Name']
-        if not name:
-            return await ctx.send("**{}**, you do not have a profile!".format(ctx.author))
         self.users[userid]['SmashProfile']['Main'] = main
         await self.save_users(self)
-        await ctx.send('**{}** has modified their main!'.format(ctx.author))
+        await ctx.send('**{}** has modified their mains!'.format(ctx.author))
 
 
+
+    @commands.command(name='smashgames',pass_context = True)
+    async def smashgames(self,ctx,*,arg):
+        await self.load_users(self)
+        userid = str(ctx.author.id)
+        arg = arg.split(';')
+        for game in arg:
+            if game is not 'Ultimate' or game is not 'Melee':
+                return await ctx.send('**{}**, the only smash games are Ultimate or Melee. xd')
+        self.users[userid]['SmashProfile']['Tag'] = arg
+        await self.save_users(self)
+        await ctx.send('**{}** has modified their tag.'.format(ctx.author))
+
+
+    @commands.command(name='smashtag',pass_context = True)
+    async def smashtag(self,ctx,*,arg):
+        await self.load_users(self)
+        userid = str(ctx.author.id)
+        self.users[userid]['SmashProfile']['Tag'] = arg
+        await self.save_users(self)
+        await ctx.send('**{}** has modified their tag.'.format(ctx.author))
+
+
+    @commands.command(name='smashnote',pass_context = True)
+    async def smashnote(self,ctx,*,arg):
+        await self.load_users(self)
+        userid = str(ctx.author.id)
+        self.users[userid]['SmashProfile']['Note'] = arg
+        await self.save_users(self)
+        await ctx.send('**{}** has modified their note.'.format(ctx.author))
+
+    @commands.command(name='smashimage',pass_context = True)
+    async def smashimage(self,ctx,*,arg):
+        await self.load_users(self)
+        userid = str(ctx.author.id)
+        self.users[userid]['SmashProfile']['Image'] = arg
+        await self.save_users(self)
+        await ctx.send('**{}** has modified their image.'.format(ctx.author))
+
+    @commands.command(name='smashregion',pass_context = True)
+    async def smashregion(self,ctx,*,arg):
+        await self.load_users(self)
+        userid = str(ctx.author.id)
+        self.users[userid]['SmashProfile']['Region'] = arg
+        await self.save_users(self)
+        await ctx.send('**{}** has modified their region.'.format(ctx.author))
+
+    @commands.command(name='smashcolor',pass_context = True)
+    async def smashcolor(self,ctx,*,Colour):
+        await self.load_users(self)
+        colorString = Colour
+        Colour = re.search(r'^0x(?:[0-9a-fA-F]{3}){1,2}$', Colour)
+        if not Colour:
+            return await ctx.send("**{}**, you did not provide a color in hex format.".format(ctx.author))
+        userid = str(ctx.author.id)
+        self.users[userid]['SmashProfile']['Colour'] = colorString
+        await self.save_users(self)
+        await ctx.send('**{}** has modified their colour.'.format(ctx.author))
+
+
+    @commands.command(name='smashpocket',pass_context = True)
+    async def smashpocket(self,ctx,*,arg=''):
+        await self.load_users(self)
+        arg = arg.split(';')
+        secondarylist = check_secondaries(arg)
+        if not secondarylist:
+            secondarylist = ['']
+        userid = str(ctx.author.id)
+        self.users[userid]['SmashProfile']['Pockets'] = secondarylist
+        await self.save_users(self)
+        await ctx.send('**{}** has modified their pockets!'.format(ctx.author))
+    
     @commands.command(name='smashsecond',pass_context = True)
     async def secondaries(self,ctx,*,arg=''):
         '''
@@ -341,16 +334,13 @@ Usage:
         arg = arg.split(';')
         secondarylist = check_secondaries(arg)
         if not secondarylist:
-            secondarylist = ['--']
+            secondarylist = ['']
         userid = str(ctx.author.id)
-        name = self.users[userid]['SmashProfile']['Name']
-        if not name:
-            return await ctx.send("**{}**, you do not have a profile!".format(ctx.author))
         self.users[userid]['SmashProfile']['Secondaries'] = secondarylist
         await self.save_users(self)
         await ctx.send('**{}** has modified their secondaries!'.format(ctx.author))
 
-    @commands.command(name='deletesmash',pass_context = True)
+    @commands.command(name='smashdelete',pass_context = True)
     async def smash_delete(self,ctx,user: discord.Member = None):
         '''
         Deletes the smash profile of the author. If a user is specified, then the author requires admin privileges. 
@@ -381,7 +371,7 @@ Usage:
             
 
     @commands.cooldown(1,20,commands.BucketType.guild)
-    @commands.command(name='smashcharacters',pass_context = True)
+    @commands.command(name='smashchars',pass_context = True)
     async def smash_characters(self,ctx):
         '''
         List all the smash characters you can enter when creating and modifying a smash profile.
@@ -389,6 +379,7 @@ Usage:
         Usage:
         !smashcharacters
         '''
+        author = ctx.author
         label = 1
         List = ""
         for item in Smash_Characters:
@@ -397,7 +388,183 @@ Usage:
             label = label +1
 
         embed = create_embed("Smash Characters Format",List,GREEN)
-        await ctx.send(embed=embed, delete_after=15)
+        await author.send(embed=embed, delete_after=15)
 
 
-    
+
+
+
+    @commands.command(name='smash',pass_context = True)
+    async def smashprofile(self,ctx, user:discord.Member = None):
+        """
+        """
+        await self.load_users(self)
+        if user is None:
+            username = ctx.author
+            userid = str(ctx.author.id)
+        else:
+            username = user
+            userid = str(user.id)
+        SmashProfile = self.users[userid]['SmashProfile']
+
+        Tag = SmashProfile['Tag']
+        SwitchCode = SmashProfile['SwitchCode']
+
+        Colour = SmashProfile['Colour']
+        if Colour:
+            colorString = Colour
+            Colour = re.search(r'^0x(?:[0-9a-fA-F]{3}){1,2}$', Colour)
+            if Colour:
+                colorString = int(colorString,16)
+                colorString = discord.Colour(colorString)
+                Colour = colorString
+            else:
+                Colour = 0x585d66
+        else:
+            Colour = 0x585d66
+
+        embed=discord.Embed(title="{}'s Profile".format(username), color=Colour)
+        if Tag:
+            embed.add_field(name='Tag', value=Tag, inline=True)
+        else:
+            return await ctx.send("Error!")
+        if SwitchCode:
+            embed.add_field(name='Friend Code', value=SwitchCode, inline=True)
+
+        mains = self.users[userid]['SmashProfile']['Main']
+        guild = self.bot.get_guild(596938793244819458)
+        guildemojis = guild.emojis
+        emojis = []
+        for name in mains:
+            for emoji in guildemojis:
+                if emoji.name == name:
+                    emojis.append(emoji)
+        guild = self.bot.get_guild(596938824983117825)
+        guildemojis = guild.emojis
+        for name in mains:
+            for emoji in guildemojis:
+                if emoji.name == name:
+                    emojis.append(emoji)
+        if len(emojis)==1:
+            embed.add_field(name='Mains', value='{}'.format(emojis[0]), inline=True)
+        elif len(emojis)==2:
+            embed.add_field(name='Mains', value='{}{}'.format(emojis[0],emojis[1]), inline=True)
+        elif len(emojis)==3:
+            embed.add_field(name='Mains', value='{}{}{}'.format(emojis[0],emojis[1],emojis[2]), inline=True)
+        elif len(emojis)==4:
+            embed.add_field(name='Mains', value='{}{}{}{}'.format(emojis[0],emojis[1],emojis[2],emojis[3]), inline=True)
+
+
+
+        secondaries = self.users[userid]['SmashProfile']['Secondaries']
+        guild = self.bot.get_guild(596938793244819458)
+        guildemojis = guild.emojis
+        emojis = []
+        for name in secondaries:
+            for emoji in guildemojis:
+                if emoji.name == name:
+                    emojis.append(emoji)
+        guild = self.bot.get_guild(596938824983117825)
+        guildemojis = guild.emojis
+        for name in secondaries:
+            for emoji in guildemojis:
+                if emoji.name == name:
+                    emojis.append(emoji)
+        if len(emojis)==1:
+            embed.add_field(name='Secondaries', value='{}'.format(emojis[0]), inline=True)
+        elif len(emojis)==2:
+            embed.add_field(name='Secondaries', value='{}{}'.format(emojis[0],emojis[1]), inline=True)
+        elif len(emojis)==3:
+            embed.add_field(name='Secondaries', value='{}{}{}'.format(emojis[0],emojis[1],emojis[2]), inline=True)
+        elif len(emojis)==4:
+            embed.add_field(name='Secondaries', value='{}{}{}{}'.format(emojis[0],emojis[1],emojis[2],emojis[3]), inline=True)
+        
+
+        pockets = self.users[userid]['SmashProfile']['Pockets']
+        guild = self.bot.get_guild(596938793244819458)
+        guildemojis = guild.emojis
+        emojis = []
+        for name in pockets:
+            for emoji in guildemojis:
+                if emoji.name == name:
+                    emojis.append(emoji)
+        guild = self.bot.get_guild(596938824983117825)
+        guildemojis = guild.emojis
+        for name in pockets:
+            for emoji in guildemojis:
+                if emoji.name == name:
+                    emojis.append(emoji)
+        if len(emojis)==1:
+            embed.add_field(name='Pockets', value='{}'.format(emojis[0]), inline=True)
+        elif len(emojis)==2:
+            embed.add_field(name='Pockets', value='{}{}'.format(emojis[0],emojis[1]), inline=True)
+        elif len(emojis)==3:
+            embed.add_field(name='Pockets', value='{}{}{}'.format(emojis[0],emojis[1],emojis[2]), inline=True)
+        elif len(emojis)==4:
+            embed.add_field(name='Pockets', value='{}{}{}{}'.format(emojis[0],emojis[1],emojis[2],emojis[3]), inline=True)
+        elif len(emojis)==5:
+            embed.add_field(name='Pockets', value='{}{}{}{}{}'.format(emojis[0],emojis[1],emojis[2],emojis[3],emojis[4]), inline=True)
+        elif len(emojis)==6:
+            embed.add_field(name='Pockets', value='{}{}{}{}{}{}'.format(emojis[0],emojis[1],emojis[2],emojis[3],emojis[4],emojis[5]), inline=True)
+        elif len(emojis)==7:
+            embed.add_field(name='Pockets', value='{}{}{}{}{}{}{}'.format(emojis[0],emojis[1],emojis[2],emojis[3],emojis[4],emojis[5],emojis[6]), inline=True)
+        
+
+        Games = SmashProfile['Games']
+        if Games:
+            gamelist = ''
+            gamelist = Games[0]
+            if len(Games) > 1:
+                for Game in Games:
+                    gamelist = "{},".format(gamelist) + Game
+            embed.add_field(name='Games', value=gamelist, inline=True)
+        Region = SmashProfile['Region']
+        if Region:
+            embed.add_field(name='Region', value=Region, inline=True)
+        Note = SmashProfile['Note']
+        if Note:
+            embed.add_field(name='Note', value=Note, inline=True)
+
+        Image = SmashProfile['Image']
+        embed.set_thumbnail(url=Image)
+        await ctx.send(embed=embed)
+
+
+
+
+
+    @commands.command(name='smashhelp')
+    async def smashhelp(self,ctx):
+        author = ctx.author
+        msg = """Hello, here is how to setup LuigiBot's Smash profiles:
+__**!smashtag:**__ Set your smash tag with this command. **Example: !smashtag Lefty**
+__**!smashmain:**__ Set your smash mains with this command. Smash characters are case sensitive AND require correct format for each character. Separated by semicolons. 
+Do !smashchars to see how to input the characters correctly. **Example: !smashmain Luigi;Mario**
+__**!smashsecond:**__ Similar to smashmain, except with secondaries. **Example: !smashsecond Pacman;Ike**
+__**!smashpocket:**__ Similar to smashmain, except with secondaries. **Example: !smashpocket Pichu;Daisy;Simon**
+__**!smashimage:**__ Set your profile image to whatever link you provide. **Example: !smashimage https://cdn.discordapp.com/avatars/88047132937822208/3cb38e0dd632deb37a37e9770631023c.png?size=1024**
+__**!smashregion:**__ Set your region to whatever you want(for now). **Example: !smashregion The Black Sea**
+__**!smashgames:**__ Set the smash games you can play. Only options are Melee and Ultimate. **Example: !smashgames Ultimate;Melee**
+__**!smashcode:**__ Set your switch code. Requires 12 digits. **Example: !smashcode 111122223333**
+__**!smashcolor:**__ Set the color of your profile. Requires a color in hex format. **Example: !smashcolor 0x167a22**
+__**!smashnote:**__ Leave a little note for whoever sees your profile. **Example: !smashnote I love Luigi!**
+
+In addition, you can do **!command** to get understand specific usage of the commands. **Example: !command smashregion**
+
+"""
+        await author.send(msg)
+
+
+
+
+
+
+
+
+        '''
+        secondarylist = self.users[userid]['SmashProfile']['Secondaries']
+        secondaries = ''
+        for secondary in secondarylist:
+            secondaries =secondaries + secondary + ', '
+        embed = profile_embed(name,switchcode,main,secondaries)
+        '''

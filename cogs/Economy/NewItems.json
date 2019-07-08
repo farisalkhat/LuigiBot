@@ -51,7 +51,127 @@
         
         "Sell": "Yes",
         "Price": "5"
+    },
+    "4":{
+        "ItemID": "4",
+        "ItemName": "Banhammer",
+        "ItemType": "Item",
+        "Url": "Placeholder",
+        "Use": "Yes",
+
+        "Description": "Pretend to ban your friends with this!",
+        "Ability": "'Ban' a user!",
+        
+        "Sell": "Yes",
+        "Price": "10"
+    },
+    "5":{
+        "ItemID": "5",
+        "ItemName": "Fishing Rod",
+        "ItemType": "Item",
+        "Url": "Placeholder",
+        "Use": "Yes",
+
+        "Description": "Fish something great!",
+        "Ability": "Fishes up a random item.",
+        
+        "Sell": "Yes",
+        "Price": "8"
+    },
+    "6":{
+        "ItemID": "6",
+        "ItemName": "Darkglasses",
+        "ItemType": "Collectible",
+        "Url": "Placeholder",
+        "Use": "No",
+
+        "Description": "Hey, maybe girls will finally start talking to you! Jk lol idiot",
+        "Ability": "Does nothing.",
+        
+        "Sell": "No",
+        "Price": "10"
+    },
+    "7":{
+        "ItemID": "7",
+        "ItemName": "Wooden Stick",
+        "ItemType": "Weapon",
+        "Url": "Placeholder",
+        "Use": "No",
+
+        "Description": "A fragile twig, it looks like it'll snap with a single swing.",
+        "Ability": "Lightly jab your opponent, possibly causing them to bleed a very slight amount!",
+        
+        "Sell": "Yes",
+        "Price": "1"
+    },
+    "8":{
+        "ItemID": "8",
+        "ItemName": "Bag of Coins",
+        "ItemType": "Item",
+        "Url": "Placeholder",
+        "Use": "Yes",
+
+        "Description": "A bag of coins just lying around..Sure, why not?",
+        "Ability": "Open the bag for a random amount of coins!",
+        
+        "Sell": "Yes",
+        "Price": "1"
+    },
+    "9":{
+        "ItemID": "9",
+        "ItemName": "Gamertag of Doom",
+        "ItemType": "Item",
+        "Url": "Placeholder",
+        "Use": "Yes",
+
+        "Description": "Give yourself a unique little role!",
+        "Ability": "Add a role to yourself with unique name and color.",
+        
+        "Sell": "Yes",
+        "Price": "20"
+    },
+    "10":{
+        "ItemID": "10",
+        "ItemName": "Krabby Patty",
+        "ItemType": "Item",
+        "Url": "Placeholder",
+        "Use": "Yes",
+
+        "Description": "Fatten yourself up with the juiciest burger in the seas!",
+        "Ability": "Increase your HP a random amount the next time you do battle!",
+        
+        "Sell": "Yes",
+        "Price": "5"
+    },
+    "11":{
+        "ItemID": "11",
+        "ItemName": "Reaper's Scythe",
+        "ItemType": "Weapon",
+        "Url": "Placeholder",
+        "Use": "No",
+
+        "Description": "Literally kill your opponent, possibly.",
+        "Ability": "Do a random amount of damage up to 10 points. Randomly instakills the opponent.",
+        
+        "Sell": "Yes",
+        "Price": "10"
+    },
+    "12":{
+        "ItemID": "12",
+        "ItemName": "Box of Chocolates",
+        "ItemType": "Item",
+        "Url": "Placeholder",
+        "Use": "Yes",
+
+        "Description": "You thought candy was a good dessert, but just wait until you try this!",
+        "Ability": "Level up a random amount, up to 10.",
+        
+        "Sell": "No",
+        "Price": "10"
     }
+
+
+    
 
     
 

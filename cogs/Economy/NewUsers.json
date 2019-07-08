@@ -1,8 +1,20 @@
 {
-    "88047132937822208": {
-        "Name": "Lefty",
+    "127652492795314177": {
+        "Name": "Michael M. 2L-17",
         "Level": 1,
         "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
         "Inventory": [
             "1",
             "1",
@@ -14,186 +26,16 @@
         "Coins": 25,
         "Rigged": 0,
         "SmashProfile": {
-            "Name": "Lefty@6430",
-            "SwitchCode": "SW-1111-2222-3333",
-            "Main": "Mario",
-            "Secondaries": [
-                "Mario"
-            ]
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "94265300622512128": {
-        "Name": "Gergoos",
-        "Level": 1,
-        "Experience": 0,
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Name": "",
+            "Tag": "",
             "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "95594620464930816": {
-        "Name": "anthonylmao",
-        "Level": 1,
-        "Experience": 0,
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Name": "",
-            "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "95646510762438656": {
-        "Name": "Charge301",
-        "Level": 1,
-        "Experience": 0,
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Name": "",
-            "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "95928549810143232": {
-        "Name": "Swampus",
-        "Level": 1,
-        "Experience": 0,
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Name": "",
-            "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "99288066883059712": {
-        "Name": "Pookiemookie",
-        "Level": 1,
-        "Experience": 0,
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Name": "",
-            "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "100303452705402880": {
-        "Name": "Chet",
-        "Level": 1,
-        "Experience": 0,
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Name": "",
-            "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
         },
         "OsuProfile": {
             "Name": "",
@@ -208,6 +50,18 @@
         "Name": "generic",
         "Level": 1,
         "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
         "Inventory": [
             "1",
             "1",
@@ -219,10 +73,354 @@
         "Coins": 25,
         "Rigged": 0,
         "SmashProfile": {
-            "Name": "",
+            "Tag": "",
             "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "99288066883059712": {
+        "Name": "Pookiemookie",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "95928549810143232": {
+        "Name": "Swampus",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "88047132937822208": {
+        "Name": "Lefty",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "Lefty",
+            "SwitchCode": "SW-1111-2222-3333",
+            "Main": [
+                "Luigi",
+                "Pacman"
+            ],
+            "Secondaries": [
+                "Ike",
+                "Cloud",
+                "King Dedede"
+            ],
+            "Pockets": [
+                "Pichu"
+            ],
+            "Games": [],
+            "Region": "The Black Sea",
+            "Note": "I love Luigi",
+            "Colour": "0x167a22",
+            "Image": "https://cdn.discordapp.com/avatars/88047132937822208/3cb38e0dd632deb37a37e9770631023c.png?size=1024"
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": "97985854"
+        }
+    },
+    "94265300622512128": {
+        "Name": "Gergoos",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "95594620464930816": {
+        "Name": "anthonylmao",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "95646510762438656": {
+        "Name": "Charge301",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        }
+    },
+    "100303452705402880": {
+        "Name": "Chet",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Coins": 25,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
         },
         "OsuProfile": {
             "Name": "",
@@ -237,6 +435,18 @@
         "Name": "MilkBoyTeo",
         "Level": 1,
         "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
         "Inventory": [
             "1",
             "1",
@@ -248,10 +458,16 @@
         "Coins": 25,
         "Rigged": 0,
         "SmashProfile": {
-            "Name": "",
+            "Tag": "",
             "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
         },
         "OsuProfile": {
             "Name": "",
@@ -266,6 +482,18 @@
         "Name": "MasterMatt64",
         "Level": 1,
         "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
         "Inventory": [
             "1",
             "1",
@@ -277,39 +505,16 @@
         "Coins": 25,
         "Rigged": 0,
         "SmashProfile": {
-            "Name": "",
+            "Tag": "",
             "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "127652492795314177": {
-        "Name": "Michael M. 2L-17",
-        "Level": 1,
-        "Experience": 0,
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Name": "",
-            "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
         },
         "OsuProfile": {
             "Name": "",
@@ -324,6 +529,18 @@
         "Name": "bun",
         "Level": 1,
         "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
         "Inventory": [
             "1",
             "1",
@@ -335,10 +552,16 @@
         "Coins": 25,
         "Rigged": 0,
         "SmashProfile": {
-            "Name": "",
+            "Tag": "",
             "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
         },
         "OsuProfile": {
             "Name": "",
@@ -353,6 +576,18 @@
         "Name": "Bad Will",
         "Level": 1,
         "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
         "Inventory": [
             "1",
             "1",
@@ -364,10 +599,16 @@
         "Coins": 25,
         "Rigged": 0,
         "SmashProfile": {
-            "Name": "",
+            "Tag": "",
             "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
         },
         "OsuProfile": {
             "Name": "",
@@ -382,6 +623,18 @@
         "Name": "GORBOGRANDMAN",
         "Level": 1,
         "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
         "Inventory": [
             "1",
             "1",
@@ -393,10 +646,16 @@
         "Coins": 25,
         "Rigged": 0,
         "SmashProfile": {
-            "Name": "",
+            "Tag": "",
             "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
         },
         "OsuProfile": {
             "Name": "",
@@ -411,6 +670,18 @@
         "Name": "otterinwater",
         "Level": 1,
         "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
         "Inventory": [
             "1",
             "1",
@@ -422,10 +693,16 @@
         "Coins": 25,
         "Rigged": 0,
         "SmashProfile": {
-            "Name": "",
+            "Tag": "",
             "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
         },
         "OsuProfile": {
             "Name": "",
@@ -440,6 +717,18 @@
         "Name": "Boozayy",
         "Level": 1,
         "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
         "Inventory": [
             "1",
             "1",
@@ -451,10 +740,16 @@
         "Coins": 25,
         "Rigged": 0,
         "SmashProfile": {
-            "Name": "",
+            "Tag": "",
             "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
         },
         "OsuProfile": {
             "Name": "",
@@ -469,6 +764,18 @@
         "Name": "law",
         "Level": 1,
         "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
         "Inventory": [
             "1",
             "1",
@@ -480,10 +787,16 @@
         "Coins": 25,
         "Rigged": 0,
         "SmashProfile": {
-            "Name": "",
+            "Tag": "",
             "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
         },
         "OsuProfile": {
             "Name": "",
@@ -498,6 +811,18 @@
         "Name": "tokyo",
         "Level": 1,
         "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
         "Inventory": [
             "1",
             "1",
@@ -509,39 +834,16 @@
         "Coins": 25,
         "Rigged": 0,
         "SmashProfile": {
-            "Name": "",
+            "Tag": "",
             "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "407075090425970688": {
-        "Name": "wizbot",
-        "Level": 1,
-        "Experience": 0,
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Name": "",
-            "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
         },
         "OsuProfile": {
             "Name": "",
@@ -556,6 +858,18 @@
         "Name": "LuigiBot",
         "Level": 1,
         "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
         "Inventory": [
             "1",
             "1",
@@ -567,10 +881,16 @@
         "Coins": 25,
         "Rigged": 0,
         "SmashProfile": {
-            "Name": "",
+            "Tag": "",
             "SwitchCode": "",
-            "Main": "",
-            "Secondaries": []
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
         },
         "OsuProfile": {
             "Name": "",

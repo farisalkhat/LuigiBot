@@ -11,8 +11,7 @@ import copy
 import os
 import re
 import shlex
-from core.helper import permission
-from db import database
+from core.helper import permission 
 import json
 default_ban_message = 'You have been banned, '
 default_kick_message = ' has been kicked.'
@@ -57,9 +56,10 @@ class ServerTools:
         self.reportlogs={}
         
         
+        
 
 
-class Admin(commands.Cog):
+class Administrator(commands.Cog):
 
     __slots__ = ('bot','tools')
     def __init__(self,bot):
@@ -87,7 +87,24 @@ class Admin(commands.Cog):
         with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'w') as f:
             json.dump(self.servers,f,indent=4)
 
+    
+    async def load_users(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+            self.users = json.load(f)
+    async def load_items(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+            self.items = json.load(f)
+    async def load_shop(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+            self.shop = json.load(f)
+    async def load_servers(self,ctx):
+        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
+            self.servers = json.load(f)
 
+
+    
+
+    '''
     @commands.Cog.listener()
     async def on_member_join(self,member):
         serverid = member.guild.id
@@ -105,7 +122,7 @@ class Admin(commands.Cog):
 
         except KeyError:
             print('KeyError. Run normally')
-
+    '''
 
 
 
@@ -136,14 +153,22 @@ class Admin(commands.Cog):
         Sets the channel for botcommands to occur.
         """
         author = ctx.message.author
-        SERVERID = str(ctx.message.guild.id)
-        CHANNELID = str(ctx.message.channel.id)
+        serverid = str(ctx.message.guild.id)
+        channelid = str(ctx.channel.id)
 
         if not author.guild_permissions.administrator:
             await ctx.send('Sorry good sir, you do not have permission to modify the database!',delete_after=10)
             return
-        database.set_botchannel([SERVERID,CHANNELID])
-        await ctx.send("Botcommands have been set to the **{}** channel.".format(ctx.message.channel),delete_after = 10)
+        await self.load_servers(self)
+        try:
+            server = self.servers[serverid]
+            server['Channelid']=channelid
+            await self.save_servers(self)
+            await ctx.send("Botcommands have now been set to the **{}** channel.".format(ctx.message.channel),delete_after = 10)
+        except KeyError:
+            self.servers[serverid] = {'Channelid':channelid}
+            await self.save_servers(self)
+            await ctx.send("Botcommands have been set to the **{}** channel.".format(ctx.message.channel),delete_after = 10)
 
 
 
@@ -158,8 +183,16 @@ class Admin(commands.Cog):
 
         author = ctx.message.author
 
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+
+        
 
         if not author.guild_permissions.manage_roles:
             embed = create_embed('addrole error: No permission', 'You do not have permission to add roles.',RED)
@@ -192,11 +225,18 @@ class Admin(commands.Cog):
         """
         author = ctx.message.author
 
+
         if member is None:
             member = ctx.message.author
 
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
 
         if not author.guild_permissions.manage_roles:
             embed = create_embed('removerole error: No permission', 'You do not have permission to remove roles.',RED)
@@ -233,8 +273,14 @@ class Admin(commands.Cog):
         """
         author = ctx.message.author
         channel = ctx.message.channel
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         if not author.guild_permissions.administrator:
             embed = create_embed('!clean error: No permission', 'You do not have permission to clean messages.',RED)
             return await ctx.send(embed=embed,delete_after=5)
@@ -271,8 +317,14 @@ class Admin(commands.Cog):
         roleName = discord.utils.get(ctx.message.guild.roles, name=roleName)
         author = ctx.message.author
 
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         
         if not author.guild_permissions.manage_roles:
             embed = create_embed('editrolecolor error: No permission', 'You do not have permission to edit roles.',RED)
@@ -323,9 +375,14 @@ class Admin(commands.Cog):
         !kick @Lefty#6430
         """
         author = ctx.message.author
-        server= ctx.guild
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         if not user:
             embed = create_embed('!kick error: No member selected.', 'You did not provide a username to kick.',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -360,8 +417,14 @@ class Admin(commands.Cog):
         !ban @Lefty#6430 You're an idiot
         !ban @Lefty#6430
         """
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         author = ctx.message.author
         server= ctx.guild
         if not user:
@@ -394,8 +457,14 @@ class Admin(commands.Cog):
         !unban @Lefty#6430 Hey you're pretty cool : )
         !unban @Lefty#6430
         """
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         author = ctx.message.author
         server= ctx.guild
         if not user:
@@ -427,8 +496,14 @@ class Admin(commands.Cog):
 
 
         author = ctx.message.author
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         if not emote:
             embed = create_embed('setemoterole error:','You did not specify an emote.',RED)
             await ctx.send(embed=embed, delete_after = 20)
@@ -469,8 +544,14 @@ class Admin(commands.Cog):
 
 
         author = ctx.message.author
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         if not emote:
             embed = create_embed('setemoterole error:','You did not specify an emote.',RED)
             await ctx.send(embed=embed, delete_after = 20)
@@ -506,8 +587,14 @@ class Admin(commands.Cog):
         """
         author = ctx.message.author
         arg = shlex.split(arg)
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         if len(arg) <=1:
             embed = create_embed('renamerole error: Not enough arguments ','You must provide 2 arguments for this command.',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -530,7 +617,7 @@ class Admin(commands.Cog):
         await ctx.send(embed=embed)
 
 
-
+    '''
     @commands.command(name='greet', pass_context=True)
     async def greet(self,ctx):
         """
@@ -541,13 +628,18 @@ class Admin(commands.Cog):
         It must also take a single int, the channel ID for which channel the greet will be sent.
         The user can use the channelid command to get the ID of the channel they're in.
         """
-        guild = ctx.message.guild
         channelid = ctx.channel.id
         channel = ctx.message.guild.get_channel(channelid)
         author = ctx.message.author
         serverid = ctx.message.guild.id
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         if not author.guild_permissions.administrator:
             embed = create_embed('greet error: No permission', 'You do not have permission to modify greets',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -583,8 +675,14 @@ class Admin(commands.Cog):
         """Modifies the greet message."""
 
         author = ctx.message.author
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         if not author.guild_permissions.administrator:
             embed = create_embed('greetmsg error: No permission', 'You do not have permission to modify greet messages.',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -605,11 +703,16 @@ class Admin(commands.Cog):
         """
         channelid = ctx.channel.id
         author = ctx.message.author
-        channel = ctx.message.guild.get_channel(channelid)
         serverid = ctx.guild.id
 
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         if not author.guild_permissions.administrator:
             embed = create_embed('greetdm error: No permission', 'You do not have permission to modify greet dms.',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -639,8 +742,14 @@ class Admin(commands.Cog):
     @commands.command(name='greetdmmsg', pass_context=True)
     async def greetdmmsg(self,ctx,*,arg):
         author = ctx.message.author
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        await self.load_servers(self)
+        serverid = str(ctx.guild.id)
+        channelid = str(ctx.channel.id)
+        try:
+            if self.servers[serverid]['Channelid'] != channelid:
+                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+        except KeyError:
+            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         if not author.guild_permissions.administrator:
             embed = create_embed('greetdmmsg error: No permission', 'You do not have permission to modify greet dms.',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -648,9 +757,9 @@ class Admin(commands.Cog):
 
         serverid = ctx.guild.id
         msg = arg
-        database.update_greetdmmsg([serverid,msg])
+        #database.update_greetdmmsg([serverid,msg])
         await ctx.send("Greetdm is now set!",delete_after=20)
-
+    '''
 
 
     '''
