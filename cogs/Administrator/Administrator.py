@@ -142,12 +142,12 @@ class Administrator(commands.Cog):
     @staticmethod
     async def errorreport(ctx, message: str, **kwargs):
         await ctx.send(message.format(**kwargs))
-    '''
+    
     @commands.command(name='createtools')
     async def createtools(self,ctx):
         tools = self.get_tools(ctx)
         print("Tools added.")
-    '''
+
     @commands.command(name='setbotcommands')
     async def setbotcommands(self,ctx):
         """
