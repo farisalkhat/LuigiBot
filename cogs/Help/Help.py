@@ -34,6 +34,7 @@ class Help(commands.Cog):
     @commands.command(name="help")
     async def help(self,ctx,*,arg=None):
         """Lists all modules for the bot."""
+        author = ctx.author
         if arg is None:
             embed=discord.Embed(title="Server Modules")
             list = ""
@@ -41,7 +42,7 @@ class Help(commands.Cog):
                 name =  cog + "\n"
                 list = list + name
             embed.add_field(name = "Here are the bot's server modules. Do !help modulename to get all of their commands and a description. ",value =list)
-            return await ctx.send(embed=embed)
+            return await author.send(embed=embed)   
         
         cog = self.bot.get_cog(arg)
         if not cog:
@@ -55,7 +56,7 @@ class Help(commands.Cog):
             list = list + name
             i = i+1
         embed.add_field(name = "Here are the commands for the **{}** module.".format(arg),value =list)
-        await ctx.send(embed=embed)
+        await author.send(embed=embed)   
 
     @commands.command(name='command')
     @commands.has_permissions(add_reactions=True,embed_links=True)

@@ -40,11 +40,11 @@ class Fun(commands.Cog):
         self.poll = {}
         self.pollstats={}
         self.pollvoters={}
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
             self.users = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
             self.items = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
             self.shop = json.load(f)
 
 
@@ -185,15 +185,15 @@ class Fun(commands.Cog):
 
 
         if left > right:
-            embed = create_embed('roll error: Invalid left range', 'The left range is greater than the right range.',RED)
+            embed = create_embed('roll error: Invalid range inputs', 'You must input two ranges, and the first range must be smaller.',RED)
             await ctx.send(embed=embed)
             return
 
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
             self.users = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
             self.items = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
             self.shop = json.load(f)
 
         try:
@@ -223,11 +223,11 @@ class Fun(commands.Cog):
         N3 = randint(1,6)
         authorid = str(ctx.author.id)
 
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
             self.users = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
             self.items = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
             self.shop = json.load(f)
 
         try:
@@ -265,6 +265,7 @@ class Fun(commands.Cog):
         Usage:
         !poll question;choice1;choice2;choice3;choice4
         '''
+        
         args = arg.split(';')
         serverid = ctx.message.guild.id
         try:
@@ -360,15 +361,15 @@ class Fun(commands.Cog):
         await ctx.send(avatar_url)
     
     async def save_users(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
             json.dump(self.users,f,indent=4)
 
     async def save_items(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
             json.dump(self.items,f,indent=4)
 
     async def save_shop(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
             json.dump(self.shop,f,indent=4)
 
 

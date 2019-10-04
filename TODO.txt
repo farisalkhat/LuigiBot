@@ -1,0 +1,27 @@
+CLEANUP TODO LIST
+
+
+General
+    - Refactor any code that is seen in multiple methods
+        - Checking if channel has permission for botcommands
+        - Check if embed limit is reached
+        - loading and saving json files
+    - For the code that interacts with json files, make it so it does not need a path to be manually inserted. 
+
+All Commands
+    - Make sure every command checks if it has permission to post in the designated channel.
+    - There is a situation where, if a command requires an argument and no argument is given, there will be no return from the bot to say the input was incorrect. 
+
+
+SmashBros Commands
+    - Fix !smashprofiles command so that it shows smash character icons instead of just their name.
+    - Create multiple embeds in the situation that the embed limit is reached. 
+
+Fun Commands
+    - Clean up/complete the race/betting commands.
+    
+Help command
+    - Fix format to be more like the !smashhelp command
+
+Audio Commands
+    - Recreate everything in my own code.

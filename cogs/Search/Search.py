@@ -258,8 +258,8 @@ class Search(commands.Cog):
         titles = []
         links = []
 
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
+
+
         if arg is None:
             for submission in reddit.subreddit('smashbros').hot(limit=5):
                 titles.append(submission.title)

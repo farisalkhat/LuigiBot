@@ -32,6 +32,51 @@ Smash_Characters = {'Mario','Luigi','Peach','Bowser','Dr.Mario','RosaLuma','Bows
 
 
 
+def check_embed_limits(embed):
+    '''
+    Embeds have limits to how many characters can be returned. 
+
+    Title = 256 characters
+    Description = 2048 characters
+    Fields = Max 25 fields
+    Field name = 256 characters
+    Field value = 1024 characters
+    Footer text = 2048 characters
+    Author name = 256 characters
+
+    Sum of all characters cannot exceed 6000 characters. 
+
+    This will check if the limit is broken. 
+    It will return true if the limit is broken.
+    Otherwise, it will return false.
+    '''
+    totalChar = 0
+
+
+    
+    if len(embed.title)>256:
+        return True
+    totalChar = totalChar + len(embed.title)
+    fields = embed.fields
+
+    if len(fields)> 25:
+        return True
+
+    for field in fields:
+        if len(field.name)>256:
+            return True
+        if len(field.value)>1024:
+            return True
+        totalChar = totalChar + len(field.name) + len(field.value)
+
+    print(totalChar)
+    if totalChar > 6000:
+        return True
+    
+    return False
+
+        
+            
 
 
 
@@ -47,10 +92,10 @@ def csmash_embed(name,switchcode,main,servername):
     embed.add_field(name='Player', value=name, inline=True)
     embed.add_field(name='Switch Code', value=switchcode, inline=True)
     embed.add_field(name='Main', value=main, inline=True)
-
-
-
     return embed
+
+
+
 def profile_embed(name,switchcode,main,secondaries):
     embed=discord.Embed(title="Smash Profiles", description="Smash Players on this Server!", color=0x008000)
     embed.add_field(name='Player', value=name, inline=True)
@@ -103,41 +148,40 @@ class SmashBros(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
         self.tools = {}
-
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
             self.users = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
             self.items = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
             self.shop = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
             self.servers = json.load(f)
 
     async def save_users(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
             json.dump(self.users,f,indent=4)
     async def save_items(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
             json.dump(self.items,f,indent=4)
     async def save_shop(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
             json.dump(self.shop,f,indent=4)
     async def save_servers(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'w') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'w') as f:
             json.dump(self.servers,f,indent=4)
 
     
     async def load_users(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
             self.users = json.load(f)
     async def load_items(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
             self.items = json.load(f)
     async def load_shop(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
             self.shop = json.load(f)
     async def load_servers(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
             self.servers = json.load(f)
 
 
@@ -183,18 +227,36 @@ Usage:
         for member in members:
             try:
                 memberid = str(member.id)
-                if self.users[memberid]['SmashProfile']['Name'] is None:
+                if self.users[memberid]['SmashProfile']['Tag'] is None:
                     continue
-                name = name + self.users[memberid]['SmashProfile']['Name'] + "\n"
+                name = name + self.users[memberid]['SmashProfile']['Tag'] + "\n"
                 switchcode = switchcode + self.users[memberid]['SmashProfile']['SwitchCode'] + "\n"
-                main = main + self.users[memberid]['SmashProfile']['Main'] + "\n"
+                mains = self.users[memberid]['SmashProfile']['Main']
+                #TODO Make their mains into their icons instead of just the name.
+                try:
+                    main = main + mains[0] + "\n"
+                except IndexError:
+                    continue
+
             except KeyError:
                 continue
-  
+   
+        if name is None:
+            embed = create_embed('No users!','There are no users! Interesting..',RED)
+            await ctx.send(embed=embed,delete_after=20)
+            return
+
 
         embed = csmash_embed(name,switchcode,main,server.name)
-        await ctx.send(embed=embed)
-
+        
+        if check_embed_limits(embed):
+            #TODO Create multiple embeds when embed limit is exceeded
+            embed = create_embed('Embed limit exceeded!','There are no users! Interesting..',RED)
+            await ctx.send(embed=embed)
+            return
+        else:
+            await ctx.send(embed=embed)
+        
 
 
     

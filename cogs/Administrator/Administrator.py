@@ -65,40 +65,40 @@ class Administrator(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
         self.tools = {}
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
             self.users = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
             self.items = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
             self.shop = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
             self.servers = json.load(f)
 
     async def save_users(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
             json.dump(self.users,f,indent=4)
     async def save_items(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
             json.dump(self.items,f,indent=4)
     async def save_shop(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
             json.dump(self.shop,f,indent=4)
     async def save_servers(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'w') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'w') as f:
             json.dump(self.servers,f,indent=4)
 
     
     async def load_users(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
             self.users = json.load(f)
     async def load_items(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
             self.items = json.load(f)
     async def load_shop(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
             self.shop = json.load(f)
     async def load_servers(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
+        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
             self.servers = json.load(f)
 
 
@@ -122,7 +122,7 @@ class Administrator(commands.Cog):
 
         except KeyError:
             print('KeyError. Run normally')
-    '''
+    
 
 
 
@@ -134,19 +134,20 @@ class Administrator(commands.Cog):
         except KeyError:
             tool = ServerTools(ctx)
             self.tools[ctx.guild.id] = tool
-        return tool
+        return tool3
+    '''
 
 
 
     @staticmethod
     async def errorreport(ctx, message: str, **kwargs):
         await ctx.send(message.format(**kwargs))
-
+    '''
     @commands.command(name='createtools')
     async def createtools(self,ctx):
         tools = self.get_tools(ctx)
         print("Tools added.")
-
+    '''
     @commands.command(name='setbotcommands')
     async def setbotcommands(self,ctx):
         """
