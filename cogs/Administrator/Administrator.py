@@ -11,7 +11,6 @@ import copy
 import os
 import re
 import shlex
-from core.helper import permission 
 import json
 from core import jsondb
 
@@ -86,7 +85,7 @@ class Administrator(commands.Cog):
         
 
 
-    
+     
 
     '''
     @commands.Cog.listener()
@@ -127,36 +126,6 @@ class Administrator(commands.Cog):
     async def errorreport(ctx, message: str, **kwargs):
         await ctx.send(message.format(**kwargs))
     
-    
-
-    @commands.command(name='setbotcommands')
-    async def setbotcommands(self,ctx):
-        """
-        Sets the channel for botcommands to occur.
-        """
-        author = ctx.message.author
-        serverid = str(ctx.message.guild.id)
-        channelid = str(ctx.channel.id)
-
-
-        if not author.guild_permissions.administrator:
-            await ctx.send('Sorry good sir, you do not have permission to modify the database!',delete_after=10)
-            return
-        await jsondb.load_servers(self)
-        try:
-            server = self.servers[serverid]
-            server['Channelid']=channelid
-            await jsondb.save_servers(self)
-            await ctx.send("Botcommands have now been set to the **{}** channel.".format(ctx.message.channel),delete_after = 10)
-        except KeyError:
-            self.servers[serverid] = {'Channelid':channelid}
-            await jsondb.save_servers(self)
-            await ctx.send("Botcommands have been set to the **{}** channel.".format(ctx.message.channel),delete_after = 10)
-
-
-
-
-
     @commands.command(name='addrole', pass_context=True)
     async def addrole(self, ctx, rolename: discord.Role = None,member: discord.Member = None):
         """
@@ -193,8 +162,6 @@ class Administrator(commands.Cog):
                 embed = create_embed('addrole error:',NOPERMISSION.format('add',rolename,member),RED)
                 await ctx.send(embed=embed, delete_after = 20)
 
-
-
     @commands.command(name='removerole', pass_context=True)
     async def deleterole(self, ctx, rolename: discord.Role = None, member: discord.Member = None):
         """
@@ -229,10 +196,6 @@ class Administrator(commands.Cog):
                 embed = create_embed('removerole error:',NOPERMISSION.format('delete',rolename,member),RED)
                 await ctx.send(embed=embed, delete_after = 20)
 
-
-
-
-
     @commands.command(name='clean')
     async def clean_messages(self,ctx,amount:int = 1):
         """
@@ -260,16 +223,7 @@ class Administrator(commands.Cog):
         except discord.Forbidden:
             embed = create_embed('!clean error:','I attempted to clean messages from this channel, but I do not have permission to do so.',RED)
             await ctx.send(embed=embed, delete_after = 20)
-    
-    
-        
-        
-
-            
-
-
-
-        
+       
     @commands.command(name='editrolecolor', pass_context=True)
     async def editcolorrole(self,ctx,*,arg):
         """
@@ -315,19 +269,6 @@ class Administrator(commands.Cog):
             embed = create_embed('!editrolecolor error: ','The role **{}** does not exist on this server'.format(roleName),RED)
             await ctx.send(embed=embed,delete_after=20)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     @commands.command(name='kick', pass_context=True)
     async def kick(self,ctx, user: discord.Member = None,reason: str = None):
         """
@@ -362,9 +303,6 @@ class Administrator(commands.Cog):
         except discord.Forbidden:
             embed = create_embed('!kick error: No permission', 'I do not have permission to kick. Try again when I have more power.',RED)
             await ctx.send(embed=embed,delete_after=20)
-
-
-
 
     @commands.command(name='ban', pass_context=True)
     async def ban(self,ctx, user: discord.Member = None,reason: str = None,days: int = 0):
@@ -404,8 +342,6 @@ class Administrator(commands.Cog):
             embed = create_embed('!ban error: No permission', 'I do not have permission to do this. Try again when I have more power.',RED)
             await ctx.send(embed=embed,delete_after=20)
 
-
-
     @commands.command(name='unban', pass_context=True)
     async def unban(self,ctx, user: discord.Member = None,reason:str = None):
         """
@@ -440,6 +376,107 @@ class Administrator(commands.Cog):
         except discord.Forbidden:
             embed = create_embed('!ban error: No permission', 'I do not have permission to do this. Try again when I have more power.',RED)
             await ctx.send(embed=embed,delete_after=20)
+
+    @commands.command(name='warn')
+    async def warn(self,ctx,user: discord.Member = None,reason:str = None):
+        ''' Warns a user.
+        Usage: !warn @Lefty You're a jerk
+        Requirement: BanMembers Server Permission
+        '''
+    
+    @commands.command(name='warnlog')
+    async def warnlog(self,ctx,user: discord.Member = None):
+        '''Sees a list of warnings of a certain user.
+        Usage: !warnlog @Lefty
+        Requirement: BanMembers Server Permission
+        '''
+    
+    @commands.command(name='warnlogall')
+    async def warnlogall(self,ctx):
+        '''Sees a list of all warnings on the server.
+        Usage: !warnlogall
+        Requirement: BanMembers Server Permission
+        '''
+
+    @commands.command(name='warnclear')
+    async def warnclear(self,ctx,user: discord.Member = None, clear: int = 0):
+        '''
+        Clears all warnings from a certain user. You can specify a number to clear a specific one.
+        Usage: !warnclear @lefty 3
+        !warnclear @lefty
+        '''
+
+    @commands.command(name='setbotcommands')
+    async def setbotcommands(self,ctx):
+        """
+        Sets the channel for botcommands to occur.
+        """
+        author = ctx.message.author
+        serverid = str(ctx.message.guild.id)
+        channelid = str(ctx.channel.id)
+
+
+        if not author.guild_permissions.administrator:
+            await ctx.send('Sorry good sir, you do not have permission to modify the database!',delete_after=10)
+            return
+        await jsondb.load_servers(self)
+        try:
+            server = self.servers[serverid]
+            server['Channel_Permissions'].append(channelid)
+            await jsondb.save_servers(self)
+            await ctx.send("**{}** channel is now allowed to bot commands.".format(ctx.message.channel),delete_after = 10)
+        except KeyError:
+            return await ctx.send("Server info has not been created yet. Use the **!createserverinfo** command first.")
+
+    @commands.command(name='createserverinfo')
+    async def createserverinfo(self,ctx):
+        '''
+        Creates basic info for the server. This command must be used in order to use LuigiBot.
+        Usage: !createserverinfo
+        Requirement: Admin privileges
+        '''
+        await jsondb.load_servers(self)
+        server = ctx.guild
+
+        if not ctx.message.author.guild_permissions.administrator:
+            return await ctx.send(ctx.message.author + ", only admins have permission to use this command.")
+            
+        if str(server.id) not in self.servers:
+            self.servers[str(server.id)] = {
+                'Server_Name': server.name,
+                'Server_Owner': server.owner.name, 
+                'Server_Info':'',
+                'User_Count': len(server.members),
+                'Warnings': {},
+                'Channel_Permissions':[],
+            }
+            await jsondb.save_servers(self)
+            return await ctx.send("Server info has been created for **{}**.",server.name)
+        else:
+            return await ctx.send("Server info has already been created. Use **!serverinfo** to see it, and **!serverhelp** to see how to modify it.")
+        
+
+
+    
+    
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

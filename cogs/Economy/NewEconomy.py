@@ -11,10 +11,7 @@ import copy
 import os
 import re
 from random import randint
-from db import database
-from core.helper import permission
 import json
-from db import dota
 from datetime import datetime,timedelta,date
 
 
@@ -279,8 +276,6 @@ class NewEconomy(commands.Cog):
         await jsondb.load_servers(self)
         if jsondb.permission(self,ctx) is False:
             return await ctx.send(jsondb.NOPERMISSION)
-        if permission(ctx.guild.id,ctx.channel.id) is False:
-            return await ctx.send("This channel has not been set to use **New Economy Commands**.")
         userid = str(ctx.message.author.id)
 
         if not userid in self.users:

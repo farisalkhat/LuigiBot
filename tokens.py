@@ -1,4 +1,4 @@
-discord_api = ''
+discord_api =''
 osu_api =''
 google_api = ''
 dota_api = ''

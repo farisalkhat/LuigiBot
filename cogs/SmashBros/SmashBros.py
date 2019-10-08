@@ -11,7 +11,6 @@ import copy
 import os
 import re
 import shlex
-from db import database
 import json
 from core import jsondb
 

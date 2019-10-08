@@ -129,7 +129,7 @@ Here is the LuigiBot documentation, meant to easily setup LuigiBot and understan
         Usage: !convertlist
         '''
 
-    @commands.command(name='invitecreate' aliases=['invc'])
+    @commands.command(name='invitecreate')
     async def invitecreate(self,ctx):
         '''
         Creates a new invite which has infinite max uses and never expires.

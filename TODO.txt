@@ -20,6 +20,8 @@ Misc Commands
     - Emote reactions add roles
     - Make an announcement when a user starts streaming
     - Add economy commands?
+    - Love gauge command(Aww.)
+    - Gif generator emotes(!slap, !kill, !hug)
     
     
 

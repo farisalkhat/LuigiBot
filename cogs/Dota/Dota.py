@@ -17,7 +17,6 @@ from random import randint
 import requests
 import tokens
 from requests.exceptions import HTTPError
-from db import dota
 import operator
 import json
 from PIL import Image

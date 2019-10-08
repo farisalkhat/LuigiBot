@@ -29,8 +29,8 @@ def get_prefix(bot, message):
     return commands.when_mentioned_or(*prefixes)(bot, message)
 
 
-initial_extensions = ['cogs.Administrator', 'cogs.Audio',
-                      'cogs.SmashBros', 'cogs.Events', 'cogs.Fun', 'cogs.Help','cogs.Search','cogs.Economy','cogs.Dota',
+initial_extensions = [ 'cogs.Administrator','cogs.Audio',
+                      'cogs.SmashBros', 'cogs.Fun', 'cogs.Help','cogs.Search','cogs.Economy','cogs.Dota',
                       'cogs.Utility']
 bot = commands.Bot(command_prefix=get_prefix,
                    description='LuigiBot: General Purpose Bot!')

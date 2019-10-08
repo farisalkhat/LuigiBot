@@ -11,7 +11,6 @@ import copy
 import os
 import re
 from random import randint
-from db import database
 from core import jsondb
 
 eightballkey = ['It is certain.','As I see it, yes.','Reply hazy, try again.',"Don't count on it.",'It is decidedly so.',
@@ -37,7 +36,7 @@ class Fun(commands.Cog):
         
     def __init__(self,bot):
         self.bot = bot
-        self.config= database.get_configs()
+        self.config= {}
         self.cooldown = {}
         self.poll = {}
         self.pollstats={}
@@ -47,7 +46,7 @@ class Fun(commands.Cog):
         self.shop = {}
         self.servers = {}
 
-
+    '''
     @commands.group(pass_context=True)
     async def race(self,ctx):
         if ctx.invoked_subcommand is None:
@@ -85,7 +84,7 @@ class Fun(commands.Cog):
 
         database.set_prize([server,minimum,maximum])
         await ctx.send("The minimum and maximum prize range for races have been set.")
-
+    
 
 
 
@@ -144,7 +143,7 @@ class Fun(commands.Cog):
         print(user_list)
                 
 
-
+    '''
 
 
 
