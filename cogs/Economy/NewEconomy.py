@@ -18,52 +18,22 @@ from db import dota
 from datetime import datetime,timedelta,date
 
 
+from core import jsondb
 
 
 
 
 
 class NewEconomy(commands.Cog):
-
+    __slots__ = ('users','items','shop','servers')
     def __init__(self,bot):
         self.bot = bot
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
-            self.users = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
-            self.items = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
-            self.shop = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
-            self.servers = json.load(f)
+        self.users = {}
+        self.items = {}
+        self.shop = {}
+        self.servers = {}
 
-    async def save_users(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
-            json.dump(self.users,f,indent=4)
-    async def save_items(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
-            json.dump(self.items,f,indent=4)
-    async def save_shop(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
-            json.dump(self.shop,f,indent=4)
-    async def save_servers(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'w') as f:
-            json.dump(self.servers,f,indent=4)
 
-    
-    async def load_users(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
-            self.users = json.load(f)
-    async def load_items(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
-            self.items = json.load(f)
-    async def load_shop(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
-            self.shop = json.load(f)
-    async def load_servers(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
-            self.servers = json.load(f)
-    
-    
     @commands.command(name="createeconomy")
     async def neweconomy(self,ctx):
         memberslist = ctx.message.guild.members
@@ -106,11 +76,15 @@ class NewEconomy(commands.Cog):
 
                 }
 
-        await self.save_users(self)
+        await jsondb.save_users(self)
     
     @commands.command(name="daily")
     async def daily(self,ctx):
-        await self.load_users(self)
+        await jsondb.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
         userid = str(ctx.author.id)
         time = self.users[userid]['Daily']
         date = datetime(time['Year'], time['Month'], time['Day'], 0, 0)
@@ -120,12 +94,16 @@ class NewEconomy(commands.Cog):
         time['Day'] = datetime.today().day
         time['Month'] = datetime.today().month
         self.users[userid]['Coins'] = self.users[userid]['Coins'] + 20
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send('**{}** has claimed his daily reward of **20 coins!**'.format(ctx.author))
     
     @commands.command(name="weekly")
     async def weekly(self,ctx):
-        await self.load_users(self)
+        await jsondb.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
         userid = str(ctx.author.id)
         time = self.users[userid]['Weekly']
         date = datetime(time['Year'], time['Month'], time['Day'], 0, 0)
@@ -136,15 +114,15 @@ class NewEconomy(commands.Cog):
         time['Day'] = datetime.today().day
         time['Month'] = datetime.today().month
         self.users[userid]['Coins'] = self.users[userid]['Coins'] + 100
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send('**{}** has claimed his weekly reward of **100 coins!**'.format(ctx.author))
-
-
 
     @commands.command(name="balance")
     async def newbalance(self,ctx,member:discord.Member = None): 
-        if permission(ctx.guild.id,ctx.channel.id) is False:
-            return await ctx.send("This channel has not been set to use **New Economy Commands**.")
+        await jsondb.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         if member is None:
             userid = str(ctx.message.author.id)
             user = ctx.author
@@ -157,17 +135,21 @@ class NewEconomy(commands.Cog):
         coins = self.users[userid]['Coins']
         await ctx.send('**{}** currently has **{} Coins**.'.format(user,coins),delete_after=10)   
 
-
     @commands.command(name="inventory")
     async def inventory(self,ctx): 
-        if permission(ctx.guild.id,ctx.channel.id) is False:
-            return await ctx.send("This channel has not been set to use **New Economy Commands**.")
+        await jsondb.load_users(self)
+        await jsondb.load_items(self)
+
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
+            
         userid = str(ctx.message.author.id)
-        user = ctx.author.name
-        if not userid in self.users:
+        
+        if userid not in self.users:
             await ctx.send('**{}**, you do not have a profile currently!')
         inventory = self.users[userid]['Inventory']
-
         itemnames = ''
         itemtypes = ''
         itemids = ''
@@ -185,12 +167,15 @@ class NewEconomy(commands.Cog):
         embed.add_field(name='Item Name', value=itemnames, inline=True)
         embed.add_field(name='Item Type', value=itemtypes, inline=True)
         await ctx.send(embed=embed,delete_after=20)
-        
-
 
     @commands.command(name="shop")
     async def open_shop(self,ctx): 
         guild = ctx.guild
+        await jsondb.load_shop(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
         serverid = str(ctx.guild.id)
         if serverid not in self.shop:
             self.shop[serverid] = {
@@ -198,7 +183,7 @@ class NewEconomy(commands.Cog):
                     'Inventory': ['1']
                 }
             await ctx.send("**{}** does not have a shop. I've just created one though!".format(guild.name))
-            await self.save_shop(self)
+            await jsondb.save_shop(self)
         shop = self.shop[serverid]
         items = []
 
@@ -221,6 +206,11 @@ class NewEconomy(commands.Cog):
             
     @commands.command(name="shopadd")
     async def shopadd(self,ctx,index:str): 
+        await jsondb.load_shop(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
         author =ctx.author
         serverid = str(ctx.guild.id)
         guild = ctx.guild
@@ -234,11 +224,16 @@ class NewEconomy(commands.Cog):
         if index in self.shop[serverid]['Inventory']:
             return await ctx.send("This item is already in the shop!")
         self.shop[serverid]['Inventory'].append(index)
-        await self.save_shop(self)
+        await jsondb.save_shop(self)
         await ctx.send("The item: **{}**, has been added to the **{}** shop!".format(self.items[index]['ItemName'],guild.name))
 
     @commands.command(name="shoprem")
     async def shoprem(self,ctx,index:str): 
+        await jsondb.load_shop(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
         author =ctx.author
         serverid = str(ctx.guild.id)
         guild = ctx.guild
@@ -252,14 +247,17 @@ class NewEconomy(commands.Cog):
         if index not in self.shop[serverid]['Inventory']:
             return await ctx.send("This shop does not sell this item!")
         self.shop[serverid]['Inventory'].remove(index)
-        await self.save_shop(self)
+        await jsondb.save_shop(self)
         await ctx.send("The item: **{}**, has been added to the **{}** shop!".format(self.items[index]['ItemName'],guild.name))
         
-
     @commands.command(name="shopbuy")
     async def shopbuy(self,ctx,index:str): 
+        await jsondb.load_shop(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         author =ctx.author
-        guild = ctx.guild
+
         serverid = str(ctx.guild.id)
         authorid = str(ctx.author.id)
         if serverid not in self.shop:
@@ -272,17 +270,19 @@ class NewEconomy(commands.Cog):
             return await ctx.send("Sorry, you do not have enough to purchase that!")
         self.users[authorid]['Coins'] =  self.users[authorid]['Coins'] - int(self.items[index]['Price'])
         self.users[authorid]['Inventory'].append(index)
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send("**{}** has purchased **{}** for **{}** coins.".format(author.name,self.items[index]['ItemName'],self.items[index]['Price']))
-
-    
 
     @commands.command(name="itemdb")
     async def all_items(self,ctx): 
+        await jsondb.load_shop(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         if permission(ctx.guild.id,ctx.channel.id) is False:
             return await ctx.send("This channel has not been set to use **New Economy Commands**.")
         userid = str(ctx.message.author.id)
-        user = ctx.author.name
+
         if not userid in self.users:
             await ctx.send('**{}**, you do not have a profile currently!')
         
@@ -304,9 +304,11 @@ class NewEconomy(commands.Cog):
     
     @commands.command(name="item")
     async def item_find(self,ctx,index:str,member:discord.Member=None):
-        print('lmao')
-        author = ctx.author
-        userid = str(ctx.author.id)
+        await jsondb.load_shop(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
         if index not in self.items:
             return await ctx.send("Sorry, that item does not exist!")
         item = self.items[index]
@@ -317,9 +319,6 @@ class NewEconomy(commands.Cog):
 
         await ctx.send(itemdesc)
         
-    
-
-
     @commands.command(name='setcoins',aliases=['sc'])
     async def setcoins(self,ctx,member: discord.Member = None,coins: int = 0):
         """
@@ -330,10 +329,12 @@ class NewEconomy(commands.Cog):
         !setcoins @Lefty#6430 50
         !sc @Lefty#6430 50
         """
-
+        jsondb.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         author = ctx.message.author
-        SERVERID = str(ctx.message.guild.id)
-        MEMBERID = str(member.id)
+
     
         
         if not author.guild_permissions.administrator:
@@ -344,14 +345,15 @@ class NewEconomy(commands.Cog):
         
         userid = str(member.id)
         self.users[userid]['Coins'] = coins
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send("**{}**, you now have a balance of **{}** Coins!".format(member,coins))
 
-    
-    
     @commands.command(name="use")
     async def use(self,ctx,index:str,member:discord.Member=None):
-        print('lmao')
+        jsondb.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         author = ctx.author
         userid = str(ctx.author.id)
         if index not in self.items:
@@ -366,21 +368,21 @@ class NewEconomy(commands.Cog):
         if index == '1':
             self.users[userid]['Level'] = self.users[userid]['Level'] + 1
             self.users[userid]['Inventory'].remove(index)
-            await self.save_users(self)
+            await jsondb.save_users(self)
             return await ctx.send("**{}** has used **{}** and gained a level! Your level is now **{}**.".format(author,item['ItemName'],str(self.users[userid]['Level'])))
         if index =='2':
             if member is None:
                 return await ctx.send("**{}**, you must target a user to bless their Smash Profile.".format(author))
             memberid = str(member.id)
             self.users[memberid]['SmashProfile']['Main'] = 'Goku'
-            return await self.save_users(self)
+            return await jsondb.save_users(self)
         if index == '3':
             if  self.users[userid]['Rigged'] == 1:
                 return await ctx.send("You're already rigging the system, bro!")
             else:
                 self.users[userid]['Rigged'] = 1
                 self.users[userid]['Inventory'].remove(index)
-                await self.save_users(self)
+                await jsondb.save_users(self)
             return await ctx.send("**{}** has used **{}** and is now insanely lucky!".format(author,item['ItemName']))
         if index =='4':
             if member is None:
@@ -390,13 +392,13 @@ class NewEconomy(commands.Cog):
                 if role.name =='BANNED':
                     await member.add_roles(role)
                     self.users[userid]['Inventory'].remove(index)
-                    await self.save_users(self)
+                    await jsondb.save_users(self)
                     return await ctx.send('**{}** has banned **{}**! Hilarious!'.format(ctx.author,member))
             
             await ctx.guild.create_role(name='BANNED',colour=discord.Colour.dark_grey())
             await member.add_roles(role)
             self.users[userid]['Inventory'].remove(index)
-            await self.save_users(self)
+            await jsondb.save_users(self)
             return await ctx.send('**{}** has banned **{}**! Hilarious!'.format(ctx.author,member))
 
             

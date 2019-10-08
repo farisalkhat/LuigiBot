@@ -13,6 +13,9 @@ import re
 import shlex
 from core.helper import permission 
 import json
+from core import jsondb
+
+
 default_ban_message = 'You have been banned, '
 default_kick_message = ' has been kicked.'
 kick_reason = 'not specified.'
@@ -46,14 +49,17 @@ def create_embed(atitle,adescription,color):
 
 
 class ServerTools:
-    __slots__ = ('bot','guild','channel','emoteroles','reportlogs','greetmsg','greetdmmsg')
+    __slots__ = ('bot','guild','channel','emoteroles',
+    'reportlogs','greetmsg','greetdmmsg')
 
-    def __init__(self,ctx):
-        self.bot = ctx.bot
-        self.guild = ctx.guild
-        self.channel = ctx.channel
+    def __init__(self,bot):
+        self.bot = bot
+        self.guild = bot.guild
+        self.channel = bot.channel
         self.emoteroles = {}
         self.reportlogs={}
+
+        
         
         
         
@@ -61,45 +67,23 @@ class ServerTools:
 
 class Administrator(commands.Cog):
 
-    __slots__ = ('bot','tools')
+    __slots__ = ('bot','tools',
+    'users','items','shop','servers')
+
+
     def __init__(self,bot):
         self.bot = bot
         self.tools = {}
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
-            self.users = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
-            self.items = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
-            self.shop = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
-            self.servers = json.load(f)
 
-    async def save_users(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
-            json.dump(self.users,f,indent=4)
-    async def save_items(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
-            json.dump(self.items,f,indent=4)
-    async def save_shop(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
-            json.dump(self.shop,f,indent=4)
-    async def save_servers(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'w') as f:
-            json.dump(self.servers,f,indent=4)
+        self.users = {}
+        self.items = {}
+        self.shop = {}
+        self.servers = {}
+        
 
-    
-    async def load_users(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
-            self.users = json.load(f)
-    async def load_items(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
-            self.items = json.load(f)
-    async def load_shop(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
-            self.shop = json.load(f)
-    async def load_servers(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
-            self.servers = json.load(f)
+
+
+        
 
 
     
@@ -143,10 +127,7 @@ class Administrator(commands.Cog):
     async def errorreport(ctx, message: str, **kwargs):
         await ctx.send(message.format(**kwargs))
     
-    @commands.command(name='createtools')
-    async def createtools(self,ctx):
-        tools = self.get_tools(ctx)
-        print("Tools added.")
+    
 
     @commands.command(name='setbotcommands')
     async def setbotcommands(self,ctx):
@@ -157,18 +138,19 @@ class Administrator(commands.Cog):
         serverid = str(ctx.message.guild.id)
         channelid = str(ctx.channel.id)
 
+
         if not author.guild_permissions.administrator:
             await ctx.send('Sorry good sir, you do not have permission to modify the database!',delete_after=10)
             return
-        await self.load_servers(self)
+        await jsondb.load_servers(self)
         try:
             server = self.servers[serverid]
             server['Channelid']=channelid
-            await self.save_servers(self)
+            await jsondb.save_servers(self)
             await ctx.send("Botcommands have now been set to the **{}** channel.".format(ctx.message.channel),delete_after = 10)
         except KeyError:
             self.servers[serverid] = {'Channelid':channelid}
-            await self.save_servers(self)
+            await jsondb.save_servers(self)
             await ctx.send("Botcommands have been set to the **{}** channel.".format(ctx.message.channel),delete_after = 10)
 
 
@@ -182,16 +164,11 @@ class Administrator(commands.Cog):
         If the user field is left blank, it will default to the author who issued the command.
         """
 
-        author = ctx.message.author
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
 
-        await self.load_servers(self)
-        serverid = str(ctx.guild.id)
-        channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+        author = ctx.message.author
 
         
 
@@ -224,20 +201,15 @@ class Administrator(commands.Cog):
         Deletes a role off a user.
         If user field is left blank, it will default to the author who issued the command.
         """
+
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
         author = ctx.message.author
-
-
         if member is None:
             member = ctx.message.author
 
-        await self.load_servers(self)
-        serverid = str(ctx.guild.id)
-        channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
 
         if not author.guild_permissions.manage_roles:
             embed = create_embed('removerole error: No permission', 'You do not have permission to remove roles.',RED)
@@ -272,16 +244,11 @@ class Administrator(commands.Cog):
         !clean 10
         
         """
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         author = ctx.message.author
         channel = ctx.message.channel
-        await self.load_servers(self)
-        serverid = str(ctx.guild.id)
-        channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         if not author.guild_permissions.administrator:
             embed = create_embed('!clean error: No permission', 'You do not have permission to clean messages.',RED)
             return await ctx.send(embed=embed,delete_after=5)
@@ -318,14 +285,11 @@ class Administrator(commands.Cog):
         roleName = discord.utils.get(ctx.message.guild.roles, name=roleName)
         author = ctx.message.author
 
-        await self.load_servers(self)
-        serverid = str(ctx.guild.id)
-        channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
+       
         
         if not author.guild_permissions.manage_roles:
             embed = create_embed('editrolecolor error: No permission', 'You do not have permission to edit roles.',RED)
@@ -376,14 +340,11 @@ class Administrator(commands.Cog):
         !kick @Lefty#6430
         """
         author = ctx.message.author
-        await self.load_servers(self)
-        serverid = str(ctx.guild.id)
-        channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
+        
         if not user:
             embed = create_embed('!kick error: No member selected.', 'You did not provide a username to kick.',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -418,14 +379,11 @@ class Administrator(commands.Cog):
         !ban @Lefty#6430 You're an idiot
         !ban @Lefty#6430
         """
-        await self.load_servers(self)
-        serverid = str(ctx.guild.id)
-        channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
+        
         author = ctx.message.author
         server= ctx.guild
         if not user:
@@ -458,14 +416,11 @@ class Administrator(commands.Cog):
         !unban @Lefty#6430 Hey you're pretty cool : )
         !unban @Lefty#6430
         """
-        await self.load_servers(self)
-        serverid = str(ctx.guild.id)
-        channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+        
+        
         author = ctx.message.author
         server= ctx.guild
         if not user:
@@ -486,6 +441,9 @@ class Administrator(commands.Cog):
             embed = create_embed('!ban error: No permission', 'I do not have permission to do this. Try again when I have more power.',RED)
             await ctx.send(embed=embed,delete_after=20)
 
+
+
+    '''
     @commands.command(name='setemoterole', pass_context=True)
     async def setemoterole(self,ctx,emote: discord.Emoji = None,*,arg):
         """
@@ -497,14 +455,12 @@ class Administrator(commands.Cog):
 
 
         author = ctx.message.author
-        await self.load_servers(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         serverid = str(ctx.guild.id)
         channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+        
         if not emote:
             embed = create_embed('setemoterole error:','You did not specify an emote.',RED)
             await ctx.send(embed=embed, delete_after = 20)
@@ -545,14 +501,11 @@ class Administrator(commands.Cog):
 
 
         author = ctx.message.author
-        await self.load_servers(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         serverid = str(ctx.guild.id)
         channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
         if not emote:
             embed = create_embed('setemoterole error:','You did not specify an emote.',RED)
             await ctx.send(embed=embed, delete_after = 20)
@@ -588,14 +541,11 @@ class Administrator(commands.Cog):
         """
         author = ctx.message.author
         arg = shlex.split(arg)
-        await self.load_servers(self)
         serverid = str(ctx.guild.id)
         channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         if len(arg) <=1:
             embed = create_embed('renamerole error: Not enough arguments ','You must provide 2 arguments for this command.',RED)
             await ctx.send(embed=embed,delete_after=20)
@@ -618,7 +568,7 @@ class Administrator(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    '''
+    
     @commands.command(name='greet', pass_context=True)
     async def greet(self,ctx):
         """

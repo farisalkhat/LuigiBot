@@ -13,6 +13,7 @@ import re
 import shlex
 from db import database
 import json
+from core import jsondb
 
 RED = 0xc9330a
 GREEN = 0x16820d
@@ -137,6 +138,9 @@ class SmashTools:
         self.guild = ctx.guild
         self.channel = ctx.channel
 
+
+        
+
         
 
 
@@ -144,45 +148,14 @@ class SmashTools:
 
 
 class SmashBros(commands.Cog):
-    __slots__ = ('bot','tools')
+    __slots__ = ('users','items','shop','servers','tools')
     def __init__(self,bot):
         self.bot = bot
-        self.tools = {}
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
-            self.users = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
-            self.items = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
-            self.shop = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
-            self.servers = json.load(f)
-
-    async def save_users(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
-            json.dump(self.users,f,indent=4)
-    async def save_items(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
-            json.dump(self.items,f,indent=4)
-    async def save_shop(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
-            json.dump(self.shop,f,indent=4)
-    async def save_servers(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'w') as f:
-            json.dump(self.servers,f,indent=4)
-
-    
-    async def load_users(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
-            self.users = json.load(f)
-    async def load_items(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
-            self.items = json.load(f)
-    async def load_shop(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
-            self.shop = json.load(f)
-    async def load_servers(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
-            self.servers = json.load(f)
+        self.users = {}
+        self.items = {}
+        self.shop = {}
+        self.servers = {}
+        self.tools={}
 
 
 
@@ -215,7 +188,12 @@ Shows all of the smash profiles currently on the server.
 Usage: 
 !smashprofiles
         '''
-        await self.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+
+
+        await jsondb.load_users(self)
         server = ctx.message.guild
         members = ctx.guild.members
 
@@ -273,7 +251,11 @@ Usage:
         Usage:
         !switchcode 123412341234
         '''
-        await self.load_users(self)
+
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+        await jsondb.load_users(self)
         arg = shlex.split(arg)
         switchcode = arg[0]
         if len(switchcode)!=12:
@@ -285,7 +267,7 @@ Usage:
         
         userid = str(ctx.author.id)
         self.users[userid]['SmashProfile']['SwitchCode'] = switchcode
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send('**{}** has modified their switchcode!'.format(ctx.author))
         
 
@@ -298,7 +280,11 @@ Usage:
         Usage:
         !smashmain Luigi
         '''
-        await self.load_users(self)
+
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+        await jsondb.load_users(self)
         arg = arg.split(';')
         main = check_secondaries(arg)
         if not main:
@@ -307,80 +293,102 @@ Usage:
             return
         userid = str(ctx.author.id)
         self.users[userid]['SmashProfile']['Main'] = main
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send('**{}** has modified their mains!'.format(ctx.author))
 
 
 
     @commands.command(name='smashgames',pass_context = True)
     async def smashgames(self,ctx,*,arg):
-        await self.load_users(self)
+
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+        await jsondb.load_users(self)
         userid = str(ctx.author.id)
         arg = arg.split(';')
         for game in arg:
             if game is not 'Ultimate' or game is not 'Melee':
                 return await ctx.send('**{}**, the only smash games are Ultimate or Melee. xd')
         self.users[userid]['SmashProfile']['Tag'] = arg
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send('**{}** has modified their tag.'.format(ctx.author))
 
 
     @commands.command(name='smashtag',pass_context = True)
     async def smashtag(self,ctx,*,arg):
-        await self.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+        await jsondb.load_users(self)
         userid = str(ctx.author.id)
         self.users[userid]['SmashProfile']['Tag'] = arg
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send('**{}** has modified their tag.'.format(ctx.author))
 
 
     @commands.command(name='smashnote',pass_context = True)
     async def smashnote(self,ctx,*,arg):
-        await self.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+        await jsondb.load_users(self)
         userid = str(ctx.author.id)
         self.users[userid]['SmashProfile']['Note'] = arg
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send('**{}** has modified their note.'.format(ctx.author))
 
     @commands.command(name='smashimage',pass_context = True)
     async def smashimage(self,ctx,*,arg):
-        await self.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+        await jsondb.load_users(self)
         userid = str(ctx.author.id)
         self.users[userid]['SmashProfile']['Image'] = arg
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send('**{}** has modified their image.'.format(ctx.author))
 
     @commands.command(name='smashregion',pass_context = True)
     async def smashregion(self,ctx,*,arg):
-        await self.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+        await jsondb.load_users(self)
         userid = str(ctx.author.id)
         self.users[userid]['SmashProfile']['Region'] = arg
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send('**{}** has modified their region.'.format(ctx.author))
 
     @commands.command(name='smashcolor',pass_context = True)
     async def smashcolor(self,ctx,*,Colour):
-        await self.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+        await jsondb.load_users(self)
         colorString = Colour
         Colour = re.search(r'^0x(?:[0-9a-fA-F]{3}){1,2}$', Colour)
         if not Colour:
             return await ctx.send("**{}**, you did not provide a color in hex format.".format(ctx.author))
         userid = str(ctx.author.id)
         self.users[userid]['SmashProfile']['Colour'] = colorString
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send('**{}** has modified their colour.'.format(ctx.author))
 
 
     @commands.command(name='smashpocket',pass_context = True)
     async def smashpocket(self,ctx,*,arg=''):
-        await self.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+        await jsondb.load_users(self)
         arg = arg.split(';')
         secondarylist = check_secondaries(arg)
         if not secondarylist:
             secondarylist = ['']
         userid = str(ctx.author.id)
         self.users[userid]['SmashProfile']['Pockets'] = secondarylist
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send('**{}** has modified their pockets!'.format(ctx.author))
     
     @commands.command(name='smashsecond',pass_context = True)
@@ -392,14 +400,17 @@ Usage:
         !smashsecond Luigi;Mario;Fox
         !smashsecond
         '''
-        await self.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+        await jsondb.load_users(self)
         arg = arg.split(';')
         secondarylist = check_secondaries(arg)
         if not secondarylist:
             secondarylist = ['']
         userid = str(ctx.author.id)
         self.users[userid]['SmashProfile']['Secondaries'] = secondarylist
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send('**{}** has modified their secondaries!'.format(ctx.author))
 
     @commands.command(name='smashdelete',pass_context = True)
@@ -411,7 +422,10 @@ Usage:
         !deletesmash
         !deletesmash @Lefty#6430
         '''
-        await self.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+        await jsondb.load_users(self)
         if not ctx.author.guild_permissions.administrator:
                 embed = create_embed('!deletesmash error: No permission.', 'You must have admin privileges to do this command',GREEN)
                 await ctx.send(embed=embed,delete_after=20)
@@ -426,7 +440,7 @@ Usage:
                                     'Main': '',
                                     'Secondaries': []
         }
-        await self.save_users
+        await jsondb.save_users
         await ctx.send("**{}**'s Smash Profile has been wiped.")
             
 
@@ -441,6 +455,9 @@ Usage:
         Usage:
         !smashcharacters
         '''
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
         author = ctx.author
         label = 1
         List = ""
@@ -460,7 +477,10 @@ Usage:
     async def smashprofile(self,ctx, user:discord.Member = None):
         """
         """
-        await self.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+        await jsondb.load_users(self)
         if user is None:
             username = ctx.author
             userid = str(ctx.author.id)
@@ -597,6 +617,9 @@ Usage:
 
     @commands.command(name='smashhelp')
     async def smashhelp(self,ctx):
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
         author = ctx.author
         msg = """Hello, here is how to setup LuigiBot's Smash profiles:
 __**!smashtag:**__ Set your smash tag with this command. **Example: !smashtag Lefty**

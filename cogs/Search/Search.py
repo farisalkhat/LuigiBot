@@ -20,7 +20,7 @@ from youtube_api import YouTubeDataAPI
 import tokens
 from pyosu import OsuApi
 import praw
-from core.helper import permission
+from core import jsondb
 
 
 google_key = tokens.google_api
@@ -38,14 +38,23 @@ GREEN = 0x16820d
 
 class Search(commands.Cog):
 
+    __slots__ = ('users','items','shop','servers')
     def __init__(self,bot):
         self.bot = bot
+        self.users = {}
+        self.items = {}
+        self.shop = {}
+        self.servers = {}
 
     @commands.command(name="cat")
     async def cat(self,ctx):
         """
         Generate a random cat from random.cat/meow
         """
+
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
         r = requests.get('http://aws.random.cat/meow')
         print(r)
         js = r.json()
@@ -60,6 +69,9 @@ class Search(commands.Cog):
         """
         Generate a doggo from dog.ceo
         """
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
         r = requests.get('https://dog.ceo/api/breeds/image/random')
         js = r.json()
         
@@ -74,6 +86,9 @@ class Search(commands.Cog):
         """
         Searches Youtube for the given search, and returns the first video given.
         """
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
         yt = YouTubeDataAPI(google_key)
         lmao = yt.search(arg)
         print(lmao[0])
@@ -89,6 +104,9 @@ class Search(commands.Cog):
         Retrieves the timezone for the given location. Utilizes geocoders and tzwhere.
         """
 
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
         g = geocoders.GoogleV3(api_key=google_key)
         
         place, (lat, lng) = g.geocode(arg)
@@ -103,6 +121,9 @@ class Search(commands.Cog):
         '''
         Retrieves the first result for the given search. 
         '''
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
 
         query = 'https://www.googleapis.com/customsearch/v1?key={}&cx={}&q='.format(google_key,google_search_key) + urllib.parse.quote_plus(arg) + "&start=1"
         
@@ -119,6 +140,9 @@ class Search(commands.Cog):
         '''
         Retrieves the first urban dictionary result for the given argument.
         '''
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
         query = 'http://api.urbandictionary.com/v0/define?term={}'.format(urllib.parse.quote_plus(arg))
         r = requests.get(query)
         js = r.json()
@@ -140,6 +164,9 @@ class Search(commands.Cog):
         Example:
         !osu Leftyy
         """
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
 
         #recent5 = await api.get_user_recents(user=arg,limit = 5)
 
@@ -172,6 +199,9 @@ class Search(commands.Cog):
         Usage:
         !osu5 Leftyy
         """
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
         user = await api.get_user(user = arg)
         image = 'http://s.ppy.sh/a/'  + str(user.user_id)
         
@@ -217,6 +247,9 @@ class Search(commands.Cog):
         """
         Shows basic information of an osu beatmap. Must provide the link to the beatmap. Uses Renondedju's Osu.py library https://github.com/Renondedju/Osu.py
         """
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
         compare = 'https://osu.ppy.sh/beatmapsets/'
         if len(arg)>31:
             if compare == arg[0:31]:
@@ -252,11 +285,16 @@ class Search(commands.Cog):
     
     @commands.command(name='smashbros')
     async def smashbros(self,ctx, *,arg=None):
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+
         reddit = praw.Reddit(client_id = reddit_client,
         client_secret =reddit_secret,
         user_agent= user_agent)
         titles = []
         links = []
+        
 
 
 
@@ -306,13 +344,14 @@ class Search(commands.Cog):
 
     @commands.command(name='smashrand')
     async def smashrand(self,ctx):
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
         reddit = praw.Reddit(client_id = reddit_client,
         client_secret =reddit_secret,
         user_agent= user_agent)
         titles = []
         links = []
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         for submission in reddit.subreddit('smashbros').top('week',limit=20):
                 titles.append(submission.title)
                 links.append(submission.url)
@@ -329,13 +368,14 @@ class Search(commands.Cog):
 
     @commands.command(name='dota2rand')
     async def dota2rand(self,ctx):
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
         reddit = praw.Reddit(client_id = reddit_client,
         client_secret =reddit_secret,
         user_agent= user_agent)
         titles = []
         links = []
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         for submission in reddit.subreddit('dota2').hot(limit=20):
                 titles.append(submission.title)
                 links.append(submission.url)
@@ -351,13 +391,14 @@ class Search(commands.Cog):
 
     @commands.command(name='gamingrand')
     async def gamingrand(self,ctx):
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
         reddit = praw.Reddit(client_id = reddit_client,
         client_secret =reddit_secret,
         user_agent= user_agent)
         titles = []
         links = []
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         for submission in reddit.subreddit('gaming').hot(limit=20):
                 titles.append(submission.title)
                 links.append(submission.url)
@@ -372,13 +413,14 @@ class Search(commands.Cog):
     
     @commands.command(name='wholesomerand')
     async def wholesomerand(self,ctx):
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
         reddit = praw.Reddit(client_id = reddit_client,
         client_secret =reddit_secret,
         user_agent= user_agent)
         titles = []
         links = []
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         for submission in reddit.subreddit('wholesomememes').hot(limit=20):
                 titles.append(submission.title)
                 links.append(submission.url)
@@ -393,13 +435,14 @@ class Search(commands.Cog):
     
     @commands.command(name='fehrand')
     async def fehrand(self,ctx):
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
         reddit = praw.Reddit(client_id = reddit_client,
         client_secret =reddit_secret,
         user_agent= user_agent)
         titles = []
         links = []
-        if permission(ctx.message.guild.id,ctx.message.channel.id) is False:
-            return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
         for submission in reddit.subreddit('fireemblemheroes').hot(limit=20):
                 titles.append(submission.title)
                 links.append(submission.url)
@@ -411,3 +454,6 @@ class Search(commands.Cog):
 
         result = '**'+title + ':** ' + link
         await ctx.send(result,delete_after=20)
+
+
+

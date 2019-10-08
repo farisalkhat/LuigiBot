@@ -11,6 +11,7 @@ import copy
 import os
 import re
 from random import randint
+from core import jsondb
 
 def create_embed(atitle,adescription,color):
     embed = discord.Embed(
@@ -22,8 +23,13 @@ RED = 0xc9330a
 GREEN = 0x16820d
 class Help(commands.Cog):
 
+    __slots__ = ('users','items','shop','servers')
     def __init__(self,bot):
         self.bot = bot
+        self.users = {}
+        self.items = {}
+        self.shop = {}
+        self.servers = {}
     '''
     @commands.command(name="guide")
     async def guide(self,ctx):
@@ -34,6 +40,10 @@ class Help(commands.Cog):
     @commands.command(name="help")
     async def help(self,ctx,*,arg=None):
         """Lists all modules for the bot."""
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+        
         author = ctx.author
         if arg is None:
             embed=discord.Embed(title="Server Modules")
@@ -61,6 +71,11 @@ class Help(commands.Cog):
     @commands.command(name='command')
     @commands.has_permissions(add_reactions=True,embed_links=True)
     async def command(self,ctx,*, arg):
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+
+
         for command in self.bot.commands:
             if command.name == arg:
                 help = command.help

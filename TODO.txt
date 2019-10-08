@@ -1,15 +1,37 @@
-CLEANUP TODO LIST
-
+TODO LIST
 
 General
-    - Refactor any code that is seen in multiple methods
-        - Checking if channel has permission for botcommands
-        - Check if embed limit is reached
-        - loading and saving json files
+    - Figure out an easy way to add requirements
+    - Figure out how to enable events for specific servers
+    - Fix the description for all of the commands
+
+Fun Commands 
+    - Add Tic Tac Toe, Connect 4, Race, etc
+
+Admin Commands
+    - Completely rehaul the admin commands
+    - Add reactionroles command
+
+Utility Commands
+    - Added a list of commands to add
+
+Misc Commands
+    - Greet commands
+    - Emote reactions add roles
+    - Make an announcement when a user starts streaming
+    - Add economy commands?
+    
+    
+
+
+
+
+BUG TODO LIST
+
+General
     - For the code that interacts with json files, make it so it does not need a path to be manually inserted. 
 
 All Commands
-    - Make sure every command checks if it has permission to post in the designated channel.
     - There is a situation where, if a command requires an argument and no argument is given, there will be no return from the bot to say the input was incorrect. 
 
 
@@ -19,9 +41,10 @@ SmashBros Commands
 
 Fun Commands
     - Clean up/complete the race/betting commands.
-    
-Help command
-    - Fix format to be more like the !smashhelp command
 
 Audio Commands
     - Recreate everything in my own code.
+
+
+
+

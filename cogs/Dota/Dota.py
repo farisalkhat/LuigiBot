@@ -23,47 +23,17 @@ import json
 from PIL import Image
 dota_api_key = tokens.dota_api
 GREEN = 0x16820d
-
+from core import jsondb
 
 class Dota(commands.Cog):
 
+    __slots__ = ('users','items','shop','servers')
     def __init__(self,bot):
         self.bot = bot
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
-            self.users = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
-            self.items = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
-            self.shop = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
-            self.servers = json.load(f)
-
-    async def save_users(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
-            json.dump(self.users,f,indent=4)
-    async def save_items(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
-            json.dump(self.items,f,indent=4)
-    async def save_shop(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
-            json.dump(self.shop,f,indent=4)
-    async def save_servers(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'w') as f:
-            json.dump(self.servers,f,indent=4)
-
-    
-    async def load_users(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
-            self.users = json.load(f)
-    async def load_items(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
-            self.items = json.load(f)
-    async def load_shop(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
-            self.shop = json.load(f)
-    async def load_servers(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\ServerPermissions.json",'r') as f:
-            self.servers = json.load(f)
+        self.users = {}
+        self.items = {}
+        self.shop = {}
+        self.servers = {}
 
 
 
@@ -75,15 +45,12 @@ class Dota(commands.Cog):
         Usage:
         !setsteam 97985854
         """
-        await self.load_users(self)
-        await self.load_servers(self)
-        serverid = str(ctx.guild.id)
-        channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+        await jsondb.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+
+
         userid = str(ctx.author.id)
         try:
             response = requests.get('https://api.opendota.com/api/players/{}?api_key={}'.format(arg,dota_api_key))
@@ -99,7 +66,7 @@ class Dota(commands.Cog):
             return await ctx.send("**{}**, you already have STEAMID linked: **{}**".format(ctx.message.author,STEAMID),delete_after=10)
         self.users[userid]['DotaProfile']['Steam32id'] = arg
         print(self.users[userid]['DotaProfile']['Steam32id'])
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send("**{}** has created his profile with the STEAMID: **{}**".format(ctx.message.author,arg),delete_after=10)
 
     @commands.command(name='steamdelete')
@@ -110,18 +77,13 @@ class Dota(commands.Cog):
         Usage:
         !steamdelete
         """
-        await self.load_users(self)
-        await self.load_servers(self)
-        serverid = str(ctx.guild.id)
-        channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+        await jsondb.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         userid = str(ctx.author.id)
         self.users[userid]['DotaProfile'] = {'Name':'', 'Steam32id': ''}
-        await self.save_users(self)
+        await jsondb.save_users(self)
         await ctx.send("**{}** has wiped their STEAMID.".format(ctx.message.author),delete_after=10)
     
     @commands.command(name='mysteam')
@@ -132,15 +94,10 @@ class Dota(commands.Cog):
         Usage:
         !mysteam
         """
-        await self.load_users(self)
-        await self.load_servers(self)
-        serverid = str(ctx.guild.id)
-        channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+        await jsondb.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         userid = str(ctx.author.id)
         STEAMID = self.users[userid]['DotaProfile']['Steam32id']
         if not STEAMID:
@@ -152,15 +109,10 @@ class Dota(commands.Cog):
 
     @commands.command(name='wordcloud',aliases=['wc'])
     async def dota_wordcloud(self, ctx, member:discord.Member = None):
-        await self.load_users(self)
-        await self.load_servers(self)
-        serverid = str(ctx.guild.id)
-        channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+        await jsondb.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         if member is None:
             userid = str(ctx.message.author.id)
         else:
@@ -188,15 +140,10 @@ class Dota(commands.Cog):
         '''
         Show the top 5 friends you play with it.
         '''
-        await self.load_users(self)
-        await self.load_servers(self)
-        serverid = str(ctx.guild.id)
-        channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+        await jsondb.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         if member is None:
             userid = str(ctx.message.author.id)
         else:
@@ -309,15 +256,10 @@ class Dota(commands.Cog):
 
     @commands.command(name='whoishere')
     async def whoishere(self, ctx):
-        await self.load_users(self)
-        await self.load_servers(self)
-        serverid = str(ctx.guild.id)
-        channelid = str(ctx.channel.id)
-        try:
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+        await jsondb.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         members = ctx.guild.members
         names = ''
         steams = ''
@@ -336,6 +278,9 @@ class Dota(commands.Cog):
         
     @commands.command(name='dotahelp')
     async def dotahelp(self, ctx):
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         author = ctx.author
         msg = """To setup a dota profile, you first need to link up your Steam32id. To get that, I reccommend you use https://steamid.xyz/ to get it.
 Then, you simply use the !setsteam command.
@@ -361,17 +306,10 @@ Then you can see your profile as well as others with !dota. Use !help Dota to se
 
         """
 
-        await self.load_users(self)
-        await self.load_servers(self)
-        serverid = str(ctx.guild.id)
-        channelid = str(ctx.channel.id)
-        try:
-            print(self.servers[serverid]['Channelid'])
-            print(channelid)
-            if self.servers[serverid]['Channelid'] != channelid:
-                return await ctx.send("This channel is not allowed to have bot commands.",delete_after=10)
-        except KeyError:
-            return await ctx.send("You have not set a channel for botcommands.",delete_after=10)
+        await jsondb.load_users(self)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         if member is None:
             userid = str(ctx.message.author.id)
         else:
@@ -577,7 +515,3 @@ def get_emblem(rank):
         if stars=='7':
             return ['Divine 7','https://gamepedia.cursecdn.com/dota2_gamepedia/thumb/c/c1/SeasonalRank7-7.png/140px-SeasonalRank7-7.png?version=7a669fe5a5f721dce6643cb64eb65fc8']
         
-def permission(serverid,channelid):
-    if dota.get_dota_channel([serverid,channelid]):
-        return True
-    return False

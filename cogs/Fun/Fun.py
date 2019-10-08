@@ -12,6 +12,7 @@ import os
 import re
 from random import randint
 from db import database
+from core import jsondb
 
 eightballkey = ['It is certain.','As I see it, yes.','Reply hazy, try again.',"Don't count on it.",'It is decidedly so.',
                 'Most likely.','Ask again later.','My reply is no.','Without a doubt.','Outlook good.',
@@ -31,8 +32,9 @@ def create_embed(atitle,adescription,color):
     return embed
 
 class Fun(commands.Cog):
+    __slots__ = ('users','items','shop','servers','poll')
 
-    __slots__ = ('bot','poll')
+        
     def __init__(self,bot):
         self.bot = bot
         self.config= database.get_configs()
@@ -40,12 +42,10 @@ class Fun(commands.Cog):
         self.poll = {}
         self.pollstats={}
         self.pollvoters={}
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
-            self.users = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
-            self.items = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
-            self.shop = json.load(f)
+        self.users = {}
+        self.items = {}
+        self.shop = {}
+        self.servers = {}
 
 
     @commands.group(pass_context=True)
@@ -152,11 +152,17 @@ class Fun(commands.Cog):
 
     @commands.command(name="8ball")
     async def ball(self,ctx, *, arg):
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         N = randint(0,19)
         await ctx.send(eightballkey[N])
 
     @commands.command(name="choose")
     async def choose(self,ctx,*,arg):
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         choices = arg.split(';')
         N = randint(0,len(choices)-1)
         await ctx.send(choices[N])
@@ -164,6 +170,9 @@ class Fun(commands.Cog):
     @commands.command(name="flip")
     async def flip(self,ctx):
         """Flips a coin."""
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
         N = randint(1,2)
         if N == 1:
             await ctx.send("_**Heads.**_")
@@ -180,27 +189,29 @@ class Fun(commands.Cog):
         !roll
         !roll 1000 2000
         """
-        authorid = str(ctx.author.id)
-        
 
+
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
+            
+        authorid = str(ctx.author.id)
 
         if left > right:
             embed = create_embed('roll error: Invalid range inputs', 'You must input two ranges, and the first range must be smaller.',RED)
             await ctx.send(embed=embed)
             return
 
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
-            self.users = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
-            self.items = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
-            self.shop = json.load(f)
+        await jsondb.load_users(self)
+        await jsondb.load_items(self)
+        await jsondb.load_shop(self)
 
         try:
             if self.users[authorid]['Rigged']== 1:
                 N = right
                 self.users[authorid]['Rigged']=0
-                await self.save_users(self)
+                await jsondb.save_users(self)
                 return await ctx.send(N)
             else:
                 N = randint(left,right)
@@ -223,12 +234,13 @@ class Fun(commands.Cog):
         N3 = randint(1,6)
         authorid = str(ctx.author.id)
 
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'r') as f:
-            self.users = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'r') as f:
-            self.items = json.load(f)
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'r') as f:
-            self.shop = json.load(f)
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
+        await jsondb.load_users(self)
+        await jsondb.load_items(self)
+        await jsondb.load_shop(self)
 
         try:
             if self.users[authorid]['Rigged']== 1:
@@ -237,7 +249,7 @@ class Fun(commands.Cog):
                 N3 = 6
                 N = str(N1) + " " + str(N2) + " "  + str(N3)
                 self.users[authorid]['Rigged']=0
-                self.save_users(self)
+                jsondb.save_users(self)
                 return await ctx.send(N)
             else:
                 N1 = randint(1,6)
@@ -265,6 +277,12 @@ class Fun(commands.Cog):
         Usage:
         !poll question;choice1;choice2;choice3;choice4
         '''
+
+
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+        
         
         args = arg.split(';')
         serverid = ctx.message.guild.id
@@ -296,6 +314,12 @@ class Fun(commands.Cog):
         Usage:
         !pollstats
         '''
+
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
+
         serverid = ctx.message.guild.id
         try:
             if self.poll[serverid] is not None:
@@ -312,6 +336,12 @@ class Fun(commands.Cog):
         Usage:
         !pollend
         '''
+
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
+
         serverid = ctx.message.guild.id
         try:
             if self.poll[serverid] is not None:
@@ -332,6 +362,12 @@ class Fun(commands.Cog):
         !vote 1
         !vote 4
         '''
+
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
+
 
         serverid = ctx.message.guild.id
         authorid = ctx.message.author.id
@@ -354,23 +390,19 @@ class Fun(commands.Cog):
         '''
         Retrieves the avatar of a user.
         '''
+
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+
+
         if member is None:
             avatar_url = ctx.author.avatar_url_as(static_format='png')
         else:
             avatar_url = member.avatar_url_as(static_format='png')
         await ctx.send(avatar_url)
     
-    async def save_users(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewUsers.json",'w') as f:
-            json.dump(self.users,f,indent=4)
-
-    async def save_items(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewItems.json",'w') as f:
-            json.dump(self.items,f,indent=4)
-
-    async def save_shop(self,ctx):
-        with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\cogs\Economy\NewShop.json",'w') as f:
-            json.dump(self.shop,f,indent=4)
+    
 
 
 def poll(arg,results):
