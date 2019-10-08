@@ -102,10 +102,7 @@ class Dota(commands.Cog):
         if not STEAMID:
             return await ctx.send("You do not have a STEAMID linked to you!",delete_after=10)
         await ctx.send("**{}**, this is the STEAMID linked to you: **{}**".format(ctx.author,STEAMID))
-        
-
-
-
+    
     @commands.command(name='wordcloud',aliases=['wc'])
     async def dota_wordcloud(self, ctx, member:discord.Member = None):
         await jsondb.load_users(self)
@@ -131,8 +128,6 @@ class Dota(commands.Cog):
             msg = msg + wordcounts[i][0] + ': ' + str(wordcounts[i][1]) + ' \n'
             i = i+1
         await ctx.send('Here are the top 10 words for **{}** \n'.format(ctx.author) + msg,delete_after=10)
-
-
 
     @commands.command(name='friendstats',aliases=['fs'])
     async def dota_friendstats(self, ctx, member:discord.Member = None):
@@ -203,24 +198,6 @@ class Dota(commands.Cog):
         embed.add_field(name='Last Played', value=lastplayedlinkslist, inline=True)
         await ctx.send(embed=embed)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     '''
     @commands.command(name='dotarecent')
     async def dotarecent(self, ctx, member:discord.Member = None):
@@ -282,12 +259,12 @@ class Dota(commands.Cog):
             return await ctx.send(jsondb.NOPERMISSION)
         author = ctx.author
         msg = """To setup a dota profile, you first need to link up your Steam32id. To get that, I reccommend you use https://steamid.xyz/ to get it.
-Then, you simply use the !setsteam command.
-!setsteam 97985854
+                Then, you simply use the !setsteam command.
+                !setsteam 97985854
 
-Then you can see your profile as well as others with !dota. Use !help Dota to see all of the dota commands.
+                Then you can see your profile as well as others with !dota. Use !help Dota to see all of the dota commands.
 
-"""
+            """
         author.send(msg)
 
     @commands.command(name='dota')
@@ -371,12 +348,7 @@ Then you can see your profile as well as others with !dota. Use !help Dota to se
         dotabuff = 'https://www.dotabuff.com/players/' + STEAMID
 
         embed = dota_profile(username,comprank_url,comprank_str,winloss,recent,HeroList,opendota,dotabuff)
-        await ctx.send(embed=embed)
-
-    
-
-    
-    
+        await ctx.send(embed=embed) 
 
 def dota_profile(username,comprank_url,comprank_str,winloss,recent,HeroList,opendota,dotabuff):
     links = opendota + '\n' + dotabuff

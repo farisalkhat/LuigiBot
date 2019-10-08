@@ -32,6 +32,7 @@ class NewEconomy(commands.Cog):
 
 
     @commands.command(name="createeconomy")
+    @commands.has_permissions(administrator=True)
     async def neweconomy(self,ctx):
         memberslist = ctx.message.guild.members
         for member in memberslist:
@@ -202,6 +203,7 @@ class NewEconomy(commands.Cog):
         await ctx.send(embed=embed)
             
     @commands.command(name="shopadd")
+    @commands.has_permissions(administrator=True)
     async def shopadd(self,ctx,index:str): 
         await jsondb.load_shop(self)
         await jsondb.load_servers(self)
@@ -225,6 +227,7 @@ class NewEconomy(commands.Cog):
         await ctx.send("The item: **{}**, has been added to the **{}** shop!".format(self.items[index]['ItemName'],guild.name))
 
     @commands.command(name="shoprem")
+    @commands.has_permissions(administrator=True)
     async def shoprem(self,ctx,index:str): 
         await jsondb.load_shop(self)
         await jsondb.load_servers(self)
@@ -315,6 +318,7 @@ class NewEconomy(commands.Cog):
         await ctx.send(itemdesc)
         
     @commands.command(name='setcoins',aliases=['sc'])
+    @commands.has_permissions(administrator=True)
     async def setcoins(self,ctx,member: discord.Member = None,coins: int = 0):
         """
         Sets coins to a user. Requires admin privileges to execute this command. 
@@ -330,11 +334,6 @@ class NewEconomy(commands.Cog):
             return await ctx.send(jsondb.NOPERMISSION)
         author = ctx.message.author
 
-    
-        
-        if not author.guild_permissions.administrator:
-            await ctx.send('Sorry **{}**, you do not have permission to use this command.'.format(author.name),delete_after=20)
-            return
         if member is None:
             return await ctx.send('**{]**, you must target a user first before using this command.',delete_after=20)
         

@@ -62,6 +62,14 @@ async def load_servers(self):
     with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\db\Servers.json",'r') as f:
         self.servers = json.load(f)
 
+async def load_event_server(serverid):
+    with open(r"C:\Users\Lefty\Desktop\Portfolio\Github-Repositories\LuigiBot\db\Servers.json",'r') as f:
+        servers = json.load(f)
+    try:
+        server = servers[serverid]
+        return server
+    except KeyError:
+        return None
 
 
 def permission(self,ctx):

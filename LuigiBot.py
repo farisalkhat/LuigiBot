@@ -8,6 +8,7 @@ from itertools import cycle
 import sqlite3
 import tokens
 import json
+from core import jsondb
 
 api_key = tokens.discord_api
 #
@@ -19,7 +20,7 @@ api_key = tokens.discord_api
 
 status = ['Pokemon Emerald', 'Final Fantasy X',
           'Dark Souls', 'Fire Emblem Heroes']
-
+servers = {}
 
 def get_prefix(bot, message):
     prefixes = ['!']
@@ -48,6 +49,21 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(name='World of Warcraft', type=1, url='https://twitch.tv/Lefty43'))
 
     print(f'Successfully logged in and booted...!')
+
+@bot.event
+async def on_command_error(ctx,error):
+    serverid = str(ctx.guild.id)
+    server = await jsondb.load_event_server(serverid)
+    if server is not None:
+        for channel in server['Channel_Permissions']:
+            if str(ctx.channel.id) == channel:
+                if isinstance(error, commands.CheckFailure):
+                    return await ctx.send("You do not have the permission required to use this command, **{}**".format(ctx.author.mention),delete_after=5)
+                elif isinstance(error, commands.CommandNotFound):
+                    return await ctx.send("Command not found.",delete_after=5)
+        return await ctx.send("This channel is not set to have bot commands.")
+    else:
+        return await ctx.send("This channel is not set to have bot commands.")
 
 
 '''
