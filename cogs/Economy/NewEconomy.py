@@ -17,10 +17,6 @@ from datetime import datetime,timedelta,date
 
 from core import jsondb
 
-
-
-
-
 class NewEconomy(commands.Cog):
     __slots__ = ('users','items','shop','servers')
     def __init__(self,bot):
@@ -38,42 +34,7 @@ class NewEconomy(commands.Cog):
         for member in memberslist:
             memberid = member.id
             if not str(memberid) in self.users:
-                self.users[str(memberid)] = {
-                    'Name': member.name,
-                    'Level': 1,
-                    'Experience': 0,
-
-                    'Daily': {'Year':1990,
-                        'Month':5,
-                        'Day': 15,
-                        'Hour':1,
-                        },
-                    'Weekly': {'Year':1990,
-                        'Month':5,
-                        'Day': 15,
-                        'Hour':1,
-                        },
-
-                    'Inventory': ['1','1','2','2','2','2'],
-                    'Coins': 25,
-                    'Rigged':0,
-
-                    'SmashProfile': { 'Tag':'' ,
-                                    'SwitchCode': '',
-                                    'Main': [],
-                                    'Secondaries': [],
-                                    'Pockets':[],
-                                    'Games':[],
-                                    'Region':'',
-                                    'Note':'',
-                                    'Colour':'',
-                                    'Image':''
-                    },
-                    'OsuProfile' : {'Name':'', 'OsuTag':''},
-                    'DotaProfile': {'Name':'', 'Steam32id': ''}
-
-                }
-
+                jsondb.create_user(self,ctx,member)
         await jsondb.save_users(self)
     
     @commands.command(name="daily")
@@ -332,7 +293,6 @@ class NewEconomy(commands.Cog):
         await jsondb.load_servers(self)
         if jsondb.permission(self,ctx) is False:
             return await ctx.send(jsondb.NOPERMISSION)
-        author = ctx.message.author
 
         if member is None:
             return await ctx.send('**{]**, you must target a user first before using this command.',delete_after=20)

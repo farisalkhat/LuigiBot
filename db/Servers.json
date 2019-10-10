@@ -18,6 +18,26 @@
         "Channel_Permissions": [
             "407071369852092418",
             "407071369852092418"
-        ]
+        ],
+        "Greets": {
+            "Enabled": 2,
+            "Greet_Channel": "",
+            "Greet_Message": "welcome loser"
+        }
+    },
+    "572868639984713728": {
+        "Server_Name": "SmashParty",
+        "Server_Owner": "Lefty",
+        "Server_Info": "",
+        "User_Count": 6,
+        "Warnings": {},
+        "Kicks": {},
+        "Bans": {},
+        "Channel_Permissions": [],
+        "Greets": {
+            "Enabled": 2,
+            "Greet_Channel": "",
+            "Greet_Message": "Welcome to the server!"
+        }
     }
 }

@@ -77,7 +77,7 @@ def permission(self,ctx):
         for channelid in self.servers[str(ctx.guild.id)]['Channel_Permissions']:
             if channelid == str(ctx.message.channel.id):
                 return True
-        return 0
+        return False
     except KeyError:
         print("KeyError")
         return False
@@ -108,7 +108,6 @@ def log_ban(self,ctx,userid,date,reason):
         server["Bans"][userid] = []
         server["Bans"][userid].append([date,enforcer,reason])
 
-
 def return_warning_logs(self,ctx,userid):
     date =  ''
     enforcer = ''
@@ -127,7 +126,6 @@ def return_warning_logs(self,ctx,userid):
         return date, enforcer, reason 
     except KeyError:
         return None, None, None
-
 
 def return_ban_logs(self,ctx,userid):
     date =  ''
@@ -178,6 +176,42 @@ def return_allwarn_logs(self,ctx):
         print(member_warning)
     return member, warnings 
         
+def create_user(self,ctx,user):
+    self.users[str(user.id)] = {
+                    'Name': user.name,
+                    'Level': 1,
+                    'Experience': 0,
+
+                    'Daily': {'Year':1990,
+                        'Month':5,
+                        'Day': 15,
+                        'Hour':1,
+                        },
+                    'Weekly': {'Year':1990,
+                        'Month':5,
+                        'Day': 15,
+                        'Hour':1,
+                        },
+
+                    'Inventory': ['1','1','2','2','2','2'],
+                    'Coins': 25,
+                    'Rigged':0,
+
+                    'SmashProfile': { 'Tag':'' ,
+                                    'SwitchCode': '',
+                                    'Main': [],
+                                    'Secondaries': [],
+                                    'Pockets':[],
+                                    'Games':[],
+                                    'Region':'',
+                                    'Note':'',
+                                    'Colour':'',
+                                    'Image':''
+                    },
+                    'OsuProfile' : {'Name':'', 'OsuTag':''},
+                    'DotaProfile': {'Name':'', 'Steam32id': ''}
+
+                }
 
 
 

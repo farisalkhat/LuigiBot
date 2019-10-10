@@ -100,38 +100,7 @@ class Administrator(commands.Cog):
 
      
 
-    '''
-    @commands.Cog.listener()
-    async def on_member_join(self,member):
-        serverid = member.guild.id
-        guild = member.guild
-        try:
-            greet = database.get_greet(serverid)
-            greetdm = database.get_greetdm(serverid)
 
-            if greet[0] == 1:
-                channel = guild.get_channel(greet[2])
-                await channel.send(greet[1])
-
-            if greetdm[0] == 1:
-                await member.send(greetdm[1])
-
-        except KeyError:
-            print('KeyError. Run normally')
-    
-
-
-
-    def get_tools(self, ctx):
-        """Retrieve the guild player, or generate one."""
-        try:
-            tool = self.tools[ctx.guild.id]
-
-        except KeyError:
-            tool = ServerTools(ctx)
-            self.tools[ctx.guild.id] = tool
-        return tool3
-    '''
 
 
 
@@ -476,6 +445,11 @@ class Administrator(commands.Cog):
                 'Kicks':{},
                 'Bans':{},
                 'Channel_Permissions':[],
+                "Greets":{
+                    "Enabled": 0,
+                    "Greet_Channel": "",
+                    "Greet_Message": "Welcome to the server!"
+                }
             }
             await jsondb.save_servers(self)
             return await ctx.send("Server info has been created for **{}**.".format(server.name))
@@ -483,19 +457,99 @@ class Administrator(commands.Cog):
             return await ctx.send("Server info has already been created. Use **!serverinfo** to see it, and **!serverhelp** to see how to modify it.")
         
 
+    @commands.command(name='greet')
+    @commands.has_permissions(administrator=True)
+    async def greet(self,ctx):
+        '''Enables or disables the bot from greeting a user. When the bot is enabled, the greet message will be sent on whatever channel the command was used.
+        Usage: !greet
+        Requirements: Author must have admin privileges.'''
+
+        await jsondb.load_servers(self)
+        server = str(ctx.guild.id)
+        try:
+            if self.servers[server]['Greets']['Enabled'] == 0 or self.servers[server]['Greets']['Enabled'] == 2:
+                self.servers[server]['Greets']['Enabled'] = 1
+                self.servers[server]['Greets']['Greet_Channel'] = str(ctx.channel.id)
+                await jsondb.save_servers(self)
+                return await ctx.send("Greets have now been enabled, and will be sent out on this channel.")
+            else:
+                self.servers[server]['Greets']['Enabled'] = 0
+                self.servers[server]['Greets']['Greet_Channel'] = ''
+                await jsondb.save_servers(self)
+                return await ctx.send("Greets have now been disabled.")
+        except KeyError:
+            return await ctx.send("Your server info could not be found. Use the **!createserverinfo** command to get started.")
+
+    @commands.command(name='greetdm')
+    @commands.has_permissions(administrator=True)
+    async def greetdm(self,ctx):
+        '''Enables or disables the bot from greeting new users through direct messaging. 
+        Usage: !greetdm
+        Requirements: Author must have admin privileges.'''
+
+        await jsondb.load_servers(self)
+        server = str(ctx.guild.id)
+        try:
+            if self.servers[server]['Greets']['Enabled'] == 0 or self.servers[server]['Greets']['Enabled'] == 1:
+                self.servers[server]['Greets']['Enabled'] = 2
+                await jsondb.save_servers(self)
+                return await ctx.send("Greetdm has now been enabled.")
+            else:
+                self.servers[server]['Greets']['Enabled'] = 0
+                self.servers[server]['Greets']['Greet_Channel'] = ''
+                await jsondb.save_servers(self)
+                return await ctx.send("Greets have now been disabled.")
+        except KeyError:
+            await ctx.send("Your server info could not be found. Use the **!createserverinfo** command to get started.")
+
+    @commands.command(name='greetmsg')
+    @commands.has_permissions(administrator=True)
+    async def greetmsg(self,ctx,*,message = ''):
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+        
+        self.servers[str(ctx.guild.id)]['Greets']['Greet_Message'] = message
+        await jsondb.save_servers(self)
+        await ctx.send("Greet message has been saved!")
+        
+
+        
+
+
+
+    @commands.command(name='info')
+    async def info(self,ctx,user: discord.Member = None):
+        '''
+        Gets the basic info of a user. If no user is provided, returns author's info.
+        Usage: !info, !info @Lefty
+        Requirements: None
+        '''
+
+    @commands.command(name='uptime')
+    async def uptime(self,ctx):
+        '''
+        Shows LuigiBot's uptime on the server.
+        Usage: !uptime
+        Requirements: None
+        '''
+
+    @commands.Cog.listener()
+    async def on_member_join(self,user):
+        server = str(user.guild.id)
+        guild = user.guild
+        await jsondb.load_servers(self)
+        try:
+            if self.servers[server]['Greets']['Enabled'] == 1:
+                channel = guild.get_channel(int(self.servers[server]['Greets']['Greet_Channel']))
+                await channel.send(self.servers[server]['Greets']['Greet_Message'])
+            elif(self.servers[server]['Greets']['Enabled']==2):
+                await user.send(self.servers[server]['Greets']['Greet_Message'])           
+        except KeyError:
+            print('KeyError. Run normally')
+
 
     
-    
-
-
-
-
-    
-
-
-
-
-
 
 
 
@@ -508,6 +562,16 @@ class Administrator(commands.Cog):
 
 
     '''
+    
+    def get_tools(self, ctx):
+        """Retrieve the guild player, or generate one."""
+        try:
+            tool = self.tools[ctx.guild.id]
+
+        except KeyError:
+            tool = ServerTools(ctx)
+            self.tools[ctx.guild.id] = tool
+        return tool3
     @commands.command(name='setemoterole', pass_context=True)
     async def setemoterole(self,ctx,emote: discord.Emoji = None,*,arg):
         """
@@ -553,7 +617,6 @@ class Administrator(commands.Cog):
             tool.emoteroles[emote.name] = role
             embed = create_embed('Role now set!','The role **{}** can now be set by reacting with **{}**'.format(roleName,emote.name),GREEN)
             await ctx.send(embed=embed)
-
     @commands.command(name='removeemoterole', pass_context=True)
     async def removeemoterole(self,ctx,emote: discord.Emoji = None):
         """
@@ -590,11 +653,6 @@ class Administrator(commands.Cog):
         except KeyError:
             embed = create_embed('!removeemoterole error: No role set', 'The emote does not have a role set to it!',RED)
             await ctx.send(embed=embed,delete_after=20)
-
-
-
-
-
     @commands.command(name='renamerole', pass_context=True)
     async def renamerole(self,ctx,*,arg):
         """
@@ -630,9 +688,6 @@ class Administrator(commands.Cog):
         await role1.edit(name = role2N)
         embed = create_embed('Role has been renamed!', 'The **{}** role has been renamed to **{}**'.format(role1N,role2N),GREEN)
         await ctx.send(embed=embed)
-
-
-    
     @commands.command(name='greet', pass_context=True)
     async def greet(self,ctx):
         """
@@ -683,8 +738,6 @@ class Administrator(commands.Cog):
                 await ctx.send("Bot greeting is now enabled!")
                 print('else2')
         print('end')
-
-
     @commands.command(name='greetmsg', pass_context=True)
     async def greetmsg(self,ctx,*,arg):
         """Modifies the greet message."""
@@ -707,8 +760,6 @@ class Administrator(commands.Cog):
         msg = arg
         database.update_greetmsg([serverid,msg])
         await ctx.send("Greet message is now set!",delete_after=20)
-
-
     @commands.command(name='greetdm', pass_context=True)
     async def greetdm(self,ctx):
         """
@@ -751,9 +802,6 @@ class Administrator(commands.Cog):
                 update = [serverid,1]
                 database.update_greetdm(update)
                 await ctx.send("DM Greets are now enabled!")
-
-
-
     @commands.command(name='greetdmmsg', pass_context=True)
     async def greetdmmsg(self,ctx,*,arg):
         author = ctx.message.author
@@ -774,10 +822,6 @@ class Administrator(commands.Cog):
         msg = arg
         #database.update_greetdmmsg([serverid,msg])
         await ctx.send("Greetdm is now set!",delete_after=20)
-    '''
-
-
-    '''
     @commands.command(name='editrolecolor', pass_context=True)
     async def removeallroles(self,ctx,*,arg):
     @commands.command(name='editrolecolor', pass_context=True)
@@ -847,28 +891,7 @@ class Administrator(commands.Cog):
 
 
 
-    @commands.command(name='editrolecolor', pass_context=True)
-    async def warn(self,ctx,*,arg):
-    @commands.command(name='editrolecolor', pass_context=True)
-    async def warnlog(self,ctx,*,arg):
-    @commands.command(name='editrolecolor', pass_context=True)
-    async def warnlogall(self,ctx,*,arg):
-    @commands.command(name='editrolecolor', pass_context=True)
-    async def warnclear(self,ctx,*,arg):
-    @commands.command(name='editrolecolor', pass_context=True)
-    async def warnpunish(self,ctx,*,arg):
-    @commands.command(name='editrolecolor', pass_context=True)
-    async def warnpunishlist(self,ctx,*,arg):
 
 
-    @commands.command(name='editrolecolor', pass_context=True)
-    async def delvoichanl(self,ctx,*,arg):
-    @commands.command(name='editrolecolor', pass_context=True)
-    async def createvoichanl(self,ctx,*,arg):
-    @commands.command(name='editrolecolor', pass_context=True)
-    async def deltxtchanl(self,ctx,*,arg):
-    @commands.command(name='editrolecolor', pass_context=True)
-    async def creatxtchanl(self,ctx,*,arg):
-    @commands.command(name='editrolecolor', pass_context=True)
-    async def setchanlname(self,ctx,*,arg):
+
     '''
