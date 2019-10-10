@@ -1,9 +1,13 @@
 TODO LIST
 
 General
-    - Figure out an easy way to add requirements
+    - When a user does not meet the requirements, clarify what requirements were not met. 
     - Figure out how to enable events for specific servers
-    - Fix the description for all of the commands
+    - Fix the description for all of the commands (Administrator done!)
+    - Make commands and checks case insensitive 
+    - Modify addrole to search rolename in quotes and not by mentions
+    - Modifying other admin roles/users returns no permissions error. How to fix?
+    - Make sure any admin level commands are restricted for the bot if the bot is not an admin. 
 
 Fun Commands 
     - Add Tic Tac Toe, Connect 4, Race, etc

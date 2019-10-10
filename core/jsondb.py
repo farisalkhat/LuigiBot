@@ -75,10 +75,110 @@ async def load_event_server(serverid):
 def permission(self,ctx):
     try:
         for channelid in self.servers[str(ctx.guild.id)]['Channel_Permissions']:
-            if channelid == str(self.channel.id):
-                return True 
-        return False
+            if channelid == str(ctx.message.channel.id):
+                return True
+        return 0
     except KeyError:
+        print("KeyError")
         return False
+    
+
+def log_warning(self,ctx,userid,date,reason):
+    server = self.servers[str(ctx.guild.id)]
+    enforcer = str(ctx.author.id)
+    try:
+        server["Warnings"][userid].append([date,enforcer,reason])
+    except KeyError:
+        server["Warnings"][userid] = []
+        server["Warnings"][userid].append([date,enforcer,reason])
+def log_kick(self,ctx,userid,date,reason):
+    server = self.servers[str(ctx.guild.id)]
+    enforcer = str(ctx.author.id)
+    try:
+        server["Kicks"][userid].append([date,enforcer,reason])
+    except KeyError:
+        server["Kicks"][userid] = []
+        server["Kicks"][userid].append([date,enforcer,reason])
+def log_ban(self,ctx,userid,date,reason):
+    server = self.servers[str(ctx.guild.id)]
+    enforcer = str(ctx.author.id)
+    try:
+        server["Bans"][userid].append([date,enforcer,reason])
+    except KeyError:
+        server["Bans"][userid] = []
+        server["Bans"][userid].append([date,enforcer,reason])
+
+
+def return_warning_logs(self,ctx,userid):
+    date =  ''
+    enforcer = ''
+    reason = ''
+
+    try:
+        user_logs = self.servers[str(ctx.guild.id)]['Warnings'][userid]
+        for log in user_logs:
+            date = date + log[0] + '\n'
+            enforcer = enforcer + ctx.guild.get_member(int(log[1])).name + '\n'
+            if len(log[2]) > 15:
+                short_reason = log[2][:13] + '..'
+                reason = reason + short_reason + '\n'
+            else:
+                reason = reason + log[2] + '\n'
+        return date, enforcer, reason 
+    except KeyError:
+        return None, None, None
+
+
+def return_ban_logs(self,ctx,userid):
+    date =  ''
+    enforcer = ''
+    reason = ''
+
+    try:
+        user_logs = self.servers[str(ctx.guild.id)]['Bans'][userid]
+        for log in user_logs:
+            date = date + log[0] + '\n'
+            enforcer = enforcer + ctx.guild.get_member(int(log[1])).name + '\n'
+            if len(log[2]) > 15:
+                short_reason = log[2][:13] + '..'
+                reason = reason + short_reason + '\n'
+            else:
+                reason = reason + log[2] + '\n'
+        return date, enforcer, reason 
+    except KeyError:
+        return None, None, None
+
+def return_kick_logs(self,ctx,userid):
+    date =  ''
+    enforcer = ''
+    reason = ''
+
+    try:
+        user_logs = self.servers[str(ctx.guild.id)]['Kicks'][userid]
+        for log in user_logs:
+            date = date + log[0] + '\n'
+            enforcer = enforcer + ctx.guild.get_member(int(log[1])).name + '\n'
+            if len(log[2]) > 15:
+                short_reason = log[2][:13] + '..'
+                reason = reason + short_reason + '\n'
+            else:
+                reason = reason + log[2] + '\n'
+        return date, enforcer, reason 
+    except KeyError:
+        return None, None, None
+    
+def return_allwarn_logs(self,ctx):
+    member = ''
+    warnings = ''
+
+    server_logs = self.servers[str(ctx.guild.id)]['Warnings']
+    for member_warning in server_logs:
+        member = member + ctx.guild.get_member(int(member_warning)).name + '\n'
+        warnings = warnings + str(len(server_logs[member_warning])) + '\n'
+        print(member_warning)
+    return member, warnings 
+        
+
+
 
 NOPERMISSION = "Bot has not been given permission to use commands in this channel."

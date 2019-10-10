@@ -4,7 +4,20 @@
         "Server_Owner": "Lefty",
         "Server_Info": "",
         "User_Count": 19,
-        "Warnings": {},
-        "Channel_Permissions": []
+        "Warnings": {
+            "88047132937822208": [
+                [
+                    "09/10/2019 23:08:29",
+                    "88047132937822208",
+                    "HE"
+                ]
+            ]
+        },
+        "Kicks": {},
+        "Bans": {},
+        "Channel_Permissions": [
+            "407071369852092418",
+            "407071369852092418"
+        ]
     }
 }

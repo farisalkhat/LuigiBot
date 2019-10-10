@@ -13,6 +13,7 @@ import re
 import shlex
 import json
 from core import jsondb
+from datetime import datetime
 
 
 
@@ -46,7 +47,18 @@ def create_embed(atitle,adescription,color):
     return embed
 
 
+def logs_embed(username,date,enforcer,reason):
+    embed=discord.Embed(title="**{}**'s Logs".format(username), color=0x008000)
+    embed.add_field(name='Date', value=date, inline=True)
+    embed.add_field(name='Enforcer', value=enforcer, inline=True)
+    embed.add_field(name='Reason', value=reason, inline=True)
+    return embed
 
+def all_logs_embed(server, members, warnings):
+    embed=discord.Embed(title="**{}**'s Logs".format(server), color=0x008000)
+    embed.add_field(name='Members', value=members, inline=True)
+    embed.add_field(name='Warnings', value=warnings, inline=True)
+    return embed
 
 class ServerTools:
     __slots__ = ('bot','guild','channel','emoteroles',
@@ -127,83 +139,67 @@ class Administrator(commands.Cog):
     async def errorreport(ctx, message: str, **kwargs):
         await ctx.send(message.format(**kwargs))
     
-    @commands.command(name='addrole', pass_context=True)
+    @commands.command(name='addrole')
     @commands.has_permissions(manage_roles=True)
-    async def addrole(self, ctx, rolename: discord.Role = None,member: discord.Member = None):
+    async def addrole(self, ctx, member: discord.Member = None, rolename: discord.Role = None):
         """
         Adds a role to a user.
         If the user field is left blank, it will default to the author who issued the command.
+        Usage: !addrole @Lefty @King of Games
+        Requirement: Both the author and bot must have admin privileges
+
         """
 
         await jsondb.load_servers(self)
         if jsondb.permission(self,ctx) is False:
             return await ctx.send(jsondb.NOPERMISSION)
 
-        author = ctx.message.author
-
-    
-
-
-
         try:
-            member = ctx.message.author
+            if member is None:
+                member = ctx.message.author
             await member.add_roles(rolename)
             embed = create_embed('Role successfully added!', "The **{}** role was successfully added to **@{}**.".format(rolename,member),GREEN)
             await ctx.send(embed=embed,delete_after=20)
 
         except discord.Forbidden:
-            if not rolename:
-                embed = create_embed('addrole error: Role does not exist!',"This role does not exist!",RED)
-                await ctx.send(embed=embed, delete_after = 20)
-            else:
-                embed = create_embed('addrole error:',NOPERMISSION.format('add',rolename,member),RED)
-                await ctx.send(embed=embed, delete_after = 20)
+            await ctx.send(jsondb.NOPERMISSION, delete_after = 20)
 
     @commands.command(name='removerole', pass_context=True)
     @commands.has_permissions(manage_roles=True)
-    async def deleterole(self, ctx, rolename: discord.Role = None, member: discord.Member = None):
+    async def deleterole(self, ctx, member: discord.Member = None, rolename: discord.Role = None):
         """
         Deletes a role off a user.
         If user field is left blank, it will default to the author who issued the command.
+        Usage: !removerole @Lefty @King of Games
+        Requirement: Both the author and bot must have admin privileges
         """
 
         await jsondb.load_servers(self)
         if jsondb.permission(self,ctx) is False:
             return await ctx.send(jsondb.NOPERMISSION)
-
-        author = ctx.message.author
-        if member is None:
-            member = ctx.message.author
-
         try:
+            if member is None:
+                member = ctx.message.author
             await member.remove_roles(rolename)
             embed = create_embed('Role successfully deleted!', "The **{}** role was successfully deleted from **@{}**.".format(rolename,member),GREEN)
             await ctx.send(embed=embed,delete_after=20)
 
         except discord.Forbidden:
-            if not rolename:
-                embed = create_embed('removerole error: Role does not exist.',"This role does not exist!",RED)
-                await ctx.send(embed=embed, delete_after = 20)
-            else:
-                embed = create_embed('removerole error:',NOPERMISSION.format('delete',rolename,member),RED)
-                await ctx.send(embed=embed, delete_after = 20)
+            await ctx.send(jsondb.NOPERMISSION, delete_after = 20)
 
     @commands.command(name='clean')
     @commands.has_permissions(administrator=True)
     async def clean_messages(self,ctx,amount:int = 1):
         """
         Removes messages from the channel. By default, it removes a single message. 
-        Requires admin privileges from both the author and the bot.
-
-        Usage:
-        !clean
-        !clean 10
+        Usage: !clean, !clean 10
+        Requirements: Both the author and the bot must have admin privileges. 
         
         """
         await jsondb.load_servers(self)
         if jsondb.permission(self,ctx) is False:
             return await ctx.send(jsondb.NOPERMISSION)
-        author = ctx.message.author
+
         channel = ctx.message.channel
 
 
@@ -212,34 +208,26 @@ class Administrator(commands.Cog):
             await channel.delete_messages(messages)
 
         except discord.Forbidden:
-            embed = create_embed('!clean error:','I attempted to clean messages from this channel, but I do not have permission to do so.',RED)
-            await ctx.send(embed=embed, delete_after = 20)
+            await ctx.send(jsondb.NOPERMISSION, delete_after = 10)
        
-    @commands.command(name='editrolecolor', pass_context=True)
-    @commands.has_permissions(manage_roles=True)
+    @commands.command(name='editrolecolor')
+    @commands.has_permissions(administrator=True)
     async def editcolorrole(self,ctx,*,arg):
         """
         Edits the color of a role. Role name must be surrounded by parentheses.
         Role color must be in hex format.
-
-        Example:
-        !editrolecolor "King of Games" 0xc9330a
+        !Usage: !editrolecolor "King of Games" 0xc9330a
+        Requirements: Both the author and the bot must have admin privileges. 
         """
 
-        arg = shlex.split(arg)
-        roleName = arg[0]
-        roleName = discord.utils.get(ctx.message.guild.roles, name=roleName)
-        author = ctx.message.author
-
+        #TODO Code works, but looks gross. Fix in the future
         await jsondb.load_servers(self)
         if jsondb.permission(self,ctx) is False:
             return await ctx.send(jsondb.NOPERMISSION)
-
-       
-        
-
-
-
+         
+        arg = shlex.split(arg)
+        roleName = arg[0]
+        roleName = discord.utils.get(ctx.message.guild.roles, name=roleName)
         color = arg[1]
         colorString = color
         color = re.search(r'^0x(?:[0-9a-fA-F]{3}){1,2}$', color)
@@ -247,144 +235,181 @@ class Administrator(commands.Cog):
             embed = create_embed('!editrolecolor error: Incorrect hex format.','You did not provide a color in its correct format.\n Format: !editrolecolor "King of Games" 0xc9330a',RED)
             await ctx.send(embed=embed, delete_after = 20)
 
-        elif(roleName):
+        if roleName:
             colorString = int(colorString,16)
             colorString = discord.Colour(colorString)
-            print(colorString)
             await roleName.edit(color=colorString)
             embed = create_embed('Role color changed!','I have successfully changed **{}** to the new color.'.format(roleName),GREEN)
-            await ctx.send(embed=embed,delete_after=20)
+            await ctx.send(embed=embed,delete_after=10)
         else:
             embed = create_embed('!editrolecolor error: ','The role **{}** does not exist on this server'.format(roleName),RED)
-            await ctx.send(embed=embed,delete_after=20)
+            await ctx.send(embed=embed,delete_after=10)
 
     @commands.command(name='kick', pass_context=True)
     @commands.has_permissions(kick_members=True)
-    async def kick(self,ctx, user: discord.Member = None,reason: str = None):
+    async def kick(self,ctx, user: discord.Member = None,*, reason='No reason given.'):
         """
-        Kicks the user if the author has admin permissions.
+        Kicks the user from the server.
         Author can optionally provide a reason for the kick.
+        Kick is logged and can be viewed at any time.
 
-
-        Example:
+        Usage:
         !kick @Lefty#6430 You're an idiot
         !kick @Lefty#6430
+
+        Requirements: Both the author and bot must have permissions to kick members.
         """
-        author = ctx.message.author
+
         await jsondb.load_servers(self)
         if jsondb.permission(self,ctx) is False:
             return await ctx.send(jsondb.NOPERMISSION)
-
-        
-        if not user:
-            embed = create_embed('!kick error: No member selected.', 'You did not provide a username to kick.',RED)
-            await ctx.send(embed=embed,delete_after=20)
-            return
-
-        if not reason:
-            reason = 'No reason given.'
         try:
+            date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            userid = str(user.id)
+            jsondb.log_kick(self,ctx,userid,date,reason)
+            jsondb.save_servers(self)
             await ctx.guild.kick(user,reason = reason)
-            embed = create_embed('**{}** has kicked **{}**'.format(author,user), '**Reason:** {}'.format(reason),GREEN)
-            await ctx.send(embed=embed,delete_after=20)
+            embed = create_embed('**{}** has kicked **{}**'.format(ctx.message.author,user), '**Reason:** {}'.format(reason),GREEN)
+            await ctx.send(embed=embed,delete_after=10)
         except discord.Forbidden:
-            embed = create_embed('!kick error: No permission', 'I do not have permission to kick. Try again when I have more power.',RED)
-            await ctx.send(embed=embed,delete_after=20)
+            await ctx.send(jsondb.NOPERMISSION,delete_after=10)
 
     @commands.command(name='ban', pass_context=True)
     @commands.has_permissions(ban_members=True)
-    async def ban(self,ctx, user: discord.Member = None,reason: str = None,days: int = 0):
+    async def ban(self,ctx, user: discord.Member = None,*, reason='No reason given.',days: int = 0):
         """
         Bans a user from the server. Requires both the bot and author to have admin permissions.
         Author can optionally set a reason for the ban.
         Author can optionally set a number, which will delete all messages from the user from that many days.
 
-        Example:
+        Usage:
         !ban @Lefty#6430 You're an idiot 3
         !ban @Lefty#6430 3
         !ban @Lefty#6430 You're an idiot
         !ban @Lefty#6430
+
+        Requirements: Both the author and bot must have permissions to ban members.
         """
         await jsondb.load_servers(self)
         if jsondb.permission(self,ctx) is False:
             return await ctx.send(jsondb.NOPERMISSION)
-
-        
-        author = ctx.message.author
-        server= ctx.guild
-        if not user:
-            embed = create_embed('!ban error: No member selected.', 'You did not provide a username to kick.',RED)
-            await ctx.send(embed=embed,delete_after=20)
-            return
-
-        if not reason:
-            reason = 'No reason given.'
         try:
-            embed = create_embed('**{}** has banned **{}**.'.format(author,user), '**Reason:** {}'.format(reason),GREEN)
+            date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            userid = str(user.id)
+            jsondb.log_ban(self,ctx,userid,date,reason)
+            jsondb.save_servers(self)
+            embed = create_embed('**{}** has banned **{}**.'.format(ctx.message.author,user), '**Reason:** {}'.format(reason),GREEN)
             await ctx.send(embed=embed,delete_after=20)
-            await server.ban(user,reason = reason,delete_message_days = days)
+            await ctx.guild.ban(user,reason = reason,delete_message_days = days)
         except discord.Forbidden:
-            embed = create_embed('!ban error: No permission', 'I do not have permission to do this. Try again when I have more power.',RED)
-            await ctx.send(embed=embed,delete_after=20)
+            await ctx.send(jsondb.NOPERMISSION,delete_after=10)
 
     @commands.command(name='unban', pass_context=True)
     @commands.has_permissions(ban_members=True)
-    async def unban(self,ctx, user: discord.Member = None,reason:str = None):
+    async def unban(self,ctx, user: discord.Member = None,*, reason='No reason given.'):
         """
         Unbans a user from the server. Requires both the bot and author to have admin permissions.
         Author can optionally set a reason for the unban.
 
-        Example:
+        Usage:
         !unban @Lefty#6430 Hey you're pretty cool : )
         !unban @Lefty#6430
+
+        Requirements: Both the author and bot must have permission to ban members. 
         """
         await jsondb.load_servers(self)
         if jsondb.permission(self,ctx) is False:
             return await ctx.send(jsondb.NOPERMISSION)
-        
-        
-        author = ctx.message.author
-        server= ctx.guild
-        if not user:
-            embed = create_embed('!ban error: No member selected.', 'You did not provide a username to kick.',RED)
-            await ctx.send(embed=embed,delete_after=20)
-            return
-
-        if not reason:
-            reason = 'No reason given.'
         try:
-            await server.unban(user,reason = reason)
-            embed = create_embed('**{}** has unbanned **{}**.'.format(author,user), '**Reason:** {}'.format(reason),GREEN)
+            await ctx.guild.unban(user,reason = reason)
+            embed = create_embed('**{}** has unbanned **{}**.'.format(ctx.message.author,user), '**Reason:** {}'.format(reason),GREEN)
             await ctx.send(embed=embed,delete_after=20)
         except discord.Forbidden:
-            embed = create_embed('!ban error: No permission', 'I do not have permission to do this. Try again when I have more power.',RED)
-            await ctx.send(embed=embed,delete_after=20)
+            await ctx.send(jsondb.NOPERMISSION,delete_after=20)
 
 
     @commands.command(name='warn')
     @commands.has_permissions(kick_members=True)
-    async def warn(self,ctx,user: discord.Member = None,reason:str = None):
-        ''' Warns a user.
+    async def warn(self,ctx,user: discord.Member = None, *, reason='No reason given.'):
+        ''' 
+        Warns a user.
         Usage: !warn @Lefty You're a jerk
-        Requirement: BanMembers Server Permission
+        Requirement: Author must be able to kick members
         '''
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+        userid = str(user.id)
+        date =  datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        jsondb.log_warning(self,ctx,userid,date,reason)
+        await jsondb.save_servers(self)
+        await ctx.send("{} has been warned.".format(user),delete_after=10)
+
+
     
     @commands.command(name='warnlog')
-    @commands.has_permissions(kick_members=True)
+    @commands.has_permissions(administrator=True)
     async def warnlog(self,ctx,user: discord.Member = None):
         '''Sees a list of warnings of a certain user.
         Usage: !warnlog @Lefty
-        Requirement: BanMembers Server Permission
+        Requirement: Author must have admin privileges. 
         '''
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+        date, enforcer, reason = jsondb.return_warning_logs(self,ctx,str(user.id))
+        if date is None:
+            return await ctx.send("{} has no warnings logged.".format(user))
+        embed = logs_embed(user.display_name,date,enforcer,reason)
+        await ctx.send(embed=embed)
+
+
+    @commands.command(name='kicklog')
+    @commands.has_permissions(administrator=True)
+    async def kicklog(self,ctx,user: discord.Member = None):
+        '''Sees a list of kicks given to certain user.
+        Usage: !kicklog @Lefty
+        Requirement: Author must have admin privileges. 
+        '''
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+        date, enforcer, reason = jsondb.return_kick_logs(self,ctx,str(user.id))
+        if date is None:
+            return await ctx.send("{} has no kicks logged.".format(user))
+        embed = logs_embed(user.display_name,date,enforcer,reason)
+        await ctx.send(embed=embed)
+
+    @commands.command(name='banlog')
+    @commands.has_permissions(administrator=True)
+    async def banlog(self,ctx,user: discord.Member = None):
+        '''Sees a list of bans given to a certain user.
+        Usage: !banlog @Lefty
+        Requirement: Author must have admin privileges. 
+        '''
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+        date, enforcer, reason = jsondb.return_ban_logs(self,ctx,str(user.id))
+        if date is None:
+            return await ctx.send("{} has no bans logged.".format(user))
+        embed = logs_embed(user.display_name,date,enforcer,reason)
+        await ctx.send(embed=embed)
     
     @commands.command(name='warnlogall')
     @commands.has_permissions(kick_members=True)
     async def warnlogall(self,ctx):
         '''Sees a list of all warnings on the server.
         Usage: !warnlogall
-        Requirement: BanMembers Server Permission
+        Requirement: Author must have the ability to kick members.
         '''
-
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+        member, warnings = jsondb.return_allwarn_logs(self,ctx)
+        embed = all_logs_embed(ctx.guild.name,member,warnings)
+        await ctx.send(embed=embed)
+ 
     @commands.command(name='warnclear')
     @commands.has_permissions(kick_members=True)
     async def warnclear(self,ctx,user: discord.Member = None, clear: int = 0):
@@ -392,7 +417,21 @@ class Administrator(commands.Cog):
         Clears all warnings from a certain user. You can specify a number to clear a specific one.
         Usage: !warnclear @lefty 3
         !warnclear @lefty
+        Requirement: Author must have the ability to kick members.
         '''
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION)
+        try:
+            if clear-1 < 0:
+                return await ctx.send("{} has no warnings at that location.".format(user.name))
+            self.servers[str(ctx.guild.id)]['Warnings'][str(user.id)].pop(clear-1)
+            await jsondb.save_servers(self)
+            return await ctx.send("Warning has been deleted.")
+        except IndexError:
+            return await ctx.send("{} has no warnings at that location.".format(user.name))
+
+ 
 
     @commands.command(name='setbotcommands')
     @commands.has_permissions(administrator=True)
@@ -400,12 +439,15 @@ class Administrator(commands.Cog):
         """
         Sets the channel for botcommands to occur.
         """
-        author = ctx.message.author
+
         serverid = str(ctx.message.guild.id)
         channelid = str(ctx.channel.id)
         await jsondb.load_servers(self)
         try:
             server = self.servers[serverid]
+            for cid in server['Channel_Permissions']:
+                if cid == channelid:
+                    return await ctx.send("This channel already has permission to use bot commands.",delete_after = 10)
             server['Channel_Permissions'].append(channelid)
             await jsondb.save_servers(self)
             await ctx.send("**{}** channel is now allowed to bot commands.".format(ctx.message.channel),delete_after = 10)
@@ -431,6 +473,8 @@ class Administrator(commands.Cog):
                 'Server_Info':'',
                 'User_Count': len(server.members),
                 'Warnings': {},
+                'Kicks':{},
+                'Bans':{},
                 'Channel_Permissions':[],
             }
             await jsondb.save_servers(self)

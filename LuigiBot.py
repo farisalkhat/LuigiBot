@@ -9,6 +9,7 @@ import sqlite3
 import tokens
 import json
 from core import jsondb
+from discord.ext.commands import has_permissions, MissingPermissions
 
 api_key = tokens.discord_api
 #
@@ -52,16 +53,19 @@ async def on_ready():
 
 @bot.event
 async def on_command_error(ctx,error):
+    print(error)
     serverid = str(ctx.guild.id)
     server = await jsondb.load_event_server(serverid)
     if server is not None:
         for channel in server['Channel_Permissions']:
             if str(ctx.channel.id) == channel:
-                if isinstance(error, commands.CheckFailure):
+                if isinstance(error, commands.MissingPermissions):
                     return await ctx.send("You do not have the permission required to use this command, **{}**".format(ctx.author.mention),delete_after=5)
                 elif isinstance(error, commands.CommandNotFound):
                     return await ctx.send("Command not found.",delete_after=5)
-        return await ctx.send("This channel is not set to have bot commands.")
+                else:
+                    return await ctx.send("{}".format(error))
+        return await ctx.send("Unknown error")
     else:
         return await ctx.send("This channel is not set to have bot commands.")
 
