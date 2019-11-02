@@ -20,7 +20,7 @@ setup(
         "geopy==1.20.0",
         "youtube_dl==2019.6.8",
         "SQLAlchemy==1.3.5",
-        "Pillow==6.1.0",
+        "Pillow==6.2.0",
         "tzwhere==3.0.3",
     ],
 )
