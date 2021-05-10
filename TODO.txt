@@ -1,5 +1,21 @@
 TODO LIST
 
+
+NEW TODOSTUFF
+Dota Commands 
+    - As for as I know, it's all clean for now.
+Music Commands
+    - Create and save playlists
+    
+
+
+
+
+
+______________________________________
+
+
+
 General
     - When a user does not meet the requirements, clarify what requirements were not met. 
     - Figure out how to enable events for specific servers
@@ -8,45 +24,28 @@ General
     - Modify addrole to search rolename in quotes and not by mentions
     - Modifying other admin roles/users returns no permissions error. How to fix?
     - Make sure any admin level commands are restricted for the bot if the bot is not an admin. 
+    - For the code that interacts with json files, make it so it does not need a path to be manually inserted. 
+    - There is a situation where, if a command requires an argument and no argument is given, there will be no return from the bot to say the input was incorrect. 
 
 Fun Commands 
     - Add Tic Tac Toe, Connect 4, Race, etc
 
 Admin Commands
-    - Completely rehaul the admin commands
     - Add reactionroles command
 
 Utility Commands
     - Added a list of commands to add
 
 Misc Commands
-    - Greet commands
     - Emote reactions add roles
     - Make an announcement when a user starts streaming
     - Add economy commands?
     - Love gauge command(Aww.)
     - Gif generator emotes(!slap, !kill, !hug)
     
-    
-
-
-
-
-BUG TODO LIST
-
-General
-    - For the code that interacts with json files, make it so it does not need a path to be manually inserted. 
-
-All Commands
-    - There is a situation where, if a command requires an argument and no argument is given, there will be no return from the bot to say the input was incorrect. 
-
-
 SmashBros Commands
     - Fix !smashprofiles command so that it shows smash character icons instead of just their name.
     - Create multiple embeds in the situation that the embed limit is reached. 
-
-Fun Commands
-    - Clean up/complete the race/betting commands.
 
 Audio Commands
     - Recreate everything in my own code.

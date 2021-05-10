@@ -137,7 +137,7 @@
         },
         "DotaProfile": {
             "Name": "",
-            "Steam32id": ""
+            "Steam32id": "95487841"
         }
     },
     "95928549810143232": {
@@ -192,15 +192,15 @@
         "Level": 1,
         "Experience": 0,
         "Daily": {
-            "Year": 2019,
-            "Month": 10,
-            "Day": 6,
+            "Year": 2020,
+            "Month": 3,
+            "Day": 18,
             "Hour": 1
         },
         "Weekly": {
-            "Year": 2019,
-            "Month": 10,
-            "Day": 6,
+            "Year": 2020,
+            "Month": 3,
+            "Day": 18,
             "Hour": 1
         },
         "Inventory": [
@@ -211,7 +211,7 @@
             "2",
             "2"
         ],
-        "Coins": 145,
+        "Coins": 265,
         "Rigged": 0,
         "SmashProfile": {
             "Tag": "Lefty",
@@ -232,7 +232,7 @@
             "Region": "The Black Sea",
             "Note": "I love Luigi",
             "Colour": "0x167a22",
-            "Image": "https://cdn.discordapp.com/avatars/88047132937822208/298c5915e6fc3088348327a9da9e71e8.png?size=1024"
+            "Image": "https://bin.smwcentral.net/u/22648/Luigi%2Bthing.png"
         },
         "OsuProfile": {
             "Name": "",

@@ -150,7 +150,24 @@ class Search(commands.Cog):
         result = js['list'][0]['definition']
         await ctx.send('**{}**: '.format(arg)+result)
 
-    
+
+    @commands.command(name='w2g')
+    async def w2g(self,ctx):
+        '''
+        Creates a watch2gether room.
+        '''
+
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+
+        query = 'https://www.watch2gether.com/rooms/create.json'
+        r = requests.post(query)
+        js = r.json()
+
+        streamkey = js['streamkey']
+
+        await ctx.send("Watch2gether room created: https://www.watch2gether.com/rooms/{}?lang=en".format(streamkey))
 
 
 
@@ -338,7 +355,7 @@ class Search(commands.Cog):
             i = i+1
 
         title = title + "**This post will be deleted after 30 seconds.**"
-        await ctx.send(title,delete_after=30)
+        await ctx.send(title)
 
 
 
@@ -362,7 +379,7 @@ class Search(commands.Cog):
         link = links[r]
 
         result = '**'+title + ':** ' + link
-        await ctx.send(result,delete_after=20)
+        await ctx.send(result)
 
     
 
@@ -386,7 +403,7 @@ class Search(commands.Cog):
         link = links[r]
 
         result = '**'+title + ':** ' + link
-        await ctx.send(result,delete_after=20)
+        await ctx.send(result)
 
 
     @commands.command(name='gamingrand')
@@ -409,7 +426,7 @@ class Search(commands.Cog):
         link = links[r]
 
         result = '**'+title + ':** ' + link
-        await ctx.send(result,delete_after=20)
+        await ctx.send(result)
     
     @commands.command(name='wholesomerand')
     async def wholesomerand(self,ctx):
@@ -431,7 +448,7 @@ class Search(commands.Cog):
         link = links[r]
 
         result = '**'+title + ':** ' + link
-        await ctx.send(result,delete_after=20)
+        await ctx.send(result)
     
     @commands.command(name='fehrand')
     async def fehrand(self,ctx):
@@ -453,7 +470,12 @@ class Search(commands.Cog):
         link = links[r]
 
         result = '**'+title + ':** ' + link
-        await ctx.send(result,delete_after=20)
+        await ctx.send(result)
 
 
-
+    @commands.command(name='w2g')
+    async def w2g(self,ctx):
+        await jsondb.load_servers(self)
+        if jsondb.permission(self,ctx) is False:
+            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+        await ctx.send('https://w2g.tv/rooms/gayroom-ld5v722axyy28alfgs?lang=en')

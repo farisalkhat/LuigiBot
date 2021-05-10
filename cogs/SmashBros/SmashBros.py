@@ -183,9 +183,9 @@ class SmashBros(commands.Cog):
     @commands.command(name='smashprofiles',pass_context = True)
     async def viewprofiles(self,ctx):
         '''
-Shows all of the smash profiles currently on the server.
-Usage: 
-!smashprofiles
+        Shows all of the smash profiles currently on the server.
+        Usage: 
+        !smashprofiles
         '''
         await jsondb.load_servers(self)
         if jsondb.permission(self,ctx) is False:

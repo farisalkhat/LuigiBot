@@ -156,28 +156,28 @@ class Administrator(commands.Cog):
         except discord.Forbidden:
             await ctx.send(jsondb.NOPERMISSION, delete_after = 20)
 
-    @commands.command(name='clean')
-    @commands.has_permissions(administrator=True)
-    async def clean_messages(self,ctx,amount:int = 1):
-        """
-        Removes messages from the channel. By default, it removes a single message. 
-        Usage: !clean, !clean 10
-        Requirements: Both the author and the bot must have admin privileges. 
+    # @commands.command(name='cleanmessages')
+    # @commands.has_permissions(administrator=True)
+    # async def clean_messages(self,ctx,amount:int = 1):
+    #     """
+    #     Removes messages from the channel. By default, it removes a single message. 
+    #     Usage: !cleanmessages, !cleanmessages 10
+    #     Requirements: Both the author and the bot must have admin privileges. 
         
-        """
-        await jsondb.load_servers(self)
-        if jsondb.permission(self,ctx) is False:
-            return await ctx.send(jsondb.NOPERMISSION)
+    #     """
+    #     await jsondb.load_servers(self)
+    #     if jsondb.permission(self,ctx) is False:
+    #         return await ctx.send(jsondb.NOPERMISSION)
 
-        channel = ctx.message.channel
+    #     channel = ctx.message.channel
 
 
-        try:
-            messages = await channel.history(limit = amount).flatten()
-            await channel.delete_messages(messages)
+    #     try:
+    #         messages = await channel.history(limit = amount).flatten()
+    #         await channel.delete_messages(messages)
 
-        except discord.Forbidden:
-            await ctx.send(jsondb.NOPERMISSION, delete_after = 10)
+    #     except discord.Forbidden:
+    #         await ctx.send(jsondb.NOPERMISSION, delete_after = 10)
        
     @commands.command(name='editrolecolor')
     @commands.has_permissions(administrator=True)
@@ -449,13 +449,43 @@ class Administrator(commands.Cog):
                     "Enabled": 0,
                     "Greet_Channel": "",
                     "Greet_Message": "Welcome to the server!"
-                }
+                },
+                'Reaction_Messages':{}
             }
             await jsondb.save_servers(self)
             return await ctx.send("Server info has been created for **{}**.".format(server.name))
         else:
             return await ctx.send("Server info has already been created. Use **!serverinfo** to see it, and **!serverhelp** to see how to modify it.")
         
+
+    @commands.command(name='reactionroles')
+    @commands.has_permissions(administrator=True)
+    async def reactionroles(self,ctx,*,args):
+        '''
+        Specify role names and server emojis with which they're represented, 
+        the bot will then add those emojis to the previous message in the channel, 
+        and users will be able to get the roles by clicking on the emoji.
+
+        Usage: !reactionroles king of games :clap:; queen of games :cowboy:;
+        '''
+        
+        arg = args.split(';')
+        print(arg)
+        for reaction in arg:
+            reactionlist = reaction.split('<')
+            print(reactionlist)
+
+    
+    @commands.command(name="kill")
+    @commands.is_owner()
+    async def shutdown(self,ctx):
+        await ctx.bot.logout()
+
+        
+
+
+
+
 
     @commands.command(name='greet')
     @commands.has_permissions(administrator=True)
@@ -512,11 +542,6 @@ class Administrator(commands.Cog):
         self.servers[str(ctx.guild.id)]['Greets']['Greet_Message'] = message
         await jsondb.save_servers(self)
         await ctx.send("Greet message has been saved!")
-        
-
-        
-
-
 
     @commands.command(name='info')
     async def info(self,ctx,user: discord.Member = None):

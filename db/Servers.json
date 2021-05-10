@@ -38,6 +38,7 @@
             "Enabled": 2,
             "Greet_Channel": "",
             "Greet_Message": "Welcome to the server!"
-        }
+        },
+        "Reaction_Messages":{}
     }
 }

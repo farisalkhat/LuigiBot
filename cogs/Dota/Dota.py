@@ -14,8 +14,8 @@ import copy
 import os
 import re
 from random import randint
-import requests
 import tokens
+import requests
 from requests.exceptions import HTTPError
 import operator
 import json
@@ -145,29 +145,25 @@ class Dota(commands.Cog):
         STEAMID = self.users[userid]['DotaProfile']['Steam32id']
         if not STEAMID:
             return await ctx.send("You do not have a STEAMID linked to you!",delete_after=10)
+
         request = requests.get('https://api.opendota.com/api/players/{}/peers?api_key={}'.format(STEAMID,dota_api_key))
         js = request.json()
-        print(js)
-
 
         personanames = [js[0]['personaname'], js[1]['personaname'], js[2]['personaname'], js[3]['personaname'], js[4]['personaname']]
-        lastplayed = [js[0]['last_played'], js[1]['last_played'], js[2]['last_played'], js[3]['last_played'], js[4]['last_played']]
         wins = [js[0]['win'], js[1]['win'], js[2]['win'], js[3]['win'], js[4]['win']]
         losses =[js[0]['games'] - js[0]['win']  ,js[1]['games'] - js[1]['win'], js[2]['games'] - js[2]['win'],js[3]['games'] - js[3]['win'],js[4]['games'] - js[4]['win']]
+        steam32ids = [js[0]["account_id"], js[1]["account_id"], js[2]["account_id"], js[3]["account_id"], js[4]["account_id"]]
+        lastplayed = []
 
-        lastplayedlinks = []
-
-        for last in lastplayed:
-            lastplayedlinks.append( 'https://www.opendota.com/matches/' + str(last))
-
-
-
+        for steam32id in steam32ids:
+            request = requests.get('https://api.opendota.com/api/players/{}/recentMatches?api_key={}'.format(steam32id,dota_api_key))
+            js = request.json()
+            recent = 'https://www.opendota.com/matches/' + str(js[0]['match_id'])
+            lastplayed.append( recent)
 
         personalist = ''
         lastplayedlinkslist= ''
         WLlist = []
-
-
 
         i = 0
         while i!=5:
@@ -178,22 +174,10 @@ class Dota(commands.Cog):
         while i!=5:
             personalist = personalist + personanames[i] + ' {}'.format(WLlist[i]) + '\n'
             i = i+1
-
-
-
-        for last in lastplayedlinks:
+        for last in lastplayed:
             lastplayedlinkslist= lastplayedlinkslist + last + '\n'
         
-
-
-
-        print(personalist)
-        print(lastplayedlinkslist)
-        print(WLlist)
-
-        author = ctx.author.name
-
-        embed=discord.Embed(title=author, description="Dota Friend Stats", color=0x800000)
+        embed=discord.Embed(title=ctx.author.name, description="Dota Friend Stats", color=0x800000)
         embed.add_field(name='Friends', value=personalist, inline=True)
         embed.add_field(name='Last Played', value=lastplayedlinkslist, inline=True)
         await ctx.send(embed=embed)
@@ -239,14 +223,18 @@ class Dota(commands.Cog):
         members = ctx.guild.members
         names = ''
         steams = ''
-
+        
         for member in members:
             memberid = str(member.id)
-            if self.users[memberid]['DotaProfile']['Steam32id'] is not None:
-                names = names + self.users[memberid]['Name'] + '\n'
-                steams = steams + self.users[memberid]['DotaProfile']['Steam32id'] +'\n'
+            try:
+                if self.users[memberid]['DotaProfile']['Steam32id'] != "":
+                    names = names + self.users[memberid]['Name'] + '\n'
+                    steams = steams + self.users[memberid]['DotaProfile']['Steam32id'] +'\n'
 
+            except KeyError:
+                continue
 
+        
         embed=discord.Embed(title='Steam Users')
         embed.add_field(name='Discord Name', value=names, inline=True)
         embed.add_field(name='Steam32ID', value=steams, inline=True)
@@ -297,6 +285,8 @@ class Dota(commands.Cog):
         request = requests.get('https://api.opendota.com/api/players/{}/wl?api_key={}'.format(STEAMID,dota_api_key))
         js = request.json()
         print(js)
+        print("\n")
+        print("\n")
         winlossper = js['win'] / (js['win'] + js['lose'])
         winlosscorr = "%.1f" % round(winlossper * 100,1)
         winloss = str(js['win']) + '/' + str(js['lose']) + " ({}%)".format(winlosscorr)
@@ -304,20 +294,36 @@ class Dota(commands.Cog):
         #Get most recent match
         request = requests.get('https://api.opendota.com/api/players/{}/recentMatches?api_key={}'.format(STEAMID,dota_api_key))
         js = request.json()
+        print(js)
+        print("\n")
+        print("\n")
         recent = 'https://www.opendota.com/matches/' + str(js[0]['match_id'])
 
+        
         #Get Dota username
         request =requests.get('https://api.opendota.com/api/players/{}?api_key={}'.format(STEAMID,dota_api_key))
         js = request.json()
+        print(js)
+        print("\n")
+        print("\n")
+        
         comprank = get_emblem(str(js["rank_tier"]))
+        if comprank is None:
+            comprank = '00'
         comprank_str = comprank[0]
         comprank_url = comprank[1]
         username = js["profile"]["personaname"]
         
+
+        
+
         #Gets Top 5 Heroes for User
         
-        request =requests.get('https://api.opendota.com/api/players/{}/heroes?api_key={}'.format(STEAMID,dota_api_key))
+        request = requests.get('https://api.opendota.com/api/players/{}/heroes?'.format(STEAMID))
         js = request.json()
+
+
+        
         sortedWins = sorted(js,key = lambda i: i['win'],reverse=True)
         Heroes = []
         i = 0
@@ -325,6 +331,7 @@ class Dota(commands.Cog):
             print(sortedWins[i])
             Heroes.append(sortedWins[i])
             i = i+1
+        
         request =requests.get('https://api.opendota.com/api/heroes?api_key={}'.format(dota_api_key))
         r = request.json()
         HeroDicts = []
@@ -344,16 +351,19 @@ class Dota(commands.Cog):
             HeroList = HeroList + HeroNames[i] + ' ({}%)'.format(HeroWL[i]) + '\n'
             i = i+1
     
+        
         opendota = 'https://www.opendota.com/players/' + STEAMID
         dotabuff = 'https://www.dotabuff.com/players/' + STEAMID
-
+        
         embed = dota_profile(username,comprank_url,comprank_str,winloss,recent,HeroList,opendota,dotabuff)
         await ctx.send(embed=embed) 
+        
+        
 
 def dota_profile(username,comprank_url,comprank_str,winloss,recent,HeroList,opendota,dotabuff):
     links = opendota + '\n' + dotabuff
     embed=discord.Embed(title=username)
-    embed.set_thumbnail(url=comprank_url)
+    #embed.set_thumbnail(url=comprank_url)
     embed.add_field(name='Medal', value=comprank_str, inline=True)
     embed.add_field(name='Win/Loss', value=winloss, inline=True)
     embed.add_field(name='Last Match Played', value=recent, inline=True)
@@ -364,7 +374,8 @@ def dota_profile(username,comprank_url,comprank_str,winloss,recent,HeroList,open
 def get_emblem(rank):
     tier = rank[0]
     stars = rank[1]
-    
+    if rank == '00':
+        return ['Unranked','https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_0.png']
     if tier == '1':
         if stars=='1':
             return ['Herald 1','https://gamepedia.cursecdn.com/dota2_gamepedia/thumb/8/85/SeasonalRank1-1.png/140px-SeasonalRank1-1.png?version=ce7c6eea36971495cdad1f06e7ef3709']

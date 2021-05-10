@@ -52,7 +52,7 @@ class Help(commands.Cog):
                 name =  cog + "\n"
                 list = list + name
             embed.add_field(name = "Here are the bot's server modules. Do !help modulename to get all of their commands and a description. ",value =list)
-            return await author.send(embed=embed)   
+            return await ctx.send(embed=embed)   
         
         cog = self.bot.get_cog(arg)
         if not cog:
@@ -66,9 +66,9 @@ class Help(commands.Cog):
             list = list + name
             i = i+1
         embed.add_field(name = "Here are the commands for the **{}** module.".format(arg),value =list)
-        await author.send(embed=embed)   
+        await ctx.send(embed=embed)   
 
-    @commands.command(name='command')
+    @commands.command(name='command',aliases=['cmd'])
     @commands.has_permissions(add_reactions=True,embed_links=True)
     async def command(self,ctx,*, arg):
         await jsondb.load_servers(self)

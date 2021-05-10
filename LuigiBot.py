@@ -10,6 +10,12 @@ import tokens
 import json
 from core import jsondb
 from discord.ext.commands import has_permissions, MissingPermissions
+import winreg as reg  
+import getpass
+import os
+import random
+USER_NAME = getpass.getuser()
+
 
 api_key = tokens.discord_api
 #
@@ -31,9 +37,9 @@ def get_prefix(bot, message):
     return commands.when_mentioned_or(*prefixes)(bot, message)
 
 
-initial_extensions = [ 'cogs.Administrator','cogs.Audio',
+initial_extensions = [ 'cogs.Administrator','cogs.Music',
                       'cogs.SmashBros', 'cogs.Fun', 'cogs.Help','cogs.Search','cogs.Economy','cogs.Dota',
-                      'cogs.Utility']
+                      'cogs.Utility','cogs.DrWilyDB']
 bot = commands.Bot(command_prefix=get_prefix,
                    description='LuigiBot: General Purpose Bot!')
 bot.remove_command('help')
@@ -44,12 +50,19 @@ if __name__ == '__main__':
 
 @bot.event
 async def on_ready():
-    
-    print(
-        f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
-    await bot.change_presence(activity=discord.Game(name='World of Warcraft', type=1, url='https://twitch.tv/Lefty43'))
+    game = random_game()
+    print(f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
+    await bot.change_presence(activity=discord.Game(name=game, type=1, url='https://twitch.tv/Lefty43'))
 
     print(f'Successfully logged in and booted...!')
+
+
+
+def random_game():
+    games_list = ['World of Warcraft','Donkey Kong 64',"Cheggars' Party Quiz",'Family Feud','Project M','Shadow the Hedgehog','Sonic 06','Comic Bakery']
+    game = random.randrange(0,len(games_list)-1)
+    return games_list[game]
+
 
 @bot.event
 async def on_command_error(ctx,error):

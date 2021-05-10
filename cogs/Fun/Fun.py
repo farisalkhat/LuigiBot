@@ -147,6 +147,10 @@ class Fun(commands.Cog):
 
 
 
+    @commands.command(name="sonic")
+    async def sanic(self,ctx):
+        await ctx.send("https://cdn.discordapp.com/attachments/95614618839285760/709344535519428618/SA1.gif")
+
 
 
     @commands.command(name="8ball")
