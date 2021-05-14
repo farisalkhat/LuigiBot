@@ -253,7 +253,7 @@ class Dota(commands.Cog):
                 Then you can see your profile as well as others with !dota. Use !help Dota to see all of the dota commands.
 
             """
-        author.send(msg)
+        await ctx.send(msg)
 
     @commands.command(name='dota')
     async def dotaprofile(self, ctx, member:discord.Member = None):

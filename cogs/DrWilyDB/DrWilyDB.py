@@ -1,26 +1,14 @@
 import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
-import asyncio
-import time
-import youtube_dl
 from itertools import cycle
 import random
 #import validators
-import copy
 import os,csv,sys
-import re
 from random import randint
 import requests
 from requests.exceptions import HTTPError
-import cat
-import urllib.parse
-from geopy import geocoders
-from tzwhere import tzwhere
-from youtube_api import YouTubeDataAPI
-import tokens
-from pyosu import OsuApi
-import praw
+
 from core import jsondb
 import random
 from pathlib import Path

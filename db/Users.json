@@ -167,10 +167,14 @@
         "Coins": 25,
         "Rigged": 0,
         "SmashProfile": {
-            "Tag": "",
+            "Tag": "Swampus",
             "SwitchCode": "",
-            "Main": [],
-            "Secondaries": [],
+            "Main": [
+                "Bowser"
+            ],
+            "Secondaries": [
+                "King K Rool"
+            ],
             "Pockets": [],
             "Games": [],
             "Region": "",
@@ -189,47 +193,43 @@
     },
     "88047132937822208": {
         "Name": "Lefty",
-        "Level": 1,
+        "Level": 3,
         "Experience": 0,
         "Daily": {
-            "Year": 2020,
-            "Month": 3,
-            "Day": 18,
+            "Year": 2021,
+            "Month": 5,
+            "Day": 11,
             "Hour": 1
         },
         "Weekly": {
-            "Year": 2020,
-            "Month": 3,
-            "Day": 18,
+            "Year": 2021,
+            "Month": 5,
+            "Day": 11,
             "Hour": 1
         },
         "Inventory": [
-            "1",
-            "1",
             "2",
             "2",
-            "2",
-            "2"
+            "3",
+            "3"
         ],
-        "Coins": 265,
-        "Rigged": 0,
+        "Coins": 360,
+        "Rigged": 1,
         "SmashProfile": {
             "Tag": "Lefty",
             "SwitchCode": "SW-1111-2222-3333",
             "Main": [
-                "Luigi",
-                "Pacman"
+                "Goku"
             ],
             "Secondaries": [
-                "Ike",
-                "Cloud",
-                "King Dedede"
+                "Pit",
+                "Roy"
             ],
             "Pockets": [
-                "Pichu"
+                "King Dedede"
             ],
             "Games": [],
-            "Region": "The Black Sea",
+            "Region": "nowhere",
             "Note": "I love Luigi",
             "Colour": "0x167a22",
             "Image": "https://bin.smwcentral.net/u/22648/Luigi%2Bthing.png"
@@ -265,21 +265,23 @@
             "2",
             "2",
             "2",
-            "2"
+            "4"
         ],
-        "Coins": 25,
+        "Coins": 15,
         "Rigged": 0,
         "SmashProfile": {
-            "Tag": "",
+            "Tag": "Gergoos",
             "SwitchCode": "",
-            "Main": [],
+            "Main": [
+                "Goku"
+            ],
             "Secondaries": [],
             "Pockets": [],
             "Games": [],
-            "Region": "",
+            "Region": "Hellride",
             "Note": "",
             "Colour": "",
-            "Image": ""
+            "Image": "https://i.kym-cdn.com/photos/images/original/000/982/341/9fd.png"
         },
         "OsuProfile": {
             "Name": "",

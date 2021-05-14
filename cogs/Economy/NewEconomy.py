@@ -304,7 +304,8 @@ class NewEconomy(commands.Cog):
 
     @commands.command(name="use")
     async def use(self,ctx,index:str,member:discord.Member=None):
-        jsondb.load_users(self)
+        await jsondb.load_users(self)
+        await jsondb.load_items(self)
         await jsondb.load_servers(self)
         if jsondb.permission(self,ctx) is False:
             return await ctx.send(jsondb.NOPERMISSION)
@@ -328,7 +329,8 @@ class NewEconomy(commands.Cog):
             if member is None:
                 return await ctx.send("**{}**, you must target a user to bless their Smash Profile.".format(author))
             memberid = str(member.id)
-            self.users[memberid]['SmashProfile']['Main'] = 'Goku'
+            self.users[memberid]['SmashProfile']['Main'] = ['Goku']
+            self.users[userid]['Inventory'].remove(index)
             return await jsondb.save_users(self)
         if index == '3':
             if  self.users[userid]['Rigged'] == 1:
@@ -340,7 +342,7 @@ class NewEconomy(commands.Cog):
             return await ctx.send("**{}** has used **{}** and is now insanely lucky!".format(author,item['ItemName']))
         if index =='4':
             if member is None:
-                return await ctx.send("**{}**, you must target a user to bless their Smash Profile.".format(author))
+                return await ctx.send("**{}**, you must target a user to punish them.".format(author))
             roles = ctx.guild.roles
             for role in roles:
                 if role.name =='BANNED':

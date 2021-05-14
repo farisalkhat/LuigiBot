@@ -12,19 +12,18 @@ import os
 import re
 from random import randint
 import requests
-import cat
 import urllib.parse
 from geopy import geocoders
 from tzwhere import tzwhere
 from youtube_api import YouTubeDataAPI
 import tokens
-from pyosu import OsuApi
+import pyosu
 import praw
 from core import jsondb
 
 
 google_key = tokens.google_api
-api = OsuApi(tokens.osu_api)
+api = pyosu.main(tokens.osu_api)
 google_search_key = tokens.google_search_key
 urban_search_key = tokens.urban_search_key
 google_image_key = tokens.google_image_key

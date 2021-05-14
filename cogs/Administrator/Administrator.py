@@ -479,7 +479,11 @@ class Administrator(commands.Cog):
     @commands.command(name="kill")
     @commands.is_owner()
     async def shutdown(self,ctx):
-        await ctx.bot.logout()
+        '''
+        Turns off LuigiBot. So sad!
+        Requirements: Owner of the bot(Lefty)
+        '''
+        await ctx.bot.close()
 
         
 
@@ -550,6 +554,10 @@ class Administrator(commands.Cog):
         Usage: !info, !info @Lefty
         Requirements: None
         '''
+
+        
+
+
 
     @commands.command(name='uptime')
     async def uptime(self,ctx):

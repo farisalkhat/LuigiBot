@@ -297,21 +297,21 @@ class SmashBros(commands.Cog):
 
 
 
-    @commands.command(name='smashgames',pass_context = True)
-    async def smashgames(self,ctx,*,arg):
+    # @commands.command(name='smashgames',pass_context = True)
+    # async def smashgames(self,ctx,*,arg):
 
-        await jsondb.load_servers(self)
-        if jsondb.permission(self,ctx) is False:
-            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
-        await jsondb.load_users(self)
-        userid = str(ctx.author.id)
-        arg = arg.split(';')
-        for game in arg:
-            if game is not 'Ultimate' or game is not 'Melee':
-                return await ctx.send('**{}**, the only smash games are Ultimate or Melee. xd')
-        self.users[userid]['SmashProfile']['Tag'] = arg
-        await jsondb.save_users(self)
-        await ctx.send('**{}** has modified their tag.'.format(ctx.author))
+    #     await jsondb.load_servers(self)
+    #     if jsondb.permission(self,ctx) is False:
+    #         return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+    #     await jsondb.load_users(self)
+    #     userid = str(ctx.author.id)
+    #     arg = arg.split(';')
+    #     for game in arg:
+    #         if game is not 'Ultimate' or game is not 'Melee':
+    #             return await ctx.send('**{}**, the only smash games are Ultimate or Melee. xd')
+    #     self.users[userid]['SmashProfile']['Tag'] = arg
+    #     await jsondb.save_users(self)
+    #     await ctx.send('**{}** has modified their tag.'.format(ctx.author))
 
 
     @commands.command(name='smashtag',pass_context = True)
@@ -520,6 +520,51 @@ class SmashBros(commands.Cog):
             for emoji in guildemojis:
                 if emoji.name == name:
                     emojis.append(emoji)
+                if name =="King K Rool" and emoji.name=="KingKRool":
+                    emojis.append(emoji)
+                if name =="GW" and emoji.name=="G&W":
+                    emojis.append(emoji)
+
+                if name =="Dr.Mario" and emoji.name=="DrMario":
+                    emojis.append(emoji)
+                if name =="Bowser Jr" and emoji.name=="BowserJr":
+                    emojis.append(emoji)
+                if name =="Donkey Kong" and emoji.name=="DonkeyKong":
+                    emojis.append(emoji)
+                if name =="Diddy Kong" and emoji.name=="DiddyKong":
+                    emojis.append(emoji)
+                if name =="Young Link" and emoji.name=="YoungLink":
+                    emojis.append(emoji)
+                if name =="Toon Link" and emoji.name=="ToonLink":
+                    emojis.append(emoji)
+                if name =="Meta Knight" and emoji.name=="MetaKnight":
+                    emojis.append(emoji)
+                if name =="King Dedede" and emoji.name=="KingDedede":
+                    emojis.append(emoji)
+                if name =="Pokemon Trainer" and emoji.name=="PokemonTrainer":
+                    emojis.append(emoji)
+                if name =="Ice Climbers" and emoji.name=="IceClimbers":
+                    emojis.append(emoji)
+                if name =="Dark Pit" and emoji.name=="DarkPit":
+                    emojis.append(emoji)
+                if name =="Wii Fit Trainer" and emoji.name=="WiiFitTrainer":
+                    emojis.append(emoji)
+                if name =="Little Mac" and emoji.name=="LittleMac":
+                    emojis.append(emoji)
+                if name =="Duck Hunt" and emoji.name=="DuckHunt":
+                    emojis.append(emoji)
+                if name =="Mii Brawler" and emoji.name=="MiiBrawler":
+                    emojis.append(emoji)
+                if name =="Mii Swordfighter" and emoji.name=="MiiSwordfighter":
+                    emojis.append(emoji)
+                if name =="Mii Gunner" and emoji.name=="MiiGunner":
+                    emojis.append(emoji)
+                if name =="Piranha Plant" and emoji.name=="PiranhaPlant":
+                    emojis.append(emoji)
+                if name =="Dark Samus" and emoji.name=="DarkSamus":
+                    emojis.append(emoji)
+
+
         guild = self.bot.get_guild(596938824983117825)
         guildemojis = guild.emojis
         for name in mains:
@@ -628,7 +673,6 @@ __**!smashsecond:**__ Similar to smashmain, except with secondaries. **Example: 
 __**!smashpocket:**__ Similar to smashmain, except with secondaries. **Example: !smashpocket Pichu;Daisy;Simon**
 __**!smashimage:**__ Set your profile image to whatever link you provide. **Example: !smashimage https://cdn.discordapp.com/avatars/88047132937822208/3cb38e0dd632deb37a37e9770631023c.png?size=1024**
 __**!smashregion:**__ Set your region to whatever you want(for now). **Example: !smashregion The Black Sea**
-__**!smashgames:**__ Set the smash games you can play. Only options are Melee and Ultimate. **Example: !smashgames Ultimate;Melee**
 __**!smashcode:**__ Set your switch code. Requires 12 digits. **Example: !smashcode 111122223333**
 __**!smashcolor:**__ Set the color of your profile. Requires a color in hex format. **Example: !smashcolor 0x167a22**
 __**!smashnote:**__ Leave a little note for whoever sees your profile. **Example: !smashnote I love Luigi!**
