@@ -1,6 +1,156 @@
 {
+    "95646510762438656": {
+        "Name": "charge301",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "92997797795602432": {
+        "Name": "noah0921",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "910691857955180574": {
+        "Name": "Squidward",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
     "127652492795314177": {
-        "Name": "Michael M. 2L-17",
+        "Name": "shadow_swipe",
         "Level": 1,
         "Experience": 0,
         "Daily": {
@@ -23,7 +173,7 @@
             "2",
             "2"
         ],
-        "Coins": 25,
+        "Dosh": 1000,
         "Rigged": 0,
         "SmashProfile": {
             "Tag": "",
@@ -44,104 +194,13 @@
         "DotaProfile": {
             "Name": "",
             "Steam32id": ""
-        }
-    },
-    "105406640857071616": {
-        "Name": "generic",
-        "Level": 1,
-        "Experience": 0,
-        "Daily": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
         },
-        "Weekly": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Tag": "",
-            "SwitchCode": "",
-            "Main": [],
-            "Secondaries": [],
-            "Pockets": [],
-            "Games": [],
-            "Region": "",
-            "Note": "",
-            "Colour": "",
-            "Image": ""
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "99288066883059712": {
-        "Name": "Pookiemookie",
-        "Level": 1,
-        "Experience": 0,
-        "Daily": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Weekly": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Tag": "",
-            "SwitchCode": "",
-            "Main": [],
-            "Secondaries": [],
-            "Pockets": [],
-            "Games": [],
-            "Region": "",
-            "Note": "",
-            "Colour": "",
-            "Image": ""
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": "95487841"
+        "YGOProfile": {
+            "Token": ""
         }
     },
     "95928549810143232": {
-        "Name": "Swampus",
+        "Name": "swampus",
         "Level": 1,
         "Experience": 0,
         "Daily": {
@@ -164,159 +223,7 @@
             "2",
             "2"
         ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Tag": "Swampus",
-            "SwitchCode": "",
-            "Main": [
-                "Bowser"
-            ],
-            "Secondaries": [
-                "King K Rool"
-            ],
-            "Pockets": [],
-            "Games": [],
-            "Region": "",
-            "Note": "",
-            "Colour": "",
-            "Image": ""
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "88047132937822208": {
-        "Name": "Lefty",
-        "Level": 3,
-        "Experience": 0,
-        "Daily": {
-            "Year": 2021,
-            "Month": 5,
-            "Day": 11,
-            "Hour": 1
-        },
-        "Weekly": {
-            "Year": 2021,
-            "Month": 5,
-            "Day": 11,
-            "Hour": 1
-        },
-        "Inventory": [
-            "2",
-            "2",
-            "3",
-            "3"
-        ],
-        "Coins": 360,
-        "Rigged": 1,
-        "SmashProfile": {
-            "Tag": "Lefty",
-            "SwitchCode": "SW-1111-2222-3333",
-            "Main": [
-                "Goku"
-            ],
-            "Secondaries": [
-                "Pit",
-                "Roy"
-            ],
-            "Pockets": [
-                "King Dedede"
-            ],
-            "Games": [],
-            "Region": "nowhere",
-            "Note": "I love Luigi",
-            "Colour": "0x167a22",
-            "Image": "https://bin.smwcentral.net/u/22648/Luigi%2Bthing.png"
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": "97985854"
-        }
-    },
-    "94265300622512128": {
-        "Name": "Gergoos",
-        "Level": 1,
-        "Experience": 0,
-        "Daily": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Weekly": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "4"
-        ],
-        "Coins": 15,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Tag": "Gergoos",
-            "SwitchCode": "",
-            "Main": [
-                "Goku"
-            ],
-            "Secondaries": [],
-            "Pockets": [],
-            "Games": [],
-            "Region": "Hellride",
-            "Note": "",
-            "Colour": "",
-            "Image": "https://i.kym-cdn.com/photos/images/original/000/982/341/9fd.png"
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "95594620464930816": {
-        "Name": "anthonylmao",
-        "Level": 1,
-        "Experience": 0,
-        "Daily": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Weekly": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
+        "Dosh": 1000,
         "Rigged": 0,
         "SmashProfile": {
             "Tag": "",
@@ -337,10 +244,13 @@
         "DotaProfile": {
             "Name": "",
             "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
         }
     },
-    "95646510762438656": {
-        "Name": "Charge301",
+    "672822334641537041": {
+        "Name": "FreeStuff",
         "Level": 1,
         "Experience": 0,
         "Daily": {
@@ -363,7 +273,7 @@
             "2",
             "2"
         ],
-        "Coins": 25,
+        "Dosh": 1000,
         "Rigged": 0,
         "SmashProfile": {
             "Tag": "",
@@ -384,10 +294,13 @@
         "DotaProfile": {
             "Name": "",
             "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
         }
     },
-    "100303452705402880": {
-        "Name": "Chet",
+    "128990357063991298": {
+        "Name": "gaurav1234",
         "Level": 1,
         "Experience": 0,
         "Daily": {
@@ -410,7 +323,7 @@
             "2",
             "2"
         ],
-        "Coins": 25,
+        "Dosh": 1000,
         "Rigged": 0,
         "SmashProfile": {
             "Tag": "",
@@ -431,241 +344,9 @@
         "DotaProfile": {
             "Name": "",
             "Steam32id": ""
-        }
-    },
-    "109390602235293696": {
-        "Name": "MilkBoyTeo",
-        "Level": 1,
-        "Experience": 0,
-        "Daily": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
         },
-        "Weekly": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Tag": "",
-            "SwitchCode": "",
-            "Main": [],
-            "Secondaries": [],
-            "Pockets": [],
-            "Games": [],
-            "Region": "",
-            "Note": "",
-            "Colour": "",
-            "Image": ""
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "123523530502438912": {
-        "Name": "MasterMatt64",
-        "Level": 1,
-        "Experience": 0,
-        "Daily": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Weekly": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Tag": "",
-            "SwitchCode": "",
-            "Main": [],
-            "Secondaries": [],
-            "Pockets": [],
-            "Games": [],
-            "Region": "",
-            "Note": "",
-            "Colour": "",
-            "Image": ""
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "138771288427593729": {
-        "Name": "bun",
-        "Level": 1,
-        "Experience": 0,
-        "Daily": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Weekly": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Tag": "",
-            "SwitchCode": "",
-            "Main": [],
-            "Secondaries": [],
-            "Pockets": [],
-            "Games": [],
-            "Region": "",
-            "Note": "",
-            "Colour": "",
-            "Image": ""
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "140651350194126849": {
-        "Name": "Bad Will",
-        "Level": 1,
-        "Experience": 0,
-        "Daily": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Weekly": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Tag": "",
-            "SwitchCode": "",
-            "Main": [],
-            "Secondaries": [],
-            "Pockets": [],
-            "Games": [],
-            "Region": "",
-            "Note": "",
-            "Colour": "",
-            "Image": ""
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
-        }
-    },
-    "163510258864488448": {
-        "Name": "GORBOGRANDMAN",
-        "Level": 1,
-        "Experience": 0,
-        "Daily": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Weekly": {
-            "Year": 1990,
-            "Month": 5,
-            "Day": 15,
-            "Hour": 1
-        },
-        "Inventory": [
-            "1",
-            "1",
-            "2",
-            "2",
-            "2",
-            "2"
-        ],
-        "Coins": 25,
-        "Rigged": 0,
-        "SmashProfile": {
-            "Tag": "",
-            "SwitchCode": "",
-            "Main": [],
-            "Secondaries": [],
-            "Pockets": [],
-            "Games": [],
-            "Region": "",
-            "Note": "",
-            "Colour": "",
-            "Image": ""
-        },
-        "OsuProfile": {
-            "Name": "",
-            "OsuTag": ""
-        },
-        "DotaProfile": {
-            "Name": "",
-            "Steam32id": ""
+        "YGOProfile": {
+            "Token": ""
         }
     },
     "179064115141148672": {
@@ -692,7 +373,7 @@
             "2",
             "2"
         ],
-        "Coins": 25,
+        "Dosh": 1000,
         "Rigged": 0,
         "SmashProfile": {
             "Tag": "",
@@ -713,10 +394,213 @@
         "DotaProfile": {
             "Name": "",
             "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "142389340322922496": {
+        "Name": "nyankind",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "544747877751324672": {
+        "Name": "f33lsom3thing",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "214170850390179840": {
+        "Name": "recreatiions",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "95594620464930816": {
+        "Name": "anthonylmao",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
         }
     },
     "183030825292398593": {
-        "Name": "Boozayy",
+        "Name": "bozzeal",
         "Level": 1,
         "Experience": 0,
         "Daily": {
@@ -739,7 +623,7 @@
             "2",
             "2"
         ],
-        "Coins": 25,
+        "Dosh": 1000,
         "Rigged": 0,
         "SmashProfile": {
             "Tag": "",
@@ -760,10 +644,13 @@
         "DotaProfile": {
             "Name": "",
             "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
         }
     },
-    "185202545319215104": {
-        "Name": "law",
+    "151513246027874304": {
+        "Name": "brody2632",
         "Level": 1,
         "Experience": 0,
         "Daily": {
@@ -786,7 +673,7 @@
             "2",
             "2"
         ],
-        "Coins": 25,
+        "Dosh": 1000,
         "Rigged": 0,
         "SmashProfile": {
             "Tag": "",
@@ -807,6 +694,759 @@
         "DotaProfile": {
             "Name": "",
             "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "784252434486263849": {
+        "Name": "Shedinja",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "179430665496821760": {
+        "Name": "flameturtle",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "148318634148626442": {
+        "Name": "acetheshibainu",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "84398418293686272": {
+        "Name": "stinkbug",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "99288066883059712": {
+        "Name": "pookiemookie",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "140651350194126849": {
+        "Name": "badwill",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "95283720432390144": {
+        "Name": "stormsoldat",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "966184228926664734": {
+        "Name": "RedHeart",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "104763164230479872": {
+        "Name": "mejae",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "701562510108786778": {
+        "Name": "amg13",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "186637607936065538": {
+        "Name": "cbombx",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "105406640857071616": {
+        "Name": "genericantagonis",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "928449699571195925": {
+        "Name": "natatat44",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "691088761068453940": {
+        "Name": "k.p.g",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "832731781231804447": {
+        "Name": "IFTTT",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
         }
     },
     "329802640487874566": {
@@ -833,7 +1473,7 @@
             "2",
             "2"
         ],
-        "Coins": 25,
+        "Dosh": 1000,
         "Rigged": 0,
         "SmashProfile": {
             "Tag": "",
@@ -854,6 +1494,709 @@
         "DotaProfile": {
             "Name": "",
             "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "665406295788224512": {
+        "Name": "ammeerr",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "448820009855352843": {
+        "Name": "nikola2366",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "917953950798475344": {
+        "Name": "booker.court",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "745046016650248353": {
+        "Name": "dzimmi03",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "657057066023911455": {
+        "Name": "noblebaby",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "100303452705402880": {
+        "Name": "chettyubetty",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "304338307582525440": {
+        "Name": "snufflesrf",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "88047132937822208": {
+        "Name": "lefty",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 2023,
+            "Month": 7,
+            "Day": 19,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 2023,
+            "Month": 7,
+            "Day": 19,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 3600,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "356268235697553409": {
+        "Name": ".fmbot",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "185185238798958592": {
+        "Name": "ostrovsky",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "94265300622512128": {
+        "Name": "gergoos",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "466038088355938304": {
+        "Name": "cg420",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "1077058981601746985": {
+        "Name": "BarnabyMelon",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "113101948961488896": {
+        "Name": "fritz",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
         }
     },
     "533438895699001364": {
@@ -880,7 +2223,7 @@
             "2",
             "2"
         ],
-        "Coins": 25,
+        "Dosh": 1000,
         "Rigged": 0,
         "SmashProfile": {
             "Tag": "",
@@ -901,10 +2244,13 @@
         "DotaProfile": {
             "Name": "",
             "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
         }
     },
-    "297570113689878530": {
-        "Name": "souhei",
+    "99252611718348800": {
+        "Name": "chavvot",
         "Level": 1,
         "Experience": 0,
         "Daily": {
@@ -927,7 +2273,7 @@
             "2",
             "2"
         ],
-        "Coins": 25,
+        "Dosh": 1000,
         "Rigged": 0,
         "SmashProfile": {
             "Tag": "",
@@ -948,6 +2294,2609 @@
         "DotaProfile": {
             "Name": "",
             "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "135536868417601537": {
+        "Name": "archerie",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "528059050643030027": {
+        "Name": "gingersnap238",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "348493542555123713": {
+        "Name": "ferch",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "121798119800176643": {
+        "Name": "hout",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "100373131025215488": {
+        "Name": "neohaku",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "258338573273530369": {
+        "Name": "badtakes",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "507288707318153216": {
+        "Name": "bmo",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "195691641460228096": {
+        "Name": "iamabadperson",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "389504544217890822": {
+        "Name": "kentarodot",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "125868194278801408": {
+        "Name": "diettea",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "154820335085158400": {
+        "Name": "itme",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "196400939416944640": {
+        "Name": "_rusher",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "261685483854233621": {
+        "Name": "grendel0556",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "107547858621739008": {
+        "Name": "durathegod",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "703074551852171364": {
+        "Name": "donaldturmp",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "414700541776494604": {
+        "Name": "deopamine",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "232097007915761664": {
+        "Name": "dad_jokes",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "392560383694602258": {
+        "Name": "tr0flwaffle",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "131120723136610304": {
+        "Name": "bunvorn",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "539595680390578178": {
+        "Name": "bigrick1701",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "136859287514382336": {
+        "Name": "yoseb",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "120318912427458562": {
+        "Name": "ketzulo",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "166045248244416512": {
+        "Name": "paletress",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "65198878533627904": {
+        "Name": "theus",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "101135913639235584": {
+        "Name": "timepie",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "203699880579825665": {
+        "Name": "Balls",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "178590867957874688": {
+        "Name": "teehones",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "343603415760240640": {
+        "Name": "sweetlu6928",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "867615896268832768": {
+        "Name": "starplum.",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "99319065855672320": {
+        "Name": "staki",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 2023,
+            "Month": 7,
+            "Day": 19,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1300,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "130566704366485504": {
+        "Name": "jollin.",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "247557428776927232": {
+        "Name": "ashlxy",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "229459187078397954": {
+        "Name": "Marcus",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "174865896819392512": {
+        "Name": "nabukiri",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "125866005678391296": {
+        "Name": "rudarii",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "99307759975030784": {
+        "Name": "joth",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 2023,
+            "Month": 7,
+            "Day": 19,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1300,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "732698476621725777": {
+        "Name": "bigretard",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "305087994187087894": {
+        "Name": "Yucc",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "172816715355389952": {
+        "Name": "professional_liar",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "118931873723318275": {
+        "Name": "ice9247",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "174889301845344257": {
+        "Name": "zerethix",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "131972169717514241": {
+        "Name": "ahriscada",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "693682754092662816": {
+        "Name": "200lbs.",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "346879743057985537": {
+        "Name": "iPreezy",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "301919674004799489": {
+        "Name": "Greed",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "751294103869980763": {
+        "Name": "eatmysheets",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "173155815312588800": {
+        "Name": "gumshoe",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "130837428381417472": {
+        "Name": "cethies",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "253769423968665610": {
+        "Name": "confusedburrito",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "128357004250054656": {
+        "Name": "kevinbobevin",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "99311976068431872": {
+        "Name": "malapathy",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
+        }
+    },
+    "280648795702951936": {
+        "Name": "aletheia42",
+        "Level": 1,
+        "Experience": 0,
+        "Daily": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Weekly": {
+            "Year": 1990,
+            "Month": 5,
+            "Day": 15,
+            "Hour": 1
+        },
+        "Inventory": [
+            "1",
+            "1",
+            "2",
+            "2",
+            "2",
+            "2"
+        ],
+        "Dosh": 1000,
+        "Rigged": 0,
+        "SmashProfile": {
+            "Tag": "",
+            "SwitchCode": "",
+            "Main": [],
+            "Secondaries": [],
+            "Pockets": [],
+            "Games": [],
+            "Region": "",
+            "Note": "",
+            "Colour": "",
+            "Image": ""
+        },
+        "OsuProfile": {
+            "Name": "",
+            "OsuTag": ""
+        },
+        "DotaProfile": {
+            "Name": "",
+            "Steam32id": ""
+        },
+        "YGOProfile": {
+            "Token": ""
         }
     }
 }

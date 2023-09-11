@@ -12,58 +12,66 @@ import os
 import re
 from random import randint
 import json
+from pathlib import Path
+
+userPath = Path(__file__).parent / "../db/Users.json"
+itemPath = Path(__file__).parent / "../db/Items.json"
+serverPath = Path(__file__).parent / "../db/Servers.json"
+shopPath = Path(__file__).parent / "../db/Shop.json"
+amongUsPath = Path(__file__).parent / "../db/AmongUs.json"
+
 
 
 
 
 async def open_users(self):
-    with open(r"C:\Users\Lefty\Desktop\Faris\Github-Repositories\LuigiBot\db\Users.json",'r') as f:
+    with userPath.open() as f:
         self.users = json.load(f)
 async def open_items(self):
-    with open(r"C:\Users\Lefty\Desktop\Faris\Github-Repositories\LuigiBot\db\Items.json",'r') as f:
+    with itemPath.open() as f:
         self.items = json.load(f)
 async def open_shop(self):
-    with open(r"C:\Users\Lefty\Desktop\Faris\Github-Repositories\LuigiBot\db\Shop.json",'r') as f:
+    with shopPath.open() as f:
         self.shop = json.load(f)
 async def open_servers(self):
-    with open(r"C:\Users\Lefty\Desktop\Faris\Github-Repositories\LuigiBot\db\Servers.json",'r') as f:
+    with serverPath.open() as f:
         self.servers = json.load(f)
 
 
 
 async def save_users(self):
-    with open(r"C:\Users\Lefty\Desktop\Faris\Github-Repositories\LuigiBot\db\Users.json",'w') as f:
+    with userPath.open('w') as f:
         json.dump(self.users,f,indent=4)
 async def save_items(self):
-    with open(r"C:\Users\Lefty\Desktop\Faris\Github-Repositories\LuigiBot\db\Items.json",'w') as f:
+    with itemPath.open('w') as f:
         json.dump(self.items,f,indent=4)
 async def save_shop(self):
-    with open(r"C:\Users\Lefty\Desktop\Faris\Github-Repositories\LuigiBot\db\Shop.json",'w') as f:
+    with shopPath.open('w') as f:
         json.dump(self.shop,f,indent=4)
 async def save_servers(self):
-    with open(r"C:\Users\Lefty\Desktop\Faris\Github-Repositories\LuigiBot\db\Servers.json",'w') as f:
+    with serverPath.open('w') as f:
         json.dump(self.servers,f,indent=4)
 
     
 
 async def load_users(self):
-    with open(r"C:\Users\Lefty\Desktop\Faris\Github-Repositories\LuigiBot\db\Users.json",'r') as f:
+    with userPath.open() as f:
         self.users= json.load(f)
 
 
 
 async def load_items(self):
-    with open(r"C:\Users\Lefty\Desktop\Faris\Github-Repositories\LuigiBot\db\Items.json",'r') as f:
+    with itemPath.open() as f:
         self.items = json.load(f)
 async def load_shop(self):
-    with open(r"C:\Users\Lefty\Desktop\Faris\Github-Repositories\LuigiBot\db\Shop.json",'r') as f:
+    with shopPath.open() as f:
         self.shop = json.load(f)
 async def load_servers(self):
-    with open(r"C:\Users\Lefty\Desktop\Faris\Github-Repositories\LuigiBot\db\Servers.json",'r') as f:
+    with serverPath.open() as f:
         self.servers = json.load(f)
 
 async def load_event_server(serverid):
-    with open(r"C:\Users\Lefty\Desktop\Faris\Github-Repositories\LuigiBot\db\Servers.json",'r') as f:
+    with serverPath.open() as f:
         servers = json.load(f)
     try:
         server = servers[serverid]
@@ -177,6 +185,46 @@ def return_allwarn_logs(self,ctx):
     return member, warnings 
         
 def create_user(self,ctx,user):
+    self.users[str(user.id)] = {
+                    'Name': user.name,
+                    'Level': 1,
+                    'Experience': 0,
+
+                    'Daily': {'Year':1990,
+                        'Month':5,
+                        'Day': 15,
+                        'Hour':1,
+                        },
+                    'Weekly': {'Year':1990,
+                        'Month':5,
+                        'Day': 15,
+                        'Hour':1,
+                        },
+
+                    'Inventory': ['1','1','2','2','2','2'],
+                    'Dosh': 1000,
+                    'Rigged':0,
+
+                    'SmashProfile': { 'Tag':'' ,
+                                    'SwitchCode': '',
+                                    'Main': [],
+                                    'Secondaries': [],
+                                    'Pockets':[],
+                                    'Games':[],
+                                    'Region':'',
+                                    'Note':'',
+                                    'Colour':'',
+                                    'Image':''
+                    },
+                    'OsuProfile' : {'Name':'', 'OsuTag':''},
+                    'DotaProfile': {'Name':'', 'Steam32id': ''},
+                    'YGOProfile':{'Token':''}
+
+                }
+
+
+
+def create_amogus_user(self,ctx,user):
     self.users[str(user.id)] = {
                     'Name': user.name,
                     'Level': 1,

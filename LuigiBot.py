@@ -14,7 +14,15 @@ import winreg as reg
 import getpass
 import os
 import random
+from pathlib import Path
 USER_NAME = getpass.getuser()
+
+intents = discord.Intents.default()
+intents.members = True
+intents.message_content = True
+intents.typing = True
+intents.presences = True
+intents.messages = True
 
 
 api_key = tokens.discord_api
@@ -29,6 +37,8 @@ status = ['Pokemon Emerald', 'Final Fantasy X',
           'Dark Souls', 'Fire Emblem Heroes']
 servers = {}
 
+
+
 def get_prefix(bot, message):
     prefixes = ['!']
     # If bot is in DM, then they can only use commands starting with ?
@@ -37,24 +47,33 @@ def get_prefix(bot, message):
     return commands.when_mentioned_or(*prefixes)(bot, message)
 
 
-initial_extensions = [ 'cogs.Administrator','cogs.Music',
-                      'cogs.SmashBros', 'cogs.Fun', 'cogs.Help','cogs.Search','cogs.Economy','cogs.Dota',
-                      'cogs.Utility','cogs.DrWilyDB']
+initial_extensions = [ 'cogs.Administrator',
+                      'cogs.SmashBros', 'cogs.Fun', 'cogs.Help','cogs.Utility','cogs.Dota','cogs.DrWilyDB','cogs.Yugioh','cogs.Economy']
 bot = commands.Bot(command_prefix=get_prefix,
-                   description='LuigiBot: General Purpose Bot!')
+                   description='LuigiBot: General Purpose Bot!',intents=intents)
 bot.remove_command('help')
-if __name__ == '__main__':
-    for extension in initial_extensions:
-        bot.load_extension(extension)
+
+        
 
 
 @bot.event
 async def on_ready():
+    
     game = random_game()
     print(f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
     await bot.change_presence(activity=discord.Game(name=game, type=1, url='https://twitch.tv/Lefty43'))
-
     print(f'Successfully logged in and booted...!')
+
+    if __name__ == '__main__':
+        for extension in initial_extensions:
+            await bot.load_extension(extension)
+            print(extension)
+    # helptext = "```"
+    # for command in bot.commands:
+    #     helptext+=f"{command}\n"
+    # helptext+="```"
+    # print(helptext)
+
 
 
 
@@ -82,6 +101,18 @@ async def on_command_error(ctx,error):
     else:
         return await ctx.send("This channel is not set to have bot commands.")
 
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    # if not message.guild:
+    #     try:
+    #         await message.channel.send("This is a DM.")
+    #     except discord.errors.Forbidden:
+    #         pass
+    # else:
+    #     pass
+    await bot.process_commands(message)
 
 '''
 @bot.event
@@ -91,7 +122,11 @@ async def on_message(message):
 '''
 
 
-bot.run(api_key, bot=True, reconnect=True)
+
+
+
+
+bot.run(api_key, reconnect=True)
 
 
 

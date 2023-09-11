@@ -1,6 +1,6 @@
 
-from .NewEconomy import NewEconomy
-def setup(bot):
-    bot.add_cog(NewEconomy(bot))
+from .Economy import Economy
+async def setup(bot):
+    await bot.add_cog(Economy(bot))
     
 

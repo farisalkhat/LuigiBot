@@ -3,42 +3,85 @@
         "Server_Name": "Chegger's Party",
         "Server_Owner": "Lefty",
         "Server_Info": "",
-        "User_Count": 19,
-        "Warnings": {
-            "88047132937822208": [
-                [
-                    "09/10/2019 23:08:29",
-                    "88047132937822208",
-                    "HE"
-                ]
-            ]
-        },
-        "Kicks": {},
-        "Bans": {},
-        "Channel_Permissions": [
-            "407071369852092418",
-            "407071369852092418"
-        ],
-        "Greets": {
-            "Enabled": 2,
-            "Greet_Channel": "",
-            "Greet_Message": "welcome loser"
-        }
-    },
-    "572868639984713728": {
-        "Server_Name": "SmashParty",
-        "Server_Owner": "Lefty",
-        "Server_Info": "",
-        "User_Count": 6,
+        "User_Count": 38,
         "Warnings": {},
         "Kicks": {},
         "Bans": {},
-        "Channel_Permissions": [],
+        "Channel_Permissions": [
+            "1108491853369724988",
+            "1108555700096995389",
+            "407071369852092418"
+        ],
         "Greets": {
-            "Enabled": 2,
+            "Enabled": 0,
             "Greet_Channel": "",
             "Greet_Message": "Welcome to the server!"
         },
-        "Reaction_Messages":{}
+        "Reaction_Messages": {},
+        "Music_Users": [
+            "88047132937822208",
+            "94265300622512128",
+            "466038088355938304",
+            "99288066883059712",
+            "95594620464930816",
+            "140651350194126849",
+            "95646510762438656",
+            "691088761068453940",
+            "689990280165982332",
+            "657057066023911455",
+            "105406640857071616"
+        ],
+        "Used_Letters": [
+            "W",
+            "D",
+            "U",
+            "Y",
+            "J",
+            "P",
+            "B",
+            "C",
+            "I",
+            "Q",
+            "G",
+            "X",
+            "L",
+            "Z",
+            "O",
+            "A",
+            "V"
+        ],
+        "Music_Users_Done": [
+            "466038088355938304",
+            "94265300622512128",
+            "691088761068453940",
+            "140651350194126849",
+            "99288066883059712",
+            "95646510762438656",
+            "88047132937822208",
+            "657057066023911455"
+        ],
+        "Music_Man": "657057066023911455"
+    },
+    "214487509952888832": {
+        "Server_Name": "Jelly Kid's Domain",
+        "Server_Owner": "staki",
+        "Server_Info": "",
+        "User_Count": 55,
+        "Warnings": {},
+        "Kicks": {},
+        "Bans": {},
+        "Channel_Permissions": [
+            "595802024004681758"
+        ],
+        "Greets": {
+            "Enabled": 0,
+            "Greet_Channel": "",
+            "Greet_Message": "Welcome to the server!"
+        },
+        "Reaction_Messages": {},
+        "Music_Users": [],
+        "Used_Letters": [],
+        "Music_Users_Done": [],
+        "Music_Man": ""
     }
 }

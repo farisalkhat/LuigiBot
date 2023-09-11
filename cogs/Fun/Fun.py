@@ -223,7 +223,11 @@ class Fun(commands.Cog):
             N = randint(left,right)
             return await ctx.send(N)
 
-        
+
+
+
+
+
 
     @commands.command(name="roll3")
     async def roll3(self,ctx):
@@ -400,9 +404,9 @@ class Fun(commands.Cog):
 
 
         if member is None:
-            avatar_url = ctx.author.avatar_url_as(static_format='png')
+            avatar_url = ctx.author.avatar
         else:
-            avatar_url = member.avatar_url_as(static_format='png')
+            avatar_url = member.avatar
         await ctx.send(avatar_url)
     
     

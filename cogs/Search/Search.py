@@ -14,16 +14,16 @@ from random import randint
 import requests
 import urllib.parse
 from geopy import geocoders
-from tzwhere import tzwhere
+#from tzwhere import tzwhere
 from youtube_api import YouTubeDataAPI
 import tokens
-import pyosu
+#import pyosu
 import praw
 from core import jsondb
 
 
 google_key = tokens.google_api
-api = pyosu.main(tokens.osu_api)
+# api = pyosu.main(tokens.osu_api)
 google_search_key = tokens.google_search_key
 urban_search_key = tokens.urban_search_key
 google_image_key = tokens.google_image_key
@@ -97,23 +97,23 @@ class Search(commands.Cog):
 
 
 
-    @commands.command(name="time")
-    async def time(self,ctx,*,arg):
-        """
-        Retrieves the timezone for the given location. Utilizes geocoders and tzwhere.
-        """
+    # @commands.command(name="time")
+    # async def time(self,ctx,*,arg):
+    #     """
+    #     Retrieves the timezone for the given location. Utilizes geocoders and tzwhere.
+    #     """
 
-        await jsondb.load_servers(self)
-        if jsondb.permission(self,ctx) is False:
-            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
-        g = geocoders.GoogleV3(api_key=google_key)
+    #     await jsondb.load_servers(self)
+    #     if jsondb.permission(self,ctx) is False:
+    #         return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+    #     g = geocoders.GoogleV3(api_key=google_key)
         
-        place, (lat, lng) = g.geocode(arg)
-        tz = tzwhere.tzwhere()
-        timezone = g.timezone(lat,lng)
+    #     place, (lat, lng) = g.geocode(arg)
+    #     tz = tzwhere.tzwhere()
+    #     timezone = g.timezone(lat,lng)
 
-        await ctx.send('The time in **{}** is: **{}**'.format(place,timezone))
-        #print (tz.tzNameAt(lat, lng))
+    #     await ctx.send('The time in **{}** is: **{}**'.format(place,timezone))
+    #     #print (tz.tzNameAt(lat, lng))
 
     @commands.command(name="google",aliases=['g'])
     async def google(self,ctx,*,arg):
@@ -172,131 +172,131 @@ class Search(commands.Cog):
 
 
 
-    @commands.command(name='osu')
-    async def osu(self,ctx,*,arg):
-        """
-        Provides basic stats of the given user, if they exist. Uses Renondedju's Osu.py library https://github.com/Renondedju/Osu.py
+    # @commands.command(name='osu')
+    # async def osu(self,ctx,*,arg):
+    #     """
+    #     Provides basic stats of the given user, if they exist. Uses Renondedju's Osu.py library https://github.com/Renondedju/Osu.py
 
-        Example:
-        !osu Leftyy
-        """
-        await jsondb.load_servers(self)
-        if jsondb.permission(self,ctx) is False:
-            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+    #     Example:
+    #     !osu Leftyy
+    #     """
+    #     await jsondb.load_servers(self)
+    #     if jsondb.permission(self,ctx) is False:
+    #         return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
 
-        #recent5 = await api.get_user_recents(user=arg,limit = 5)
+    #     #recent5 = await api.get_user_recents(user=arg,limit = 5)
 
-        user = await api.get_user(user = arg)
-        if not user:
-            await ctx.send("Sorry, **{}** is not an Osu Player!".format(arg))
-            return
+    #     user = await api.get_user(user = arg)
+    #     if not user:
+    #         await ctx.send("Sorry, **{}** is not an Osu Player!".format(arg))
+    #         return
 
-        playcount = str(user.playcount)
-        pp_rank = str(user.pp_rank)
-        level = str(user.level)
-        accuracy = str(user.accuracy)
-        image = 'http://s.ppy.sh/a/'  + str(user.user_id)
+    #     playcount = str(user.playcount)
+    #     pp_rank = str(user.pp_rank)
+    #     level = str(user.level)
+    #     accuracy = str(user.accuracy)
+    #     image = 'http://s.ppy.sh/a/'  + str(user.user_id)
 
-        embed=discord.Embed(title="{}".format(arg), description="osu stats for this user!", color=0x008000)
-        embed.set_thumbnail(url=image)
-        embed.add_field(name='Level:', value=level, inline=True)
-        embed.add_field(name='Playcount:', value=playcount, inline=True)
-        embed.add_field(name='Rank:', value=pp_rank, inline=True)
-        embed.add_field(name='Accuracy:', value=accuracy, inline=True)
+    #     embed=discord.Embed(title="{}".format(arg), description="osu stats for this user!", color=0x008000)
+    #     embed.set_thumbnail(url=image)
+    #     embed.add_field(name='Level:', value=level, inline=True)
+    #     embed.add_field(name='Playcount:', value=playcount, inline=True)
+    #     embed.add_field(name='Rank:', value=pp_rank, inline=True)
+    #     embed.add_field(name='Accuracy:', value=accuracy, inline=True)
 
-        await ctx.send(embed = embed)
+    #     await ctx.send(embed = embed)
 
 
-    @commands.command(name='osu5')
-    async def osu5(self,ctx,*,arg):
-        """
-        Find the top 5 beatmaps of the given user. Uses Renondedju's Osu.py library https://github.com/Renondedju/Osu.py
+    # @commands.command(name='osu5')
+    # async def osu5(self,ctx,*,arg):
+    #     """
+    #     Find the top 5 beatmaps of the given user. Uses Renondedju's Osu.py library https://github.com/Renondedju/Osu.py
 
-        Usage:
-        !osu5 Leftyy
-        """
-        await jsondb.load_servers(self)
-        if jsondb.permission(self,ctx) is False:
-            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
-        user = await api.get_user(user = arg)
-        image = 'http://s.ppy.sh/a/'  + str(user.user_id)
+    #     Usage:
+    #     !osu5 Leftyy
+    #     """
+    #     await jsondb.load_servers(self)
+    #     if jsondb.permission(self,ctx) is False:
+    #         return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+    #     user = await api.get_user(user = arg)
+    #     image = 'http://s.ppy.sh/a/'  + str(user.user_id)
         
 
-        if not user:
-            await ctx.send("Sorry, **{}** is not an Osu Player!".format(arg))
-            return
+    #     if not user:
+    #         await ctx.send("Sorry, **{}** is not an Osu Player!".format(arg))
+    #         return
 
-        best5 = await api.get_user_bests(user=arg,limit = 5)
-        osubest = []
+    #     best5 = await api.get_user_bests(user=arg,limit = 5)
+    #     osubest = []
 
-        for best in best5:
-            beatmap = await api.get_beatmap(beatmap_id =best.beatmap_id)
-            beatmap_title = beatmap.title
+    #     for best in best5:
+    #         beatmap = await api.get_beatmap(beatmap_id =best.beatmap_id)
+    #         beatmap_title = beatmap.title
 
-            beatmap_id = beatmap.beatmapset_id
-            beatmap_diff = best.beatmap_id
-            creator = beatmap.creator
+    #         beatmap_id = beatmap.beatmapset_id
+    #         beatmap_diff = best.beatmap_id
+    #         creator = beatmap.creator
 
 
-            osutuple = [beatmap_title,  str(best.score), str(best.maxcombo), str(best.pp), str(beatmap_id), str(beatmap_diff), creator]
-            osubest.append(osutuple)
+    #         osutuple = [beatmap_title,  str(best.score), str(best.maxcombo), str(best.pp), str(beatmap_id), str(beatmap_diff), creator]
+    #         osubest.append(osutuple)
 
-        embed=discord.Embed(title="{}".format(arg), description="Top 5 Plays!", color=0x008000)
-        embed.set_thumbnail(url=image)
+    #     embed=discord.Embed(title="{}".format(arg), description="Top 5 Plays!", color=0x008000)
+    #     embed.set_thumbnail(url=image)
 
 
         
 
-        for bestmap in osubest:
+    #     for bestmap in osubest:
 
-            link = "https://osu.ppy.sh/beatmapsets/" + bestmap[4]  +"#osu/" + bestmap[5] + ')'
-            title = bestmap[0] + ' by ' + bestmap[6] + ': '
-            together = title + link
+    #         link = "https://osu.ppy.sh/beatmapsets/" + bestmap[4]  +"#osu/" + bestmap[5] + ')'
+    #         title = bestmap[0] + ' by ' + bestmap[6] + ': '
+    #         together = title + link
 
-            info = '**Score:** '+ bestmap[1] + '    **Max Combo:** ' + bestmap[2] + '    **PP: **' + bestmap[3]
-            embed.add_field(name=together, value=info )
+    #         info = '**Score:** '+ bestmap[1] + '    **Max Combo:** ' + bestmap[2] + '    **PP: **' + bestmap[3]
+    #         embed.add_field(name=together, value=info )
 
-        await ctx.send(embed = embed)
+    #     await ctx.send(embed = embed)
 
-    @commands.command(name='osub')
-    async def osub(self,ctx,*,arg):
-        """
-        Shows basic information of an osu beatmap. Must provide the link to the beatmap. Uses Renondedju's Osu.py library https://github.com/Renondedju/Osu.py
-        """
-        await jsondb.load_servers(self)
-        if jsondb.permission(self,ctx) is False:
-            return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
-        compare = 'https://osu.ppy.sh/beatmapsets/'
-        if len(arg)>31:
-            if compare == arg[0:31]:
-                beatmap_id = arg[31:37]
-                print(beatmap_id)
-            beatmap = await api.get_beatmap(beatmapset_id = beatmap_id)
-            if not beatmap:
-                await ctx.send('Beatmap does not exist.',delete_after=20)
-                return
+    # @commands.command(name='osub')
+    # async def osub(self,ctx,*,arg):
+    #     """
+    #     Shows basic information of an osu beatmap. Must provide the link to the beatmap. Uses Renondedju's Osu.py library https://github.com/Renondedju/Osu.py
+    #     """
+    #     await jsondb.load_servers(self)
+    #     if jsondb.permission(self,ctx) is False:
+    #         return await ctx.send(jsondb.NOPERMISSION,delete_after=10)
+    #     compare = 'https://osu.ppy.sh/beatmapsets/'
+    #     if len(arg)>31:
+    #         if compare == arg[0:31]:
+    #             beatmap_id = arg[31:37]
+    #             print(beatmap_id)
+    #         beatmap = await api.get_beatmap(beatmapset_id = beatmap_id)
+    #         if not beatmap:
+    #             await ctx.send('Beatmap does not exist.',delete_after=20)
+    #             return
             
-            title = beatmap.title + " by " + beatmap.artist
-            length = beatmap.total_length
-            difficulty = beatmap.difficultyrating
-            creator = beatmap.creator
-            bpm = str(beatmap.bpm)
-            max_combo = str(beatmap.max_combo)
-            playcount = str(beatmap.playcount)
+    #         title = beatmap.title + " by " + beatmap.artist
+    #         length = beatmap.total_length
+    #         difficulty = beatmap.difficultyrating
+    #         creator = beatmap.creator
+    #         bpm = str(beatmap.bpm)
+    #         max_combo = str(beatmap.max_combo)
+    #         playcount = str(beatmap.playcount)
 
-            embed=discord.Embed(title=title, url=arg, description="All the basic information for this song!", color=0xe005ba)
-            embed.add_field(name='Length', value=length, inline=True)
-            embed.add_field(name='Difficulty', value=difficulty, inline=True)
-            embed.add_field(name='Creator', value=creator, inline=True)
-            embed.add_field(name='BPM', value=bpm, inline=True)
-            embed.add_field(name='Max Combo', value=max_combo, inline=True)
-            embed.add_field(name='Playcount', value=playcount, inline=True)
-            await ctx.send(embed=embed) 
-            return 
+    #         embed=discord.Embed(title=title, url=arg, description="All the basic information for this song!", color=0xe005ba)
+    #         embed.add_field(name='Length', value=length, inline=True)
+    #         embed.add_field(name='Difficulty', value=difficulty, inline=True)
+    #         embed.add_field(name='Creator', value=creator, inline=True)
+    #         embed.add_field(name='BPM', value=bpm, inline=True)
+    #         embed.add_field(name='Max Combo', value=max_combo, inline=True)
+    #         embed.add_field(name='Playcount', value=playcount, inline=True)
+    #         await ctx.send(embed=embed) 
+    #         return 
 
-        else:
-            await ctx.send('Invalid format. Try using an actual link.',delete_after=20)
-            return
+    #     else:
+    #         await ctx.send('Invalid format. Try using an actual link.',delete_after=20)
+    #         return
 
     
     @commands.command(name='smashbros')

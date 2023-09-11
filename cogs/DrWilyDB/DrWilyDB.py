@@ -27,6 +27,10 @@ website = "https://farisalkhat.github.io/DrWilyDB/home"
 
 
 class DrWilyDB(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot # now you'll use self.bot instead of just bot when referring to the bot in the code
+
+        
     @commands.command(name='drwilydb')
     async def drwilydb(self,ctx):
         """
@@ -65,7 +69,7 @@ class DrWilyDB(commands.Cog):
 
 
         try:
-            response = requests.get('https://mm8bitdm-v2.herokuapp.com/api/dailyrm')
+            response = requests.get('https://mm8bitdm-ygo.herokuapp.com/api/dailyrm')
             js = response.json()
             print(js)
             response.raise_for_status()
@@ -101,7 +105,7 @@ class DrWilyDB(commands.Cog):
             await ctx.send('Invalid format. Try using an actual link.',delete_after=20)
             return
         try:
-            response = requests.get('https://mm8bitdm-v2.herokuapp.com/api/recentmatch')
+            response = requests.get('https://mm8bitdm-ygo.herokuapp.com/api/recentmatch')
             js = response.json()
             response.raise_for_status()
         except HTTPError as http_err:
@@ -141,7 +145,7 @@ class DrWilyDB(commands.Cog):
             await ctx.send('Invalid format. Try using an actual link.',delete_after=20)
             return
         try:
-            response = requests.get('https://mm8bitdm-v2.herokuapp.com/api/randommatch')
+            response = requests.get('https://mm8bitdm-ygo.herokuapp.com/api/randommatch')
             js = response.json()
             response.raise_for_status()
         except HTTPError as http_err:
@@ -175,7 +179,7 @@ class DrWilyDB(commands.Cog):
             await ctx.send('Invalid format. Try using an actual link.',delete_after=20)
             return
         try:
-            response = requests.get('https://mm8bitdm-v2.herokuapp.com/api/robotmasters/name/{}'.format(arg))
+            response = requests.get('https://mm8bitdm-ygo.herokuapp.com/api/robotmasters/name/{}'.format(arg))
             js = response.json()
             print(js)
             response.raise_for_status()
@@ -183,7 +187,7 @@ class DrWilyDB(commands.Cog):
             print(f'HTTP error occurred: {http_err}')  
             return await ctx.send("The robot master you provided does not exist.")
        
-        robotmaster = requests.get('https://mm8bitdm-v2.herokuapp.com/api/robotmaster/{}'.format(js['id']))
+        robotmaster = requests.get('https://mm8bitdm-ygo.herokuapp.com/api/robotmaster/{}'.format(js['id']))
         js = response.json()
 
         link = js['image'].replace(" ", "%20").replace('\\',"/")

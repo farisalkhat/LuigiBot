@@ -17,7 +17,7 @@ from datetime import datetime,timedelta,date
 
 from core import jsondb
 
-class NewEconomy(commands.Cog):
+class Economy(commands.Cog):
     __slots__ = ('users','items','shop','servers')
     def __init__(self,bot):
         self.bot = bot
@@ -52,9 +52,9 @@ class NewEconomy(commands.Cog):
         time['Year'] = datetime.today().year
         time['Day'] = datetime.today().day
         time['Month'] = datetime.today().month
-        self.users[userid]['Coins'] = self.users[userid]['Coins'] + 20
+        self.users[userid]['Dosh'] = self.users[userid]['Dosh'] + 300
         await jsondb.save_users(self)
-        await ctx.send('**{}** has claimed his daily reward of **20 coins!**'.format(ctx.author))
+        await ctx.send('**{}** has claimed his daily reward of **300 Dosh!**'.format(ctx.author))
     
     @commands.command(name="weekly")
     async def weekly(self,ctx):
@@ -72,11 +72,11 @@ class NewEconomy(commands.Cog):
         time['Year'] = datetime.today().year
         time['Day'] = datetime.today().day
         time['Month'] = datetime.today().month
-        self.users[userid]['Coins'] = self.users[userid]['Coins'] + 100
+        self.users[userid]['Dosh'] = self.users[userid]['Dosh'] + 1000
         await jsondb.save_users(self)
-        await ctx.send('**{}** has claimed his weekly reward of **100 coins!**'.format(ctx.author))
+        await ctx.send('**{}** has claimed his weekly reward of **1000 Dosh!**'.format(ctx.author))
 
-    @commands.command(name="balance")
+    @commands.command(name="dosh")
     async def newbalance(self,ctx,member:discord.Member = None): 
         await jsondb.load_users(self)
         await jsondb.load_servers(self)
@@ -91,8 +91,8 @@ class NewEconomy(commands.Cog):
 
         if not userid in self.users:
             await ctx.send('**{}**, you do not have a profile currently!')
-        coins = self.users[userid]['Coins']
-        await ctx.send('**{}** currently has **{} Coins**.'.format(user,coins),delete_after=10)   
+        Dosh = self.users[userid]['Dosh']
+        await ctx.send('You have **{} Dosh**.'.format(user,Dosh),delete_after=10)   
 
     @commands.command(name="inventory")
     async def inventory(self,ctx): 
@@ -150,7 +150,7 @@ class NewEconomy(commands.Cog):
             item = self.items[itemID]
             price = item['Price']
 
-            itemname = '**'+item['ItemName']+'**' + ' -- ' + '__{} coins__'.format(price) + '\t **ID: '+item['ItemID']+'** '+ '\n'
+            itemname = '**'+item['ItemName']+'**' + ' -- ' + '__{} Dosh__'.format(price) + '\t **ID: '+item['ItemID']+'** '+ '\n'
             itemdesc = itemname + item['Description'] + '\n'
             items.append(itemdesc)
         
@@ -227,12 +227,12 @@ class NewEconomy(commands.Cog):
             return await ctx.send("Sorry, that item does not exist!")
         if index not in self.shop[serverid]['Inventory']:
             return await ctx.send("This shop does not sell this item!")
-        if self.users[authorid]['Coins'] - int(self.items[index]['Price']) < 0 :
+        if self.users[authorid]['Dosh'] - int(self.items[index]['Price']) < 0 :
             return await ctx.send("Sorry, you do not have enough to purchase that!")
-        self.users[authorid]['Coins'] =  self.users[authorid]['Coins'] - int(self.items[index]['Price'])
+        self.users[authorid]['Dosh'] =  self.users[authorid]['Dosh'] - int(self.items[index]['Price'])
         self.users[authorid]['Inventory'].append(index)
         await jsondb.save_users(self)
-        await ctx.send("**{}** has purchased **{}** for **{}** coins.".format(author.name,self.items[index]['ItemName'],self.items[index]['Price']))
+        await ctx.send("**{}** has purchased **{}** for **{}** Dosh.".format(author.name,self.items[index]['ItemName'],self.items[index]['Price']))
 
     @commands.command(name="itemdb")
     async def all_items(self,ctx): 
@@ -273,20 +273,20 @@ class NewEconomy(commands.Cog):
         item = self.items[index]
 
         price = item['Price']
-        itemname = '**'+item['ItemName']+'**' + ' -- ' + '__{} coins__'.format(price) + '\n**__ID:__** '+item['ItemID']+ ' \t**__Item Type:__** ' + item['ItemType'] + '\t**__Use:__** ' + item['Use'] + '\t**__Purchasable:__** ' + item['Sell'] + '\n'
+        itemname = '**'+item['ItemName']+'**' + ' -- ' + '__{} Dosh__'.format(price) + '\n**__ID:__** '+item['ItemID']+ ' \t**__Item Type:__** ' + item['ItemType'] + '\t**__Use:__** ' + item['Use'] + '\t**__Purchasable:__** ' + item['Sell'] + '\n'
         itemdesc = itemname + item['Description'] + '\n'
 
         await ctx.send(itemdesc)
         
-    @commands.command(name='setcoins',aliases=['sc'])
+    @commands.command(name='setDosh',aliases=['sc'])
     @commands.has_permissions(administrator=True)
-    async def setcoins(self,ctx,member: discord.Member = None,coins: int = 0):
+    async def setDosh(self,ctx,member: discord.Member = None,Dosh: int = 0):
         """
-        Sets coins to a user. Requires admin privileges to execute this command. 
-        Use !givecoins to give coins of a specific amount to a user.
+        Sets Dosh to a user. Requires admin privileges to execute this command. 
+        Use !giveDosh to give Dosh of a specific amount to a user.
 
         Usage:
-        !setcoins @Lefty#6430 50
+        !setDosh @Lefty#6430 50
         !sc @Lefty#6430 50
         """
         jsondb.load_users(self)
@@ -298,9 +298,9 @@ class NewEconomy(commands.Cog):
             return await ctx.send('**{]**, you must target a user first before using this command.',delete_after=20)
         
         userid = str(member.id)
-        self.users[userid]['Coins'] = coins
+        self.users[userid]['Dosh'] = Dosh
         await jsondb.save_users(self)
-        await ctx.send("**{}**, you now have a balance of **{}** Coins!".format(member,coins))
+        await ctx.send("**{}**, you now have a balance of **{}** Dosh!".format(member,Dosh))
 
     @commands.command(name="use")
     async def use(self,ctx,index:str,member:discord.Member=None):

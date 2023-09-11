@@ -411,6 +411,7 @@ class Administrator(commands.Cog):
 
         serverid = str(ctx.message.guild.id)
         channelid = str(ctx.channel.id)
+        print(serverid)
         await jsondb.load_servers(self)
         try:
             server = self.servers[serverid]
@@ -450,7 +451,11 @@ class Administrator(commands.Cog):
                     "Greet_Channel": "",
                     "Greet_Message": "Welcome to the server!"
                 },
-                'Reaction_Messages':{}
+                'Reaction_Messages':{},
+                'Music_Users':[],
+                'Used_Letters':[],
+                'Music_Users_Done':[],
+                'Music_Man':""
             }
             await jsondb.save_servers(self)
             return await ctx.send("Server info has been created for **{}**.".format(server.name))
